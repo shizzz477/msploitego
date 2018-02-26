@@ -12,6 +12,10 @@ __maintainer__ = 'Marc Gurreri'
 __email__ = 'me@me.com'
 __status__ = 'Development'
 
+__all__ = {
+    'HelloWorld',
+    'HelloWorld2'
+}
 
 @EnableDebugWindow
 class HelloWorld(Transform):
@@ -23,10 +27,35 @@ class HelloWorld(Transform):
     def do_transform(self, request, response, config):
         # Since we know what the input_type of this transform is, we can directly access static fields. Alternatively,
         # dynamic field values can still be accessed by querying the entity.fields property.
+
         person = request.entity
         response += Phrase('Hello %s!' % person.value)
         response += Phrase('This way Mr(s). %s!' % person.lastname)
         response += Phrase('Hi %s!' % person.firstnames)
+        return response
+
+    def on_terminate(self):
+        """
+        This method gets called when transform execution is prematurely terminated. It is only applicable for local
+        transforms.
+        """
+        pass
+
+@EnableDebugWindow
+class HelloWorld2(Transform):
+    """This transform returns a set of phrases with various salutations to a Person's name."""
+
+    # The transform input entity type.
+    input_type = Person
+
+    def do_transform(self, request, response, config):
+        # Since we know what the input_type of this transform is, we can directly access static fields. Alternatively,
+        # dynamic field values can still be accessed by querying the entity.fields property.
+
+        person = request.entity
+        response += Phrase('Hello2 %s!' % person.value)
+        response += Phrase('This way2 Mr(s). %s!' % person.lastname)
+        response += Phrase('Hi2 %s!' % person.firstnames)
         return response
 
     def on_terminate(self):

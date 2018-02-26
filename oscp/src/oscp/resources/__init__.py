@@ -1,4 +1,6 @@
 __all__ = [
     'etc',
-    'images'
+    'images',
+    'external',
+    'maltego'
 ]

@@ -12,7 +12,8 @@ __status__ = 'Development'
 
 __all__ = [
     'OscpEntity',
-    'MyOscpEntity'
+    'MyOscpEntity',
+    'Oport'
 ]
 
 
@@ -43,3 +44,8 @@ class MyOscpEntity(OscpEntity):
     datetime = DateTimeEntityField('type.datetime', display_name='Foo Datetime')
     timespan = TimeSpanEntityField('type.timespan', display_name='Foo Timespan')
     color = ColorEntityField('type.color', display_name='Foo Color')
+
+class Oport(OscpEntity):
+    portnumber = StringEntityField('type.str', display_name="Port Number")
+    protocol = StringEntityField('type.str', display_name="Protocol")
+    state = StringEntityField('type.str', display_name="State")
