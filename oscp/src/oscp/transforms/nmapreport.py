@@ -1,11 +1,9 @@
-from libnmap.parser import NmapParser
-
-from canari.maltego.entities import IPv4Address, File, Phrase
+from canari.maltego.entities import Unknown
 from canari.maltego.transform import Transform
 from canari.framework import EnableDebugWindow
 
 __author__ = 'Marc Gurreri'
-__copyright__ = 'Copyright 2018, ozzy Project'
+__copyright__ = 'Copyright 2018, oscp Project'
 __credits__ = []
 
 __license__ = 'GPLv3'
@@ -16,20 +14,14 @@ __status__ = 'Development'
 
 
 @EnableDebugWindow
-class Portscan(Transform):
-    """Do a first level port scan"""
+class Nmapreport(Transform):
+    """TODO: Your transform description."""
 
     # The transform input entity type.
-    input_type = File
+    input_type = Unknown
 
     def do_transform(self, request, response, config):
-        #
-        nmapfile = request.entity
-        rep = NmapParser.parse_fromfile(nmapfile)
-        for host in rep.hosts:
-            if host.is_up():
-                print "host " + host.address + " is up"
-                response += Phrase('Host found ' % host.address)
+        # TODO: write your code here.
         return response
 
     def on_terminate(self):

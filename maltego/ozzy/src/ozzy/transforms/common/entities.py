@@ -1,4 +1,4 @@
-from canari.maltego.message import *
+from canari.maltego.message import StringEntityField, IntegerEntityField, Entity
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, ozzy Project'
@@ -12,15 +12,22 @@ __status__ = 'Development'
 
 __all__ = [
     'OzzyEntity',
-    'SmbPort'
+    'Port'
 ]
 
 
 class OzzyEntity(Entity):
     _namespace_ = 'ozzy'
 
+class Port(OzzyEntity):
+    number = IntegerEntityField('type.int', display_name='Port Number')
+    state = StringEntityField('type.string', display_name='State')
+    proto = StringEntityField('type.string', display_name='Protocol')
 
-class SmbPort(OzzyEntity):
+class Host(OzzyEntity):
+    pass
+
+class SampleEntity(OzzyEntity):
     """This is an example of a custom entity that you would design. Here we can specify a custom namespace if we want to
     further segment our entities into separate namespaces by specifying the '_namespace_' class variable. (i.e.
     'socialmedia.twitter.Tweet', 'socialmedia.myspace.Post', etc.). Or maybe you'd like to specify a custom fully
@@ -30,7 +37,7 @@ class SmbPort(OzzyEntity):
     'canari.maltego.message' package.
     """
 
-    sambaport = StringEntityField(name='ip.port', propname='port', displayname='Samba Port')
+    # sambaport = StringEntityField(name='ip.port', propname='port', displayname='Samba Port')
     # at = FloatEntityField('type.float', display_name='Foo Float')
     # bool = BooleanEntityField('type.bool', display_name='Foo Boolean')
     # enum = EnumEntityField('type.enum', choices=[2, 1, 0], display_name='Foo Enum')
