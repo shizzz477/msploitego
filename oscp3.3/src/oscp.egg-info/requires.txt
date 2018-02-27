@@ -1,0 +1,5 @@
+canari==1.1
+lxml
+pyiptools
+python-libnmap
+python-nmap

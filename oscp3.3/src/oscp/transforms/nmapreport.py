@@ -4,6 +4,7 @@ from canari.framework import EnableDebugWindow
 
 from common.nmaputil import getParsedReport
 from common.entities import Oport
+from sploitego.transforms.common.entities import Port
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, oscp Project'
@@ -22,12 +23,12 @@ class Nmapreport(Transform):
     """Takes a string as a filename and parses nmap report"""
 
     # The transform input entity type.
-    input_type = File
+    input_type = Phrase
 
     def do_transform(self, request, response, config):
         nmapfile = request.entity
-        filepath = nmapfile.source
-        print filepath
+        #filepath = nmapfile.source
+        #print filepath
         parsedreport = getParsedReport(filepath)
         for _host in parsedreport.hosts:
             if _host.is_up():
@@ -42,26 +43,28 @@ class Nmapreport(Transform):
 
 @EnableDebugWindow
 class EnumPorts(Transform):
+    """OSCP Enum Ports"""
     input_type = IPv4Address
 
     def do_transform(self, request, response, config):
         ipv4obj = request.entity
         ip = ipv4obj.value
-        print "IP retrieved from request entity " + ip
+        # print "IP retrieved from request entity " + ip
         parsedreport = getParsedReport(filepath)
         for _host in parsedreport.hosts:
-            print "checking host: " + _host.address
-            print type(ip)
+            # print "checking host: " + _host.address
+            # print type(ip)
             if _host.address == ip:
                 for s in _host.services:
-                    print "found service"
-                    print s
+                    # print "found service"
+                    # print s
                     # s.port,s.protocol,s.state
-                    op = Oport(s.port)
-                    op.portnumber = s.port
+                    op = Port(s.port)
+                    # op = Oport(s.port)
+                    op.ip.destination = _host.address
                     op.protocol = s.protocol
-                    op.state = s.state
-                    print op
+                    op.port.status = s.state
+                    # print op
                     response += op
         return response
 

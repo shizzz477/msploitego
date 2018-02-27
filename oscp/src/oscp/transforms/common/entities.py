@@ -1,10 +1,12 @@
-from canari.maltego.message import *
+#!/usr/bin/env python
+
+from canari.maltego.message import Entity, EntityField, EntityFieldType, MatchingRule
 
 __author__ = 'Marc Gurreri'
-__copyright__ = 'Copyright 2018, oscp Project'
+__copyright__ = 'Copyright 2018, Oscp Project'
 __credits__ = []
 
-__license__ = 'GPLv3'
+__license__ = 'GPL'
 __version__ = '0.1'
 __maintainer__ = 'Marc Gurreri'
 __email__ = 'me@me.com'
@@ -12,40 +14,45 @@ __status__ = 'Development'
 
 __all__ = [
     'OscpEntity',
-    'MyOscpEntity',
-    'Oport'
+    'MyOscpEntity'
 ]
 
-
+"""
+DO NOT EDIT:
+The following entity is the base entity type from which all your entities will inherit from. This provides you with the
+default namespace that all your entities will use for their unique entity type in Maltego. For example, MyOscpEntity will
+have an entity type name of oscp.MyOscpEntity. When adding a new entity in Maltego, you will have to specify this
+name (oscp.MyOscpEntity) in the 'Unique entity type' field.
+"""
 class OscpEntity(Entity):
-    """This is the base entity used to optionally define the namespace for all your other entities. The namespace is the
-    string preceding the name of your entity separated by a dot (i.e. 'foo' in 'foo.BarTransform'). If _namespace_ is
-    not defined as a class variable, then the namespace will be generated based on the name of your Canari package. For
-    example, if your project's name is 'sniffmypackets' then the namespace will also be 'sniffmypackets'.
+    _namespace_ = 'oscp'
+
+
+"""
+You can specify as many entity fields as you want by just adding an extra @EntityField() decorator to your entities. The
+@EntityField() decorator takes the following parameters:
+    - name: the name of the field without spaces or special characters except for dots ('.') (required)
+    - propname: the name of the object's property used to get and set the value of the field (required, if name contains dots)
+    - displayname: the name of the entity as it appears in Maltego (optional)
+    - type: the data type of the field (optional, default: EntityFieldType.String)
+    - required: whether or not the field's value must be set before sending back the message (optional, default: False)
+    - choices: a list of acceptable field values for this field (optional)
+    - matchingrule: whether or not the field should be loosely or strictly matched (optional, default: MatchingRule.Strict)
+    - decorator: a function that is invoked each and everytime the field's value is set or changed.
+    - is_value: a boolean value that determines whether the field is also the default value of the entity object.
+TODO: define as many custom fields and entity types as you wish:)
+"""    
+@EntityField(name='oscp.fieldN', propname='fieldN', displayname='Field N', matchingrule=MatchingRule.Loose)
+@EntityField(name='oscp.field1', propname='field1', displayname='Field 1', type=EntityFieldType.Integer)
+class MyOscpEntity(OscpEntity):
     """
+    Uncomment the line below and comment out the pass if you wish to define a ridiculous entity type name like
+    'my.fancy.EntityType'
+    """
+    # _name_ = 'my.fancy.EntityType'
     pass
 
-
-class MyOscpEntity(OscpEntity):
-    """This is an example of a custom entity that you would design. Here we can specify a custom namespace if we want to
-    further segment our entities into separate namespaces by specifying the '_namespace_' class variable. (i.e.
-    'socialmedia.twitter.Tweet', 'socialmedia.myspace.Post', etc.). Or maybe you'd like to specify a custom fully
-    qualified type name by defining the '_type_' class variable. By default the type is set to the name of your Canari
-    package dot the name of this entity class. Most importantly, you're probably wondering how to specify custom entity
-    fields. Take a look below for examples of the different built-in field types provided from the
-    'canari.maltego.message' package.
-    """
-    str = StringEntityField('type.str', display_name='Foo String')
-    int = IntegerEntityField('type.int', display_name='Foo Integer')
-    float = FloatEntityField('type.float', display_name='Foo Float')
-    bool = BooleanEntityField('type.bool', display_name='Foo Boolean')
-    enum = EnumEntityField('type.enum', choices=[2, 1, 0], display_name='Foo Enum')
-    date = DateEntityField('type.date', display_name='Foo Date')
-    datetime = DateTimeEntityField('type.datetime', display_name='Foo Datetime')
-    timespan = TimeSpanEntityField('type.timespan', display_name='Foo Timespan')
-    color = ColorEntityField('type.color', display_name='Foo Color')
-
-class Oport(OscpEntity):
-    portnumber = StringEntityField('type.str', display_name="Port Number")
-    protocol = StringEntityField('type.str', display_name="Protocol")
-    state = StringEntityField('type.str', display_name="State")
+@EntityField(name='ip.source', propname='source', displayname='Source IP')
+@EntityField(name='oscp.macaddress', propname='macaddress', displayname='Mac Address')
+class MacAddress(OscpEntity):
+    pass
