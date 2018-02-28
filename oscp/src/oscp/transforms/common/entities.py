@@ -14,7 +14,11 @@ __status__ = 'Development'
 
 __all__ = [
     'OscpEntity',
-    'MyOscpEntity'
+    'MyOscpEntity',
+    'Port',
+    'MacAddress',
+    'Fingerprint',
+    'Service'
 ]
 
 """
@@ -53,6 +57,25 @@ class MyOscpEntity(OscpEntity):
     pass
 
 @EntityField(name='ip.source', propname='source', displayname='Source IP')
-@EntityField(name='oscp.macaddress', propname='macaddress', displayname='Mac Address')
+@EntityField(name='oscp.protocol', propname='protocol', displayname='Protocol')
+@EntityField(name='oscp.state', propname='state', displayname='State')
+@EntityField(name='oscp.servicename', propname='servicename', displayname='Service Name')
+@EntityField(name='oscp.product', propname='product', displayname='Product')
+@EntityField(name='oscp.portnumber', propname='portnumber', displayname='Port Number', value=True)
+class Port(OscpEntity):
+    pass
+
+@EntityField(name='oscp.servicename', propname='servicename', displayname='Service Name', value=True)
+@EntityField(name='oscp.portnumber', propname='portnumber', displayname='Port Number')
+class Service(OscpEntity):
+    pass
+
+@EntityField(name='ip.source', propname='source', displayname='Source IP')
+@EntityField(name='oscp.macaddress', propname='macaddress', displayname='Mac Address',value=True)
 class MacAddress(OscpEntity):
+    pass
+
+@EntityField(name='oscp.accuracy', propname='accuracy', displayname='Accuracy')
+@EntityField(name='oscp.osname', propname='osname', displayname='OS Name', value=True)
+class Fingerprint(OscpEntity):
     pass

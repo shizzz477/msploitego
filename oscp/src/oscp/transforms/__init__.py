@@ -11,8 +11,9 @@ __email__ = 'me@me.com'
 __status__ = 'Development'
 
 __all__ = [
+    'enumport',
     'fromnmap',
     'common',
     'helloworld',
-    'enumports'
+    'enumhost'
 ]
