@@ -52,7 +52,20 @@ def doSmbVuln(vuln):
         return None
 '''''
 
-rep = getParsedReport("dummy")
+rep = getParsedReport("/mnt/64G/proj/oscp-maltego/bannersample.xml")
+for _host in rep.hosts:
+    pprint.pprint(_host)
+    for s in _host.services:
+        pprint.pprint(s)
+        banner = s.banner
+        print banner
+        ban = ""
+        bl = banner.split()
+        if "product" in bl[0]:
+            ban = " ".join(bl[1:])
+        else:
+            ban = banner
+        print ban
 
 for _host in rep.hosts:
     if _host.is_up():

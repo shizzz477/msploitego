@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/local/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.60SVN scan initiated Thu Mar  1 20:07:46 2018 as: nmap -vvvv -Pn -p 22 -sV -&#45;script=banner -oX ../bannersample.xml 10.11.1.39 -->
+<nmaprun scanner="nmap" args="nmap -vvvv -Pn -p 22 -sV -&#45;script=banner -oX ../bannersample.xml 10.11.1.39" start="1519952866" startstr="Thu Mar  1 20:07:46 2018" version="7.60SVN" xmloutputversion="1.04">
+<scaninfo type="syn" protocol="tcp" numservices="1" services="22"/>
+<verbose level="4"/>
+<debugging level="0"/>
+<taskbegin task="NSE" time="1519952866"/>
+<taskend task="NSE" time="1519952866"/>
+<taskbegin task="NSE" time="1519952866"/>
+<taskend task="NSE" time="1519952866"/>
+<taskbegin task="ARP Ping Scan" time="1519952866"/>
+<taskend task="ARP Ping Scan" time="1519952866" extrainfo="1 total hosts"/>
+<taskbegin task="Parallel DNS resolution of 1 host." time="1519952866"/>
+<taskend task="Parallel DNS resolution of 1 host." time="1519952866"/>
+<taskbegin task="SYN Stealth Scan" time="1519952866"/>
+<taskend task="SYN Stealth Scan" time="1519952867" extrainfo="1 total ports"/>
+<taskbegin task="Service scan" time="1519952867"/>
+<taskend task="Service scan" time="1519952867" extrainfo="1 service on 1 host"/>
+<taskbegin task="NSE" time="1519952867"/>
+<taskend task="NSE" time="1519952868"/>
+<taskbegin task="NSE" time="1519952868"/>
+<taskend task="NSE" time="1519952868"/>
+<host starttime="1519952866" endtime="1519952868"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.11.1.39" addrtype="ipv4"/>
+<address addr="00:50:56:B8:F8:03" addrtype="mac" vendor="VMware"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="tcp" portid="22"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="ssh" product="OpenSSH" version="6.6.1" extrainfo="protocol 2.0" method="probed" conf="10"><cpe>cpe:/a:openbsd:openssh:6.6.1</cpe></service><script id="banner" output="SSH-2.0-OpenSSH_6.6.1"/></port>
+</ports>
+<times srtt="40771" rttvar="64995" to="300751"/>
+</host>
+<taskbegin task="NSE" time="1519952868"/>
+<taskend task="NSE" time="1519952868"/>
+<taskbegin task="NSE" time="1519952868"/>
+<taskend task="NSE" time="1519952868"/>
+<runstats><finished time="1519952868" timestr="Thu Mar  1 20:07:48 2018" elapsed="2.20" summary="Nmap done at Thu Mar  1 20:07:48 2018; 1 IP address (1 host up) scanned in 2.20 seconds" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

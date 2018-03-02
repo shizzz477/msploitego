@@ -21,7 +21,7 @@ __all__ = [
     'dotransform',
     'onterminate' # comment out this line if you don't need this function.
 ]
-filepath = "/mnt/64G/proj/oscp-maltego/nmapfull.xml"
+filepath = "/mnt/64G/proj/oscp-maltego/nmapnoping.xml"
 
 @configure(
     label='OSCP Enum Hosts [Enum Hosts]',

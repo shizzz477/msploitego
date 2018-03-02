@@ -7,13 +7,9 @@ def toPort(mobj):
     pn = mobj.getVar('oscp.portnumber')
     op = Port(pn)
     op.protocol = mobj.getVar('oscp.protocol')
-    # mobj.debug("Protocol: " + op.protocol)
     op.source = mobj.getVar('ip.source')
-    # mobj.debug("IP: " + op.source)
     op.portnumber = mobj.getVar('oscp.portnumber')
-    # mobj.debug("Port: " + op.portnumber)
     op.servicename = mobj.getVar('oscp.servicename')
-    # mobj.debug("Service: " + op.servicename)
     return op
 
 '''''

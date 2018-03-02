@@ -11,7 +11,6 @@ __email__ = 'me@me.com'
 __status__ = 'Development'
 
 __all__ = [
-    'bannergrab',
     'smbvuln',
     'enumport',
     'fromnmap',

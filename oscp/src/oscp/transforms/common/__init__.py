@@ -15,5 +15,6 @@ __all__ = [
     'nmaputil',
     'MaltegoTransform',
     'entutil',
-    'coreutil'
+    'coreutil',
+    'enum4parse'
 ]

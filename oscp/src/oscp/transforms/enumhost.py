@@ -47,7 +47,7 @@ def dotransform(request, response, config):
     # debug(ip)
     # _host = getHost(ip)
     # debug(pprint.pprint(_host))
-    parsedreport = getParsedReport("/mnt/64G/proj/oscp-maltego/nmapfull.xml")
+    parsedreport = getParsedReport("/mnt/64G/proj/oscp-maltego/nmapnoping.xml")
     for _host in parsedreport.hosts:
         if _host.address == ip:
             '''''
