@@ -5,7 +5,7 @@ from canari.framework import configure
 from canari.pkgutils import maltego
 
 from common.nmaputil import getParsedReport
-from common.entities import MacAddress
+from common.entities import MacAddress, OHost
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, Oscp Project'
@@ -21,7 +21,7 @@ __all__ = [
     'dotransform',
     'onterminate' # comment out this line if you don't need this function.
 ]
-filepath = "/mnt/64G/proj/oscp-maltego/samplenmap.xml"
+filepath = "/mnt/64G/proj/oscp-maltego/nmapfull.xml"
 
 @configure(
     label='OSCP Enum Hosts [Enum Hosts]',
@@ -38,8 +38,11 @@ def dotransform(request, response, config):
     parsedreport = getParsedReport(filepath)
     for _host in parsedreport.hosts:
         if _host.is_up():
-            ipaddr = IPv4Address(_host.address)
-            response += ipaddr
+            h = OHost(_host.ipv4)
+            h.source = _host.ipv4
+            h.mac = _host.mac
+            h.vendor = _host.vendor
+            response += h
     return response
 
 

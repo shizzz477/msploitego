@@ -12,5 +12,8 @@ __status__ = 'Development'
 
 __all__ = [
     'entities',
-    'nmaputil'
+    'nmaputil',
+    'MaltegoTransform',
+    'entutil',
+    'coreutil'
 ]

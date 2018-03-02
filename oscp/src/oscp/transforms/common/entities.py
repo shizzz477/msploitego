@@ -18,7 +18,9 @@ __all__ = [
     'Port',
     'MacAddress',
     'Fingerprint',
-    'Service'
+    'Service',
+    'OHost',
+    'Vulnerability'
 ]
 
 """
@@ -56,17 +58,26 @@ class MyOscpEntity(OscpEntity):
     # _name_ = 'my.fancy.EntityType'
     pass
 
+@EntityField(name='ip.source', propname='source', displayname='Source IP', value=True)
+@EntityField(name='oscp.tcpseq', propname='tcpseq', displayname='TCP Sequence')
+@EntityField(name='oscp.mac', propname='mac', displayname='MAC Address')
+@EntityField(name='oscp.vendor', propname='vendor', displayname='Vendor')
+
+class OHost(OscpEntity):
+    pass
+
 @EntityField(name='ip.source', propname='source', displayname='Source IP')
 @EntityField(name='oscp.protocol', propname='protocol', displayname='Protocol')
 @EntityField(name='oscp.state', propname='state', displayname='State')
 @EntityField(name='oscp.servicename', propname='servicename', displayname='Service Name')
-@EntityField(name='oscp.product', propname='product', displayname='Product')
+@EntityField(name='oscp.banner', propname='banner', displayname='Banner')
 @EntityField(name='oscp.portnumber', propname='portnumber', displayname='Port Number', value=True)
 class Port(OscpEntity):
     pass
 
 @EntityField(name='oscp.servicename', propname='servicename', displayname='Service Name', value=True)
 @EntityField(name='oscp.portnumber', propname='portnumber', displayname='Port Number')
+@EntityField(name='ip.source', propname='source', displayname='Source IP')
 class Service(OscpEntity):
     pass
 
@@ -78,4 +89,13 @@ class MacAddress(OscpEntity):
 @EntityField(name='oscp.accuracy', propname='accuracy', displayname='Accuracy')
 @EntityField(name='oscp.osname', propname='osname', displayname='OS Name', value=True)
 class Fingerprint(OscpEntity):
+    pass
+
+@EntityField(name='oscp.vulnerable', propname='VULNERABLE', displayname='Vulnerable', value=True)
+@EntityField(name='oscp.vulnstate', propname='State', displayname='Vulnerabilty State')
+@EntityField(name='oscp.vulndescription', propname='vulndescription', displayname='Description')
+@EntityField(name='oscp.vulnreferences', propname='References', displayname='References')
+@EntityField(name='oscp.vulnids', propname='IDs', displayname='IDs')
+@EntityField(name='oscp.disclosuredate', propname='date', displayname='Disclosure Date')
+class Vulnerability(OscpEntity):
     pass
