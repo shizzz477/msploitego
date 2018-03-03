@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import pprint
 
-from coreutil import sanitize
-
 inf = {}
 def enum4parser(filename):
     chunk = {}
@@ -119,14 +117,19 @@ def doGroups(d):
 
 def doNbStat(d):
     global inf
+    skipwords = [
+        'Domain/Workgroup Name',
+        '[V]',
+        'MAC Address'
+    ]
     nb = {}
     for l in d:
-        if "MAC Address" in l:
+        if any(x in l for x in skipwords):
             pass
         else:
             val = l.split()[0]
             k = l.split()[5:]
-            nb[" ".join(k).strip('<ACVTIVE>').replace(' ','')] = val
+            nb[" ".join(k).strip('<ACVTIVE>').strip('/').replace(' ','')] = val
     if nb:
         inf['nbtstat'] = nb
 
@@ -159,6 +162,12 @@ def doOsInfo(d):
             if smbclientinfo:
                 osinfo['smbclientinfo'] = smbclientinfo
         elif "from srvinfo" in l:
+            i += 1
+            l = d[i]
+            servername = l.split()[0]
+            desc = " ".join(l.split()[1:])
+            srvinfo['servername'] = servername
+            srvinfo['description'] = desc
             i += 1
             l = d[i]
             while "[+]" not in l:
@@ -291,8 +300,8 @@ def getEnum4(ip):
             # print "**** key not found " + k
     return inf
 
-data = getEnum4("10.11.1.31")
-pprint.pprint(data)
+# data = getEnum4("10.11.1.24")
+# pprint.pprint(data)
 '''''
 chunks = {}
 while True:

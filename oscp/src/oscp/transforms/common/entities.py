@@ -99,3 +99,18 @@ class Fingerprint(OscpEntity):
 @EntityField(name='oscp.disclosuredate', propname='date', displayname='Disclosure Date')
 class Vulnerability(OscpEntity):
     pass
+
+@EntityField(name='oscp.servername', propname='servername', displayname='Server Name', value=True)
+@EntityField(name='oscp.serverdescription', propname='description', displayname='Description')
+@EntityField(name='oscp.osversion', propname='osversion', displayname='OS Version')
+class ServerInfo(OscpEntity):
+    pass
+
+@EntityField(name='oscp.BrowserServiceElections', propname='BrowserServiceElections', displayname='Browser Service')
+@EntityField(name='oscp.serverdescription', propname='description', displayname='Description')
+@EntityField(name='oscp.FileServerService', propname='FileServerService', displayname='FileServer Service')
+@EntityField(name='oscp.MasterBrowser', propname='MasterBrowser', displayname='Master Browser')
+@EntityField(name='oscp.MessengerService', propname='MessengerService', displayname='Messenger Service')
+@EntityField(name='oscp.WorkstationService', propname='WorkstationService', displayname='Workstation Service', value=True)
+class Nbtstat(OscpEntity):
+    pass
