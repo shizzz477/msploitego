@@ -24,27 +24,6 @@ me.parseArguments(sys.argv)
 
 # pprint(me)
 oport = toPort(me)
-'''''
-buffersize = 1024
-
-try:
-    tcpsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    tcpsocket.connect((oport.source, int(oport.portnumber)))
-    tcpsocket.send("")
-    me.debug("message sent successfully")
-    data = tcpsocket.recv(buffersize)
-    tcpsocket.close()
-    me.debug(data)
-    me.addEntity('maltego.Banner', data)
-    # tcpsocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    # tcpsocket.settimeout(3)
-    # tcpsocket.bind((tcpip, tcpport))
-    # listen for incoming connections
-    # tcpsocket.listen(5)
-except socket.error, (value, message):
-    me.debug("Error ocurred while creating the socket. Error Code: " + str(value) + ", Error Message: " + message)
-    sys.exit(1)
-'''''
 banner = me.getVar("oscp.banner")
 ban = ""
 

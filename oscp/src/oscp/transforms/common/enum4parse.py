@@ -169,7 +169,10 @@ def doOsInfo(d):
             srvinfo['servername'] = servername
             srvinfo['description'] = desc
             i += 1
-            l = d[i]
+            if i >= len(d):
+                break
+            else:
+                l = d[i]
             while "[+]" not in l:
                 if any(x in l for x in skipwords):
                     i += 1

@@ -47,7 +47,7 @@ def dotransform(request, response, config):
     # debug(ip)
     # _host = getHost(ip)
     # debug(pprint.pprint(_host))
-    parsedreport = getParsedReport("/mnt/64G/proj/oscp-maltego/nmapnoping.xml")
+    parsedreport = getParsedReport("/root/data/oscp_prep/scan_pack/zenmap/zenmap-oscp-scan.xml")
     for _host in parsedreport.hosts:
         if _host.address == ip:
             '''''

@@ -20,7 +20,9 @@ __all__ = [
     'Fingerprint',
     'Service',
     'OHost',
-    'Vulnerability'
+    'Vulnerability',
+    'Nbtstat',
+    'ServerInfo'
 ]
 
 """
@@ -101,7 +103,7 @@ class Vulnerability(OscpEntity):
     pass
 
 @EntityField(name='oscp.servername', propname='servername', displayname='Server Name', value=True)
-@EntityField(name='oscp.serverdescription', propname='description', displayname='Description')
+@EntityField(name='oscp.serverdescription', propname='serverdescription', displayname='Description')
 @EntityField(name='oscp.osversion', propname='osversion', displayname='OS Version')
 class ServerInfo(OscpEntity):
     pass

@@ -16,5 +16,6 @@ __all__ = [
     'fromnmap',
     'common',
     'helloworld',
-    'enumhost'
+    'enumhost',
+    'enu4linux2'
 ]

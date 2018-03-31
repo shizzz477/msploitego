@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 import pprint
 
+from canari.maltego.entities import Phrase
 from canari.maltego.utils import debug, progress
-from canari.framework import configure #, superuser
-from common.coreutil import sanitize
+from canari.framework import configure
 
-from common.nmaputil import getParsedReport, doSmbVuln
-
-from common.entities import Port, OHost
+from common.entities import Port
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, Oscp Project'
@@ -31,27 +29,20 @@ TODO: Uncomment the line below if the transform needs to run as super-user
 """
 #@superuser
 @configure(
-    label='SMB Vulnernabilities',
-    description='Enumerates the SMB Vulns from Nmap File',
-    uuids=[ 'TODO something.v2.SomethingToPhrase_HelloWorld' ],
-    inputs=[ ( 'oscp', OHost ) ],
+    label='To Website [From Port]',
+    description='Creates a website entity from port',
+    uuids=[ 'oscp.Porttowebsite' ],
+    inputs=[ ( 'oscp', Port ) ],
     debug=True
 )
 def dotransform(request, response, config):
     """
-    Check SMB Vulnerabilities
+    Need ip and port
     """
-    ip = request.value
-    parsedreport = getParsedReport("/root/proj/oscp-maltego/nmapsmbvuln.xml")
-    for _host in parsedreport.hosts:
-        if _host.address == ip:
-            scripts = _host.scripts_results
-            for res in scripts:
-                if "smb-vuln" in res.get('id'):
-                    v = doSmbVuln(sanitize(res.get('output')))
-                    if v is not None:
-                        response += v
+    debug(pprint.pprint(request))
+    response += Phrase("TESTING")
     return response
+
 
 def onterminate():
     """
