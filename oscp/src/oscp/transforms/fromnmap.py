@@ -40,10 +40,10 @@ def dotransform(request, response, config):
     parsedreport = getParsedReport(filepath)
     for _host in parsedreport.hosts:
         if _host.is_up():
-            h = IPv4Address(_host.ipv4)
+            h = OHost(_host.ipv4)
             h.source = _host.ipv4
-            # h.mac = _host.mac
-            # h.vendor = _host.vendor
+            h.mac = _host.mac
+            h.vendor = _host.vendor
             response += h
     return response
 

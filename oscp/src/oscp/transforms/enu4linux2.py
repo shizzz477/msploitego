@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import pprint
 
 from canari.maltego.utils import debug, progress
 from canari.framework import configure #, superuser
@@ -19,7 +20,7 @@ __status__ = 'Development'
 # me = MaltegoTransform()
 # me.parseArguments(sys.argv)
 @configure(
-    label='Enum4Linux Scan',
+    label='Enum4Linux2 Scan',
     description='Parses enum4linux scan',
     uuids=[ 'oscp.enum4Linux_scan' ],
     inputs=[ ( 'oscp', OHost ) ],
@@ -28,7 +29,11 @@ __status__ = 'Development'
 def dotransform(request, response, config):
     #ip = me.getVar('ip.source')
     ip = request.value
+    fields = request.fields
     debug(ip)
+    debug(fields)
+    debug(pprint.pprint(response))
+    debug(pprint.pprint(request))
 
     enum4 = getEnum4(ip)
     for k, d in enum4.iteritems():
@@ -50,3 +55,6 @@ def dotransform(request, response, config):
         '''''
 #me.addUIMessage("completed!")
 #me.returnOutput()
+
+
+#dotransform(raw_input().strip())
