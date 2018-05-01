@@ -1,6 +1,10 @@
 import pprint
 import re
 
+
+
+
+
 errormsgs = [
     "ERROR:",
     "could not connect",
