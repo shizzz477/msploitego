@@ -2,9 +2,10 @@
 
 class Melement(object):
     def __init__(self, elem):
-        for item in elem:
-            if item.text and item.text.strip():
-                setattr(self, item.tag, item.text)
+        if len(list(elem)) > 0:
+            for item in elem:
+                if item.text and item.text.strip():
+                    setattr(self, item.tag, item.text)
 
     def getgen(self,elem,cls=None):
         for n in elem:

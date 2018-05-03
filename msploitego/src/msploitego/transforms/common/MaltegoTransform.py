@@ -1,4 +1,4 @@
-#!/usr/bin/python 
+#!/usr/bin/env python
 #######################################################
 # Maltego Python Local Transform Helper               #
 #   Version 0.3                                       #
