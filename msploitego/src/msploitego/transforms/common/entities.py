@@ -12,7 +12,8 @@ __status__ = 'Development'
 
 __all__ = [
     'MsploitegoEntity',
-    'MyMsploitegoEntity'
+    'MyMsploitegoEntity',
+    'Host'
 ]
 
 
@@ -51,12 +52,12 @@ class Host(MsploitegoEntity):
     osname = StringEntityField('type.str', display_name='OS Name')
     ossp = StringEntityField('type.str', display_name='OS Sp')
     purpose = StringEntityField('type.str', display_name='Purpose')
-    servicecount = IntegerEntityField('type.int', display_name='Service Count')
+    servicecount = StringEntityField('type.str', display_name='Service Count')
     state = StringEntityField('type.str', display_name='State')
-    vulncount = IntegerEntityField('type.int', display_name='Vulnerability Count')
+    vulncount = StringEntityField('type.str', display_name='Vulnerability Count')
 
-    def transform(self,elem):
-        for tag in elem:
+    def transform(self,h):
+        fs = self.fields
+        for tag,val in h:
             tag = tag.replace('-','')
-            if tag in self.fields:
-                setattr(self, tag, eval("elem.{}".format(tag)))
+            setattr(self, tag, val)

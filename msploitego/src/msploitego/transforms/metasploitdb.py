@@ -23,11 +23,10 @@ class Metasploitdb(Transform):
     input_type = File
 
     def do_transform(self, request, response, config):
-        file = request.entity
-        mdb = MetasploitXML(file.value)
+        fname = request.entity
+        mdb = MetasploitXML(fname.value)
         for h in mdb.hosts:
-            maltegohost = h.maltego()
-            response += maltegohost
+            response += h.tomaltego()
         return response
 
     def on_terminate(self):

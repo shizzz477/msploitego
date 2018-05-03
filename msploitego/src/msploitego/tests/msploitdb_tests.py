@@ -1,16 +1,18 @@
 import unittest
 
-from canari.maltego.message import MaltegoTransformRequestMessage
+from canari.maltego.message import MaltegoTransformRequestMessage, MaltegoTransformResponseMessage
 from canari.maltego.entities import File
 
 from msploitego.src.msploitego.transforms.common.entities import Host
 from msploitego.src.msploitego.transforms.common.msploitdb import MetasploitXML, Mhost
-
+from msploitego.src.msploitego.transforms.metasploitdb import Metasploitdb
+from canari.config import load_config
 
 class Testmsploitdb(unittest.TestCase):
 
     def setUp(self):
         self.file = File("/root/data/scan/hthebox/msploitdb20180501.xml")
+        self.canariconf = "/usr/local/lib/python2.7/dist-packages/canari-3.2.2-py2.7.egg/canari/resources/etc/canari.conf"
 
     def testreqmessage(self):
         req = MaltegoTransformRequestMessage()
@@ -27,3 +29,9 @@ class Testmsploitdb(unittest.TestCase):
         for h in mdb.hosts:
             self.assertIsInstance(h, Mhost)
             self.assertIsInstance(h.maltego(), Host)
+
+    def testdotransform(self):
+        req = MaltegoTransformRequestMessage()
+        req.__iadd__(self.file)
+        transform = Metasploitdb()
+        transform.do_transform(req, MaltegoTransformResponseMessage(), load_config(self.canariconf))

@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+__all__ = [
+    'Melement',
+    'Nelement'
+]
 class Melement(object):
     def __init__(self, elem):
         if len(list(elem)) > 0:

@@ -1,5 +1,14 @@
 #/usr/bin/env python
 
+__all__ = [
+    'MetasploitXML',
+    'Mhost',
+    'Mservice',
+    'Mvuln',
+    'Mnote',
+    'Mwebsites'
+]
+
 import xml.etree.ElementTree as ET
 from pprint import pprint
 
@@ -33,9 +42,10 @@ class MetasploitXML:
 
 class Mhost:
     def __init__(self, elem):
-        self.services = None
-        self.notes = None
-        self.vulns = None
+        self.services = []
+        self.notes = []
+        self.vulns = []
+        self._dict = {}
         for item in elem:
             if item.tag == "services":
                 self.services = self._getgen(item, Mservice)
@@ -45,6 +55,11 @@ class Mhost:
                 self.vulns = self._getgen(item, Mvuln)
             elif item.text and item.text.strip():
                 setattr(self, item.tag, item.text)
+                self._dict.update({item.tag:item.text})
+
+    def __iter__(self):
+        for tag, value in self._dict.items():
+            yield [tag,value]
 
     def _getgen(self,node,cls):
         for n in node:
@@ -55,9 +70,13 @@ class Mhost:
             if service.isopen():
                 yield service
 
-    def maltego(self):
+    def gettags(self):
+        return self._dict.keys()
+
+    def tomaltego(self):
         h = Host()
         h.transform(self)
+        return h
 
 class Mservice(Melement):
     def __init__(self, elem):
@@ -92,20 +111,22 @@ class Mwebvulns(Melement):
     def __init__(self,elem):
         super(Mwebvulns, self).__init__(elem)
 
-mdb = MetasploitXML("/root/data/scan/hthebox/msploitdb20180502.xml")
-print "class loaded"
-
+# mdb = MetasploitXML("/root/data/scan/hthebox/msploitdb20180502.xml")
+# print "class loaded"
+# hosts = []
+# for h in mdb.hosts:
+#     pprint(h)
 # website = mdb.websites.next()
 # webpage = mdb.webpages.next()
 # webform = mdb.webforms.next()
 # vuln = mdb.webvulns.next()
 
 # print "subclasses loaded"
-hosts = []
-for h in mdb.hosts:
-    pprint(h)
-    vulns = [x for x in h.vulns]
-    print "got vulns"
+# hosts = []
+# for h in mdb.hosts:
+#     pprint(h)
+#     vulns = [x for x in h.vulns]
+#     print "got vulns"
 #     for s in h.services:
 #         pprint(s)
 #     for n in h.notes:
