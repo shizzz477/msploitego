@@ -1,4 +1,4 @@
-#/usr/bin/env python
+#!/usr/bin/env python
 
 __all__ = [
     'MetasploitXML',
@@ -12,18 +12,13 @@ __all__ = [
 import xml.etree.ElementTree as ET
 from pprint import pprint
 
-from canari.maltego.entities import File
-
-from msploitego.src.msploitego.transforms.common.corelib import Melement
-from msploitego.src.msploitego.transforms.common.entities import Host
+from corelib import Melement
+from entities import Host
 
 class MetasploitXML:
 
-    def __init__(self, f):
-        if isinstance(f, File):
-            _root = ET.parse(f.value).getroot()
-        else:
-            _root = ET.parse(f).getroot()
+    def __init__(self, fn):
+        _root = ET.parse(fn).getroot()
         self.hosts = self._getgen(_root.find("hosts"), Mhost)
         self.services = self._getgen(_root.find("services"), Mservice)
         self.websites = self._getgen(_root.find("web_sites"), Mwebsites)
@@ -34,11 +29,16 @@ class MetasploitXML:
             _root.remove(_root.find("module_details"))
             _root.remove(_root.find("events"))
         except ValueError:
-            print "no module details or events to strip"
+            pass
 
     def _getgen(self,elem,cls):
         for e in elem:
             yield cls(e)
+
+    def gethost(self,ip):
+        for host in self.hosts:
+            if host.getVal("address") == ip:
+                return host
 
 class Mhost:
     def __init__(self, elem):
@@ -54,8 +54,9 @@ class Mhost:
             elif item.tag == "vulns":
                 self.vulns = self._getgen(item, Mvuln)
             elif item.text and item.text.strip():
-                setattr(self, item.tag, item.text)
-                self._dict.update({item.tag:item.text})
+                cleantag = item.tag.replace('-','')
+                setattr(self, cleantag, item.text)
+                self._dict.update({cleantag:item.text})
 
     def __iter__(self):
         for tag, value in self._dict.items():
@@ -72,6 +73,9 @@ class Mhost:
 
     def gettags(self):
         return self._dict.keys()
+
+    def getVal(self, tag):
+        return self._dict.get(tag)
 
     def tomaltego(self):
         h = Host()

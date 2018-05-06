@@ -1,5 +1,7 @@
 from canari.maltego.message import *
 
+from MaltegoTransform import MaltegoEntity
+
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
 __credits__ = []
@@ -45,7 +47,7 @@ class MyMsploitegoEntity(MsploitegoEntity):
     timespan = TimeSpanEntityField('type.timespan', display_name='Foo Timespan')
     color = ColorEntityField('type.color', display_name='Foo Color')
 
-class Host(MsploitegoEntity):
+class Host(MaltegoEntity):
     address = StringEntityField('type.str', display_name='IP Address',value=True)
     name = StringEntityField('type.str', display_name='Name')
     osfamily = StringEntityField('type.str', display_name='OS Family')
@@ -57,7 +59,8 @@ class Host(MsploitegoEntity):
     vulncount = StringEntityField('type.str', display_name='Vulnerability Count')
 
     def transform(self,h):
-        fs = self.fields
-        for tag,val in h:
-            tag = tag.replace('-','')
-            setattr(self, tag, val)
+        pass
+        # fs = self.fields
+        # for tag,val in h:
+        #     tag = tag.replace('-','')
+        #     setattr(self, tag, val)

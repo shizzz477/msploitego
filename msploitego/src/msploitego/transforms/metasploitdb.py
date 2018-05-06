@@ -1,9 +1,8 @@
-from canari.maltego.entities import File
-from canari.maltego.transform import Transform
-from canari.framework import EnableDebugWindow
+from pprint import pprint
 
-from msploitego.src.msploitego.transforms.common.entities import Host
-from msploitego.src.msploitego.transforms.common.msploitdb import MetasploitXML
+from common.msploitdb import MetasploitXML
+from common.MaltegoTransform import *
+import sys
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
@@ -15,10 +14,31 @@ __maintainer__ = 'Marc Gurreri'
 __email__ = 'me@me.com'
 __status__ = 'Development'
 
-@EnableDebugWindow
-class Metasploitdb(Transform):
-    """Parse a Metasploit database into Maltego entities."""
+def dotransform(args):
+    entitytags = ["name", "address", "servicecount", "osname", "state", "mac"]
+    mt = MaltegoTransform()
+    # mt.debug(pprint(args))
+    mt.parseArguments(args)
+    fn = mt.getVar("description")
+    mdb = MetasploitXML(fn)
+    for host in mdb.hosts:
+        hostentity = mt.addEntity("maltego.IPv4Address", host.address)
+        hostentity.setValue(host.address)
+        hostentity.addAdditionalFields("fromfile", "Source File", True, fn)
+        tags = host.gettags()
+        for etag in entitytags:
+            if etag in tags:
+                hostentity.addAdditionalFields(etag, etag, True, host.getVal(etag))
+    mt.returnOutput()
+    mt.addUIMessage("completed!")
 
+dotransform(sys.argv)
+# args = ['metasploitdb.py',
+#  '/root/proj/oscp-maltego/oscp/src/oscp/transforms/common/msploitdb20180501.xml',
+#  'description=/root/proj/oscp-maltego/oscp/src/oscp/transforms/common/msploitdb20180501.xml']
+# dotransform(args)
+
+"""
     # The transform input entity type.
     input_type = File
 
@@ -28,8 +48,4 @@ class Metasploitdb(Transform):
         for h in mdb.hosts:
             response += h.tomaltego()
         return response
-
-    def on_terminate(self):
-        """This method gets called when transform execution is prematurely terminated. It is only applicable for local
-        transforms. It can be excluded if you don't need it."""
-        pass
+"""

@@ -199,8 +199,6 @@ class MaltegoTransform(object):
 	
 	def debug(self,msg):
 		self.writeSTDERR("D:" + str(msg))
-			
-
 
 def sanitise(value):
 	replace_these = ["&",">","<"]
