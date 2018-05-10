@@ -12,7 +12,7 @@ __all__ = [
 import xml.etree.ElementTree as ET
 from pprint import pprint
 
-from corelib import Melement
+from corelib import Melement, SingleElement
 from entities import Host
 
 class MetasploitXML:
@@ -91,13 +91,29 @@ class Mservice(Melement):
             return True
         return False
 
-class Mvuln(Melement):
+class Mvuln(object):
     def __init__(self,elem):
-        super(Mvuln, self).__init__(elem)
+        self._dict = {}
+        # super(Mvuln, self).__init__(elem)
+        self.vulnrefs = []
+        for prop in elem:
+            if prop.tag == "refs":
+                for ref in prop:
+                    vr = Mvulnref(ref)
+                    self.vulnrefs.append(vr)
+                    print "ref"
+            if prop.text and prop.text.strip():
+                cleantag = prop.tag.replace('-', '')
+                setattr(self, cleantag, prop.text.strip())
+                self._dict.update({cleantag: prop.text.strip()})
 
 class Mnote(Melement):
     def __init__(self,elem):
         super(Mnote, self).__init__(elem)
+
+class Mvulnref(SingleElement):
+    def __init__(self,elem):
+        super(Mvulnref, self).__init__(elem)
 
 class Mwebsites(Melement):
     def __init__(self,elem):

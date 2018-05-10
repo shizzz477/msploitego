@@ -22,6 +22,10 @@ def dotransform(args):
     fn = mt.getVar("description")
     mdb = MetasploitXML(fn)
     for host in mdb.hosts:
+        vulns = [x for x in host.vulns]
+        for v in vulns:
+            refs = [y for y in v.vulnrefs]
+            print "ref"
         hostentity = mt.addEntity("maltego.IPv4Address", host.address)
         hostentity.setValue(host.address)
         hostentity.addAdditionalFields("fromfile", "Source File", True, fn)
@@ -32,11 +36,11 @@ def dotransform(args):
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
-dotransform(sys.argv)
-# args = ['metasploitdb.py',
-#  '/root/proj/oscp-maltego/oscp/src/oscp/transforms/common/msploitdb20180501.xml',
-#  'description=/root/proj/oscp-maltego/oscp/src/oscp/transforms/common/msploitdb20180501.xml']
-# dotransform(args)
+# dotransform(sys.argv)
+args = ['metasploitdb.py',
+ '/root/data/scan/hthebox/msploitdb-20180508.xml',
+ 'description=/root/data/scan/hthebox/msploitdb-20180508.xml']
+dotransform(args)
 
 """
     # The transform input entity type.

@@ -7,8 +7,6 @@ from libnmap.process import NmapProcess
 from common.MaltegoTransform import *
 import sys
 
-from common.entutil import toPort
-
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, Oscp Project'
 __credits__ = []
@@ -23,7 +21,7 @@ me = MaltegoTransform()
 me.parseArguments(sys.argv)
 
 # pprint(me)
-oport = toPort(me)
+# oport = toPort(me)
 banner = me.getVar("oscp.banner")
 ban = ""
 

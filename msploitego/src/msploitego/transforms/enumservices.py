@@ -23,15 +23,24 @@ def dotransform(args):
     for service in MetasploitXML(fn).gethost(ip).services:
         hostservice = mt.addEntity("maltego.Service", "{}/{}".format(service.name,service.port))
         hostservice.setValue = "{}/{}".format(service.name,service.port)
-        hostservice.addAdditionalFields("fromfile", "Source File", True, fn)
+        hostservice.addAdditionalFields("ip","IP Address",False,ip)
+        if service.name.lower() in ["http","www","https"]:
+            hostservice.addAdditionalFields("niktofile", "Nikto File", False, '')
+        # hostservice.addAdditionalFields("banner.text", "Banner", service.info)
+        hostservice.addAdditionalFields("fromfile", "Source File", False, fn)
         for etag in entitytags:
             if etag in service.getTags():
-                hostservice.addAdditionalFields(etag, etag, True, service.getVal(etag))
+                val = service.getVal(etag)
+                # if etag == "state":
+                #     if any(x for x in ["filtered","closed"] if x in val):
+                #         hostservice.setLinkColor("red")
+                hostservice.addAdditionalFields(etag, etag, False, val)
+
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
 # args = ['enumservices.py',
-#  '10.10.10.59',
-#  'ipv4-address=10.10.10.59#ipaddress.internal=false#fromfile=/root/proj/oscp-maltego/oscp/src/oscp/transforms/common/msploitdb20180501.xml#name=TALLY#address=10.10.10.59#servicecount=48#osname=Windows 2016#state=alive']
+#  '10.10.10.74',
+#  'ipv4-address=10.10.10.74#ipaddress.internal=false#fromfile=/root/proj/oscp-maltego/oscp/src/oscp/transforms/common/msploitdb20180501.xml#name=TALLY#address=10.10.10.74#servicecount=48#osname=Windows 2016#state=alive']
 # dotransform(args)
