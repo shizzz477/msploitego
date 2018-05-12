@@ -8,7 +8,7 @@ from common.MaltegoTransform import *
 import sys
 
 __author__ = 'Marc Gurreri'
-__copyright__ = 'Copyright 2018, Oscp Project'
+__copyright__ = 'Copyright 2018, msploitego Project'
 __credits__ = []
 
 __license__ = 'GPL'
@@ -29,15 +29,18 @@ def mycallback(nmaptask):
                                                               nmaptask.progress)
 
 args = ['smbvuln.py',
-    'tftp/69',
-    'service.name=tftp/69#port=69#banner=Apache 9#properties.service= #ip=10.10.10.74#fromfile=/root/proj/oscp-maltego/oscp/src/oscp/transforms/common/msploitdb20180501.xml#name=tftp#proto=tcp#state=filtered']
+ 'netbios-ns/137:253',
+ 'properties.metasploitservice=netbios-ns/137:253#name=netbios-ns#proto=tcp#hostid=253#service.name=80/Apache 9#port=137#banner=Apache 9#properties.service= #ip=10.10.10.80#fromfile=/root/proj/oscp-maltego/oscp/src/oscp/transforms/common/msploitdb20180501.xml#state=filtered']
+
 mt = MaltegoTransform()
 # mt.debug(pprint(sys.argv))
-mt.parseArguments(sys.argv)
+mt.parseArguments(args)
+# mt.parseArguments(sys.argv)
 ip = mt.getVar("ip")
 port = mt.getVar("port.number")
+# options="-vvvv -p {} -sS --script {}".format(port,scripts),
 nmap_proc = NmapProcess(targets=ip,
-                         options="-vvvv -p {} -sS --script {}".format(port,scripts),
+                         options="-vvvvv --script=smb-vuln-conficker",
                          event_callback=mycallback,
                         safe_mode=False)
 nmap_proc.run()
