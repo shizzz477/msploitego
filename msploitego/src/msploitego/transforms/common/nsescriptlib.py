@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+
+import shlex
+import subprocess
+from libnmap.parser import NmapParser
 from pprint import pprint
 import sys
 
@@ -29,13 +33,27 @@ scripts = {"httpenum":"maltego.WedDir"}
 def cleantag(tag):
     return tag.replace('-', '')
 
-def cleanresults(r):
+def cleanresults(r,func):
     results = {}
     for d in r:
         scriptname = d.get("id")
-        resultlist = [x for x in [d.get("output").replace("'", "").replace("/", "").lstrip("\n").lstrip(" ").split("\n")][0] if ":" in x]
+        resultlist = func(d)
         result = {}
         for item in resultlist:
             result.update([item.lstrip().split(":")])
         results.update({cleantag(scriptname): result})
     return results
+
+def scriptrunner(port,name,ip,args=None):
+    #TODO: exception handling
+    cmd = "nmap -p {} -oX - -vvvvvv --script {} {}".format(port,name,ip)
+    nmap_proc = subprocess.Popen(args=shlex.split(cmd),
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE,
+                                universal_newlines=True,
+                                bufsize=0)
+    xmloutput = []
+    while nmap_proc.poll() is None:
+        for streamline in iter(nmap_proc.stdout.readline, ''):
+            xmloutput.append(streamline)
+    return NmapParser.parse(" ".join(xmloutput))

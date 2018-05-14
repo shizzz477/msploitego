@@ -24,6 +24,8 @@ def mycallback(nmaptask):
                                                               nmaptask.status,
                                                               nmaptask.etc,
                                                               nmaptask.progress)
+def cleanoutput(d):
+    return [x for x in [d.get("output").replace("'", "").replace("/", "").lstrip("\n").lstrip(" ").split("\n")][0] if ":" in x]
 
 def dotransform(args):
     global nmap_proc
@@ -45,7 +47,7 @@ def dotransform(args):
             xmloutput.append(streamline)
 
     rep = NmapParser.parse(" ".join(xmloutput))
-    r = cleanresults(rep.hosts[0].services[0].scripts_results)
+    r = cleanresults(rep.hosts[0].services[0].scripts_results,cleanoutput)
 
     for scriptname, result in r.items():
         if scriptname == "httpenum":
@@ -56,11 +58,10 @@ def dotransform(args):
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
-dotransform(sys.argv)
-# args = ['httpenum.py',
-#  'http/80:249',
-#  'properties.metasploitservice=http/80:249#info=Microsoft IIS httpd 10.0#name=http#proto=tcp#hostid=249#service.name=80/Apache 9#port=80#banner=Apache 9#properties.service= #ip=10.10.10.80#fromfile=/root/proj/oscp-maltego/oscp/src/oscp/transforms/common/msploitdb20180501.xml#state=open']
-#
-# dotransform(args)
+# dotransform(sys.argv)
+args = ['httpenum.py',
+ 'http/80:249',
+ 'properties.metasploitservice=http/80:249#info=Microsoft IIS httpd 10.0#name=http#proto=tcp#hostid=249#service.name=80/Apache 9#port=80#banner=Apache 9#properties.service= #ip=10.10.10.80#fromfile=/root/proj/oscp-maltego/oscp/src/oscp/transforms/common/msploitdb20180501.xml#state=open']
+dotransform(args)
 
 # {'output': "\n  /css/: Potentially interesting directory w/ listing on 'apache/2.4.25 (ubuntu)'\n  /images/: Potentially interesting directory w/ listing on 'apache/2.4.25 (ubuntu)'\n  /js/: Potentially interesting directory w/ listing on 'apache/2.4.25 (ubuntu)'\n  /uploads/: Potentially interesting folder\n", 'elements': {}, 'id': 'http-enum'}
