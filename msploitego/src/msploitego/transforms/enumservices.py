@@ -29,11 +29,41 @@ def dotransform(args):
                 servicename = service.name
             except AttributeError:
                 servicename = "NoName"
+            try:
+                serviceinfo = service.info
+            except AttributeError:
+                serviceinfo = None
             if service.state.lower() in ["filtered", "closed"]:
                 entityname = "msploitego.ClosedPort"
             else:
                 if servicename in ["http","https","possible_wls","www","ncacn_http","ccproxy-http","ssl/http"]:
-                    entityname = "msploitego.WebService"
+                    if serviceinfo:
+                        if "iis" in service.info.lower():
+                            entityname = "msploitego.IISWebservice"
+                        elif "rpc over http" in service.info.lower():
+                            entityname = "msploitego.RPCoverhttp"
+                        elif "apache httpd" in service.info.lower():
+                            entityname = "msploitego.Apachehttpd"
+                        elif "apache tomcat" in service.info.lower():
+                            entityname = "msploitego.ApacheTomcat"
+                        elif "httpfileserver" in service.info.lower():
+                            entityname = "msploitego.HTTPFileServer"
+                        elif "lighttpd" in service.info.lower():
+                            entityname = "msploitego.lighttpd"
+                        elif "nginx" in service.info.lower():
+                            entityname = "msploitego.nginx"
+                        elif "jetty" in service.info.lower():
+                            entityname = "msploitego.Jetty"
+                        elif "node.js" in service.info.lower():
+                            entityname = "msploitego.Nodejs"
+                        elif "httpapi" in service.info.lower():
+                            entityname = "msploitego.MicrosoftHTTPAPI"
+                        elif "WAF" in service.info:
+                            entityname = "msploitego.WAF"
+                        else:
+                            entityname = "msploitego.WebService"
+                    else:
+                        entityname = "msploitego.WebService"
                 elif servicename in ["samba","netbios-ssn","smb","microsoft-ds"]:
                     entityname = "msploitego.SambaService"
                 elif servicename == "ssh":
@@ -78,6 +108,8 @@ def dotransform(args):
                     entityname = "msploitego.ajp"
                 elif servicename.lower() in ["kerberos","kpasswd5","kerberos-sec"]:
                     entityname = "msploitego.kerberos"
+                elif "msexchange-logcopier" in servicename.lower():
+                    entityname = "msploitego.MSExchangeLogCopier"
             hostservice = mt.addEntity(entityname, "{}/{}:{}".format(servicename,service.port,service.hostid))
             hostservice.setValue = "{}/{}:{}".format(servicename,service.port,service.hostid)
             hostservice.addAdditionalFields("ip","IP Address",False,ip)
@@ -93,6 +125,7 @@ def dotransform(args):
 
 dotransform(sys.argv)
 # args = ['enumservices.py',
-#  '10.10.10.74',
-#  'ipv4-address=10.10.10.74#ipaddress.internal=false#notecount=3#address=10.10.10.74#purpose=server#osfamily=Windows#servicecount=9#name=10.10.10.74#state=alive#vulncount=3#fromfile=/root/data/scan/hthebox/msploitdb-20180508.xml#osname=Windows 2012']
+#  '10.10.10.71',
+#  'ipv4-address=10.10.10.71#ipaddress.internal=false#fromfile=/root/data/scan/hthebox/msploitdb20180513.xml#name=10.10.10.71#address=10.10.10.71#servicecount=76#osname=Windows 2008 R2#state=alive#vulncount=194#purpose=server#osfamily=Windows#notecount=34']
+#
 # dotransform(args)

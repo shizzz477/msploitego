@@ -25,8 +25,11 @@ def dotransform(args):
         output = scriptrun.get("output")
         lines = output.split("\n")
         for line in lines:
-            secheader = mt.addEntity("msploitego.httpsecureheaders", output)
-            secheader.setValue(output)
+            if not line.strip():
+                lines.remove(line)
+        secheader = mt.addEntity("msploitego.httpsecureheaders", output)
+        secheader.setValue(output[0:25])
+        secheader.addAdditionalFields("details", "Details", False, output)
 
     mt.returnOutput()
     mt.addUIMessage("completed!")
