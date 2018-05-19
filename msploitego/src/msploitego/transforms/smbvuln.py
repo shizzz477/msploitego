@@ -28,13 +28,18 @@ def dotransform(args):
     port = mt.getVar("port")
 
     rep = scriptrunner(port, scripts, ip)
-    for host in rep.hosts:
-        pprint(host)
-    print "running"
+    for scriptrun in rep.hosts[0].scripts_results:
+        id = scriptrun.get("id")
+        if id:
+            smbvuln = mt.addEntity("msploitego.SambaVulnerability", id)
+            smbvuln.setValue(id)
+            smbvuln.addAdditionalFields("description", "Description", False, scriptrun.get("output"))
 
-# dotransform(sys.argv)
-args = ['smbvuln.py',
- 'smb/139:282',
- 'properties.metasploitservice=smb/139:282#info=Microsoft Windows netbios-ssn#name=smb#proto=tcp#hostid=282#service.name=80/Apache 9#port=139#banner=Apache 9#properties.service= #ip=10.10.10.52#state=open#fromfile=/root/data/scan/hthebox/msploitdb-20180508.xml']
-dotransform(args)
+    mt.returnOutput()
+    mt.addUIMessage("completed!")
+dotransform(sys.argv)
+# args = ['smbvuln.py',
+#  'smb/139:249',
+#  'properties.metasploitservice=smb/139:249#info=Microsoft Windows netbios-ssn#name=smb#proto=tcp#hostid=249#service.name=80/Apache 9#port=139#banner=Apache 9#properties.service= #ip=10.10.10.59#state=open#fromfile=/root/data/scan/hthebox/msploitdb20180517.xml']
+# dotransform(args)
 

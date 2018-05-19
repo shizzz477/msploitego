@@ -46,7 +46,10 @@ def cleanresults(r,func):
 
 def scriptrunner(port,name,ip,args=None):
     #TODO: exception handling
-    cmd = "nmap -p {} -oX - -vvvvvv --script {} {}".format(port,name,ip)
+    if args:
+        cmd = "nmap {} -p {} -oX - -vvvvvv --script {} {}".format(args, port, name, ip)
+    else:
+        cmd = "nmap -p {} -oX - -vvvvvv --script {} {}".format(port,name,ip)
     nmap_proc = subprocess.Popen(args=shlex.split(cmd),
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,

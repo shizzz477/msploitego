@@ -68,7 +68,7 @@ def dotransform(args):
                     entityname = "msploitego.SambaService"
                 elif servicename == "ssh":
                     entityname = "msploitego.SSHService"
-                elif servicename in ["dns","mdns"]:
+                elif servicename in ["dns","mdns","domain"]:
                     entityname = "msploitego.DNSService"
                 elif "rpc" in servicename:
                     entityname = "msploitego.RPC"
@@ -110,6 +110,10 @@ def dotransform(args):
                     entityname = "msploitego.kerberos"
                 elif "msexchange-logcopier" in servicename.lower():
                     entityname = "msploitego.MSExchangeLogCopier"
+                elif "nfs_acl" in servicename.lower():
+                    entityname = "msploitego.nfsacl"
+                elif "fmtp" in servicename.lower():
+                    entityname = "msploitego.fmtp"
             hostservice = mt.addEntity(entityname, "{}/{}:{}".format(servicename,service.port,service.hostid))
             hostservice.setValue = "{}/{}:{}".format(servicename,service.port,service.hostid)
             hostservice.addAdditionalFields("ip","IP Address",False,ip)
