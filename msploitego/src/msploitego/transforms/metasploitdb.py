@@ -34,6 +34,6 @@ def dotransform(args):
 
 dotransform(sys.argv)
 # args = ['metasploitdb.py',
-#  '/root/data/scan/hthebox/msploitdb-20180508.xml',
-#  'description=/root/data/scan/hthebox/msploitdb-20180508.xml']
+#  '/root/data/scan/hthebox/msplotdb20180522.xml',
+#  'description=/root/data/scan/hthebox/msplotdb20180522.xml']
 # dotransform(args)

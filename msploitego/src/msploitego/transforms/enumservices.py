@@ -21,7 +21,6 @@ def dotransform(args):
     fn = mt.getVar("fromfile")
     ip = mt.getVar("address")
     servicecount = int(mt.getVar("servicecount"))
-    # servicename = None
     if servicecount > 0:
         for service in MetasploitXML(fn).gethost(ip).services:
             entityname = "msploitego.MetasploitService"
@@ -36,7 +35,7 @@ def dotransform(args):
             if service.state.lower() in ["filtered", "closed"]:
                 entityname = "msploitego.ClosedPort"
             else:
-                if servicename in ["http","https","possible_wls","www","ncacn_http","ccproxy-http","ssl/http"]:
+                if servicename in ["http","https","possible_wls","www","ncacn_http","ccproxy-http","ssl/http","http-proxy"]:
                     if serviceinfo:
                         if "iis" in service.info.lower():
                             entityname = "msploitego.IISWebservice"
@@ -130,6 +129,5 @@ def dotransform(args):
 dotransform(sys.argv)
 # args = ['enumservices.py',
 #  '10.10.10.71',
-#  'ipv4-address=10.10.10.71#ipaddress.internal=false#fromfile=/root/data/scan/hthebox/msploitdb20180513.xml#name=10.10.10.71#address=10.10.10.71#servicecount=76#osname=Windows 2008 R2#state=alive#vulncount=194#purpose=server#osfamily=Windows#notecount=34']
-#
+#  'ipv4-address=10.10.10.71#ipaddress.internal=false#fromfile=/root/data/scan/hthebox/msplotdb20180522.xml#name=10.10.10.71#address=10.10.10.71#servicecount=76#osname=Windows 2008 R2#state=alive#vulncount=194#purpose=server#osfamily=Windows#notecount=34']
 # dotransform(args)

@@ -31,6 +31,10 @@ class XMLElement(object):
         else:
             self._setprop(elem.tag, elem)
 
+    def __iter__(self):
+        for x,y in self._dict.items():
+            yield [x,y]
+
     def _setprop(self,prop,val):
         dictval = None
         prop = self.cleantag(prop)
