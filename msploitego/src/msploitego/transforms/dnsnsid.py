@@ -26,7 +26,6 @@ def dotransform(args):
             dnsnsid = mt.addEntity("msploitego.dnsnsid", "{}:{}".format(id,hostid))
             dnsnsid.setValue("{}:{}".format(id,hostid))
 
-
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
