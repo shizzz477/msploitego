@@ -27,6 +27,8 @@ from pprint import pprint
 from corelib import XMLElement
 from entities import Host
 
+#TODO:make exclusively for MetasploitDB, create derived entity
+
 class MetasploitXML(XMLElement):
 
     def __init__(self, fn):

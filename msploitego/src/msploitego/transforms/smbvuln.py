@@ -22,7 +22,7 @@ scripts = "smb-vuln-conficker,smb-vuln-cve-2017-7494,smb-vuln-cve2009-3103,smb-v
 
 def dotransform(args):
     mt = MaltegoTransform()
-    # mt.debug(pprint(sys.argv))
+    mt.debug(pprint(sys.argv))
     mt.parseArguments(args)
     ip = mt.getVar("ip")
     port = mt.getVar("port")
@@ -37,9 +37,10 @@ def dotransform(args):
 
     mt.returnOutput()
     mt.addUIMessage("completed!")
-dotransform(sys.argv)
-# args = ['smbvuln.py',
-#  'smb/139:249',
-#  'properties.metasploitservice=smb/139:249#info=Microsoft Windows netbios-ssn#name=smb#proto=tcp#hostid=249#service.name=80/Apache 9#port=139#banner=Apache 9#properties.service= #ip=10.10.10.59#state=open#fromfile=/root/data/scan/hthebox/msploitdb20180517.xml']
-# dotransform(args)
+
+# dotransform(sys.argv)
+args = ['smbvuln.py',
+ 'smb/445:22',
+ 'properties.metasploitservice=smb/445:22#info=Windows 2008 Standard SP1 (build:6001) (name:HELPDESK) (workgroup:WORKGROUP )#name=smb#proto=tcp#hostid=22#service.name=80/Apache 9#port=445#banner=Apache 9#properties.service= #ip=10.11.1.145#state=open#fromfile=/root/data/report_pack/msploitdb_oscp-20180325.xml']
+dotransform(args)
 

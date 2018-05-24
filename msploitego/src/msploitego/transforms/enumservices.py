@@ -41,10 +41,15 @@ def dotransform(args):
                             entityname = "msploitego.IISWebservice"
                         elif "rpc over http" in service.info.lower():
                             entityname = "msploitego.RPCoverhttp"
-                        elif "apache httpd" in service.info.lower():
-                            entityname = "msploitego.Apachehttpd"
-                        elif "apache tomcat" in service.info.lower():
-                            entityname = "msploitego.ApacheTomcat"
+                        elif "oracle xml db" in service.info.lower():
+                            entityname = "msploitego.OracleXMLDB"
+                        elif "apache" in service.info.lower():
+                            if "apache tomcat" in service.info.lower():
+                                entityname = "msploitego.ApacheTomcat"
+                            elif all(x in service.info.lower() for x in ["apache", "php"]):
+                                entityname = "msploitego.ApachePHP"
+                            else:
+                                entityname = "msploitego.Apachehttpd"
                         elif "httpfileserver" in service.info.lower():
                             entityname = "msploitego.HTTPFileServer"
                         elif "lighttpd" in service.info.lower():
@@ -59,6 +64,13 @@ def dotransform(args):
                             entityname = "msploitego.MicrosoftHTTPAPI"
                         elif "WAF" in service.info:
                             entityname = "msploitego.WAF"
+                        elif "oracle http server" in service.info.lower():
+                            entityname = "msploitego.OracleHTTPServer"
+                        elif "oracle xml db" in service.info.lower():
+                            entityname = "msploitego.OracleXMLDB"
+                        elif "goahead" in service.info.lower():
+                            entityname = "msploitego.GoAheadWebServer"
+                        #
                         else:
                             entityname = "msploitego.WebService"
                     else:
@@ -113,12 +125,24 @@ def dotransform(args):
                     entityname = "msploitego.nfsacl"
                 elif "fmtp" in servicename.lower():
                     entityname = "msploitego.fmtp"
+                elif "telnet" in servicename.lower():
+                    entityname = "msploitego.telnet"
+                elif "rdp" in servicename.lower():
+                    entityname = "msploitego.rdp"
+                elif "ipp" in servicename.lower():
+                    entityname = "msploitego.ipp"
+                #msploitego.rdp
             hostservice = mt.addEntity(entityname, "{}/{}:{}".format(servicename,service.port,service.hostid))
             hostservice.setValue = "{}/{}:{}".format(servicename,service.port,service.hostid)
             hostservice.addAdditionalFields("ip","IP Address",False,ip)
             if servicename and servicename.lower() in ["http","www","https"]:
                 hostservice.addAdditionalFields("niktofile", "Nikto File", False, '')
             hostservice.addAdditionalFields("fromfile", "Source File", False, fn)
+            hostservice.addAdditionalFields("service.name", "Service Name", False, servicename)
+            if service.containsTag("info"):
+                hostservice.addAdditionalFields("banner", "Banner", False, service.info)
+            else:
+                hostservice.addAdditionalFields("banner", "Banner", False, "{}-No info".format(servicename))
             for etag in entitytags:
                 if etag in service.getTags():
                     val = service.getVal(etag)
@@ -128,6 +152,7 @@ def dotransform(args):
 
 dotransform(sys.argv)
 # args = ['enumservices.py',
-#  '10.10.10.71',
-#  'ipv4-address=10.10.10.71#ipaddress.internal=false#fromfile=/root/data/scan/hthebox/msplotdb20180522.xml#name=10.10.10.71#address=10.10.10.71#servicecount=76#osname=Windows 2008 R2#state=alive#vulncount=194#purpose=server#osfamily=Windows#notecount=34']
+#  '10.11.1.115',
+#  'ipv4-address=10.11.1.115#ipaddress.internal=false#notecount=3#address=10.11.1.115#purpose=server#mac=00:50:56:b8:e9:18#osfamily=Linux#servicecount=9#name=tophat.acme.com#state=alive#vulncount=1#fromfile=/root/data/report_pack/msploitdb_oscp-20180325.xml#osname=Linux']
+#
 # dotransform(args)

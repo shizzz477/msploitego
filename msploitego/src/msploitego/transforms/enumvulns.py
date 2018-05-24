@@ -27,17 +27,21 @@ def dotransform(args):
     if vulncount > 0:
         for vuln in host.vulns:
             vulnent = mt.addEntity("maltego.Vulnerability", vuln.name)
-            vulnent.setValue(vuln.name)
+            vulnent.setValue("{}/{}".format(vuln.name,host.address))
             vulnent.addAdditionalFields("refs", "References", False, ",".join([x.ref for x in vuln.refs]))
+            vulnent.addAdditionalFields("ipaddress", "IP Address", False, host.address)
+            vulnent.addAdditionalFields("hostid", "Host ID", False, host.id)
+            vulnent.addAdditionalFields("os", "OS Name", False, host.osname)
+
             for tag,val in vuln:
-                vulnent.addAdditionalFields(tag, tag.capitalize() , False, val)
-                pprint(tag,vuln)
+                if isinstance(val,str):
+                    vulnent.addAdditionalFields(tag, tag.capitalize() , False, val)
 
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['enumservices.py',
-#  '10.10.10.71',
-#  'ipv4-address=10.10.10.71#ipaddress.internal=false#fromfile=/root/data/scan/hthebox/msplotdb20180522.xml#name=10.10.10.71#address=10.10.10.71#servicecount=76#osname=Windows 2008 R2#state=alive#vulncount=194#purpose=server#osfamily=Windows#notecount=34']
+# args = ['enumvulns.py',
+#  '10.10.10.63',
+#  'ipv4-address=10.10.10.63#ipaddress.internal=false#notecount=25#address=10.10.10.63#purpose=client#osfamily=Windows#servicecount=16#name=JEEVES#state=alive#vulncount=39#fromfile=/root/data/scan/hthebox/msplotdb20180522.xml#osname=Windows 10#osflavor=Pro']
 # dotransform(args)
