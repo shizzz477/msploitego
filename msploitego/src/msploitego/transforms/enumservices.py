@@ -109,6 +109,8 @@ def dotransform(args):
                     entityname = "msploitego.ntp"
                 elif "smtp" in servicename:
                     entityname = "msploitego.smtp"
+                elif "snmp" in servicename:
+                    entityname = "msploitego.SNMP"
                 elif "tcpwrapped" in servicename:
                     entityname = "msploitego.tcpwrapped"
                 elif "mysql" in servicename:
@@ -117,6 +119,8 @@ def dotransform(args):
                     entityname = "msploitego.mssql"
                 elif "ajp" in servicename:
                     entityname = "msploitego.ajp"
+                elif "llmnr" in servicename.lower():
+                    entityname = "msploitego.llmnr"
                 elif servicename.lower() in ["kerberos","kpasswd5","kerberos-sec"]:
                     entityname = "msploitego.kerberos"
                 elif "msexchange-logcopier" in servicename.lower():
@@ -131,7 +135,15 @@ def dotransform(args):
                     entityname = "msploitego.rdp"
                 elif "ipp" in servicename.lower():
                     entityname = "msploitego.ipp"
-                #msploitego.rdp
+                elif "vnc" in servicename.lower():
+                    entityname = "msploitego.vnc"
+                elif "rtsp" in servicename.lower():
+                    entityname = "msploitego.rtsp"
+                elif "ms-wbt-server" in servicename.lower():
+                    entityname = "msploitego.MicrosoftTerminalServices"
+                elif servicename.lower() in ["rmiregistry", "java-rmi"]:
+                    entityname = "msploitego.JavaRMI"
+                #msploitego.JavaRMI
             hostservice = mt.addEntity(entityname, "{}/{}:{}".format(servicename,service.port,service.hostid))
             hostservice.setValue = "{}/{}:{}".format(servicename,service.port,service.hostid)
             hostservice.addAdditionalFields("ip","IP Address",False,ip)

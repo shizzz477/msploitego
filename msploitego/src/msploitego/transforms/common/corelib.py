@@ -22,24 +22,30 @@ def static_var(varname, value):
         return func
     return decorate
 
-def _nextheader(j,d,r):
-    while j < len(d) and r.match(d[j]) is None:
+def _nextheader(j,d,r,m):
+    while j < len(d) and _reg(d[j],m,r) is None:
         j += 1
     return j-1
 
-def bucketparser(regex,data,sep=":"):
+def _reg(st,meth,reg):
+    if meth == "match":
+        return reg.match(st)
+    elif meth == "search":
+        return reg.search(st)
+
+def bucketparser(regex,data,sep=":",method="match"):
     i = 0
     bucket = []
     while i < len(data):
-        if regex.match(data[i]):
-            nextindex = _nextheader(i+1,data,regex)
+        if _reg(data[i],method,regex):
+            nextindex = _nextheader(i+1,data,regex,method)
             item = {"Header":data[i].lstrip()}
             details = []
             i += 1
             while i <= nextindex and i < len(data):
-                q = data[i].split(sep)
+                q = data[i].lstrip().split(sep,1)
                 if len(q) > 1:
-                    item.update({q[0].lstrip().capitalize():q[1].lstrip()})
+                    item.update({q[0].lstrip().capitalize():q[1].lstrip().rstrip()})
                 else:
                     details.append(q)
                 i += 1

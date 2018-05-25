@@ -15,21 +15,6 @@ __maintainer__ = 'Marc Gurreri'
 __email__ = 'me@me.com'
 __status__ = 'Development'
 
-scripts = {"httpenum":"maltego.WedDir"}
-
-# def _supported(n):
-#     return n in scripts
-#
-# def httpenum(d):
-#     pass
-
-# def processNse(name, d):
-#     name = cleantag(name)
-#     if _supported(name):
-#         getattr(sys.modules[__name__], name)(d)
-#     else:
-#         return "{} not supported".format(name)
-
 def cleantag(tag):
     return tag.replace('-', '')
 
@@ -44,12 +29,16 @@ def cleanresults(r,func):
         results.update({cleantag(scriptname): result})
     return results
 
-def scriptrunner(port,name,ip,args=None):
+def scriptrunner(port,name,ip,args=None,scriptargs=None):
     #TODO: exception handling
     if args:
         cmd = "nmap {} -p {} -oX - -vvvvvv --script {} {}".format(args, port, name, ip)
     else:
         cmd = "nmap -p {} -oX - -vvvvvv --script {} {}".format(port,name,ip)
+
+    if scriptargs:
+        cmd += " --script-args {}".format(scriptargs)
+
     nmap_proc = subprocess.Popen(args=shlex.split(cmd),
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
