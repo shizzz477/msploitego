@@ -1,0 +1,8 @@
+# Created by .ignore supirrelevantn (hsz.mobi)
+.idea
+/msploitego/build/
+/msploitego/dist/
+/msploitego/src/msploitego.egg-info/
+/oscp/
+/osint/
+/python-libnmap/
