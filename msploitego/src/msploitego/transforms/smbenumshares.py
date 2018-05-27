@@ -1,4 +1,3 @@
-from pprint import pprint
 from common.nsescriptlib import scriptrunner
 from common.MaltegoTransform import *
 from common.corelib import bucketparser

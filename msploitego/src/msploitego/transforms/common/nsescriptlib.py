@@ -3,7 +3,6 @@
 import shlex
 import subprocess
 from libnmap.parser import NmapParser
-from pprint import pprint
 import sys
 
 __author__ = 'Marc Gurreri'

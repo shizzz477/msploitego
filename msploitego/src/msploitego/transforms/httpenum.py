@@ -1,6 +1,5 @@
 import shlex
 from libnmap.parser import NmapParser
-from pprint import pprint
 import subprocess
 from common.nsescriptlib import cleanresults
 from common.MaltegoTransform import *

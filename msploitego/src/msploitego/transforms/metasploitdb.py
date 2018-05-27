@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from common.msploitdb import MetasploitXML
 from common.MaltegoTransform import *
 import sys

@@ -6,3 +6,5 @@
 /oscp/
 /osint/
 /python-libnmap/
+/msploitego/src/msploitego/transforms/helloworld.py
+/msploitego/src/msploitego/transforms/metasploitdb-canari.py

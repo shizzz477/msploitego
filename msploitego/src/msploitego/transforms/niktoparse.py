@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from common.MaltegoTransform import *
 from common.niktolib import NiktoReport
 import sys

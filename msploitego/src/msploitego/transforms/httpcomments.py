@@ -1,6 +1,5 @@
 import re
-from pprint import pprint
-from common.nsescriptlib import cleanresults, scriptrunner
+from common.nsescriptlib import scriptrunner
 from common.MaltegoTransform import *
 import sys
 

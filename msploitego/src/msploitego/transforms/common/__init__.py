@@ -1,5 +1,10 @@
 __all__ = [
     'entities',
     'corelib',
-    'msploitdb'
+    'msploitdb',
+    'niktolib',
+    'MaltegoTransform',
+    'nmapparser',
+    'nmaprunner',
+    'nsescriptlib'
 ]

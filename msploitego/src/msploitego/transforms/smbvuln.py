@@ -1,10 +1,5 @@
-#!/usr/bin/env python
-
-from pprint import pprint
-
 from common.MaltegoTransform import *
 import sys
-
 from common.nsescriptlib import scriptrunner
 
 __author__ = 'Marc Gurreri'
@@ -22,7 +17,7 @@ scripts = "smb-vuln-conficker,smb-vuln-cve-2017-7494,smb-vuln-cve2009-3103,smb-v
 
 def dotransform(args):
     mt = MaltegoTransform()
-    mt.debug(pprint(sys.argv))
+    # mt.debug(pprint(sys.argv))
     mt.parseArguments(args)
     ip = mt.getVar("ip")
     port = mt.getVar("port")

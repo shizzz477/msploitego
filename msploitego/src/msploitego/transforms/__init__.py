@@ -1,5 +1,7 @@
 __all__ = [
     'common',
     'metasploitdb',
-    'enumservices'
+    'enumservices',
+    'bannergrab',
+    'dnsnsid'
 ]
