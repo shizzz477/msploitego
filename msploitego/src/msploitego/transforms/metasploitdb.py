@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from common.msploitdb import MetasploitXML
 from common.MaltegoTransform import *
 import sys
@@ -32,6 +34,6 @@ def dotransform(args):
 
 dotransform(sys.argv)
 # args = ['metasploitdb.py',
-#  '/root/data/scan/hthebox/msplotdb20180522.xml',
-#  'description=/root/data/scan/hthebox/msplotdb20180522.xml']
+#  '/root/data/report_pack/msploitdb20180524.xml',
+#  'description=/root/data/report_pack/msploitdb20180524.xml']
 # dotransform(args)

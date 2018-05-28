@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from common.msploitdb import MetasploitXML
 from common.MaltegoTransform import *
 import sys
@@ -151,6 +153,12 @@ def dotransform(args):
             hostservice.addAdditionalFields("service.name", "Service Name", False, servicename)
             if service.containsTag("info"):
                 hostservice.addAdditionalFields("banner", "Banner", False, service.info)
+                if servicename in ["samba", "netbios-ssn", "smb", "microsoft-ds"]:
+                    if "workgroup" in service.info.lower():
+                        groupname = service.info.lower().split("workgroup:",1)[-1].lstrip()
+                        workgroup = mt.addEntity("maltego.Domain", groupname)
+                        workgroup.setValue(groupname)
+                        workgroup.addAdditionalFields("ip", "IP Address", False, ip)
             else:
                 hostservice.addAdditionalFields("banner", "Banner", False, "{}-No info".format(servicename))
             for etag in entitytags:
@@ -162,7 +170,6 @@ def dotransform(args):
 
 dotransform(sys.argv)
 # args = ['enumservices.py',
-#  '10.11.1.115',
-#  'ipv4-address=10.11.1.115#ipaddress.internal=false#notecount=3#address=10.11.1.115#purpose=server#mac=00:50:56:b8:e9:18#osfamily=Linux#servicecount=9#name=tophat.acme.com#state=alive#vulncount=1#fromfile=/root/data/report_pack/msploitdb_oscp-20180325.xml#osname=Linux']
-#
+#  '10.11.1.8',
+#  'ipv4-address=10.11.1.8#ipaddress.internal=false#notecount=31#address=10.11.1.8#purpose=server#mac=00:50:56:b8:20:14#osfamily=Linux#servicecount=10#name=10.11.1.8#state=alive#vulncount=31#fromfile=/root/data/report_pack/msploitdb20180524.xml#osname=Linux']
 # dotransform(args)

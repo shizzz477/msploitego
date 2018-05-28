@@ -20,14 +20,16 @@ def dotransform(args):
     port = mt.getVar("port")
     rep = scriptrunner(port, "http-robots.txt", ip)
 
-    for scriptrun in rep.hosts[0].services[0].scripts_results:
-        output = scriptrun.get("output")
-        for line in output.split("\n"):
-            if line.lstrip()[0] == "/":
-                for d in line.lstrip().strip().split():
-                    webdirentity = mt.addEntity("maltego.WebDir", d)
-                    webdirentity.setValue(d)
-
+    if rep.hosts[0].status == "up":
+        for scriptrun in rep.hosts[0].services[0].scripts_results:
+            output = scriptrun.get("output")
+            for line in output.split("\n"):
+                if line.lstrip()[0] == "/":
+                    for d in line.lstrip().strip().split():
+                        webdirentity = mt.addEntity("maltego.WebDir", d)
+                        webdirentity.setValue(d)
+    else:
+        mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
