@@ -51,16 +51,6 @@ def dotransform(args):
                 alias = mt.addEntity("maltego.Alias", user)
                 alias.setValue(user)
                 alias.addAdditionalFields("ip", "IP Address", False, ip)
-        # elif "network interfaces" in header:
-        #     if res.get("Interface"):
-        #         iname = res.get("Interface").lstrip(":")
-        #         ninterface = mt.addEntity("msploitego.NetworkInterface", iname)
-        #         ninterface.setValue(iname)
-        #         ninterface.addAdditionalFields("ip", "IP Address", False, ip)
-        #     if res.get("Mac"):
-        #         m = res.get("Mac").split(":",1)[-1].lstrip()
-        #         mac = mt.addEntity("maltego.MacAddress", m)
-        #         mac.setValue(m)
         elif "routing information" in header:
             ipprefix = ".".join(ip.split(".")[0:2])
             for k,v in res.items():
@@ -68,9 +58,9 @@ def dotransform(args):
                     continue
                 for ipr in v.split():
                     if re.search(ipprefix,ipr) and ipr != ip:
-                        iprout = mt.addEntity("maltego.MacAddress", v)
-                        iprout.setValue(v)
-                        iprout.addAdditionalFields("ip", "IP Address", False, ipr)
+                        iprout = mt.addEntity("msploitego.RoutingIP", ipr)
+                        iprout.setValue(ipr)
+                        iprout.addAdditionalFields("ip", "IP Address", False, ip)
         elif "network services" in header:
             for k,v in res.items():
                 if any(x in k for x in ["Details", "Header","Index"]):
@@ -113,8 +103,8 @@ def dotransform(args):
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
-dotransform(sys.argv)
-# args = ['snmpcheck.py',
-#  'snmp/161:516',
-#  'properties.metasploitservice=snmp/161:516#name=snmp#proto=udp#hostid=516#service.name=snmp#port=161#banner=snmp-No info#properties.service= #ip=10.11.1.227#state=open#fromfile=/root/data/report_pack/msploitdb20180524.xml']
-# dotransform(args)
+# dotransform(sys.argv)
+args = ['snmpcheck.py',
+ 'snmp/161:516',
+ 'properties.metasploitservice=snmp/161:516#name=snmp#proto=udp#hostid=516#service.name=snmp#port=161#banner=snmp-No info#properties.service= #ip=10.11.1.227#state=open#fromfile=/root/data/report_pack/msploitdb20180524.xml']
+dotransform(args)

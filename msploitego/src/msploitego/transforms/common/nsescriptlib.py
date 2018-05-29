@@ -30,19 +30,22 @@ def cleanresults(r,func):
 
 def scriptrunner(port,name,ip,args=None,scriptargs=None):
     #TODO: exception handling
+    cmd = "nmap -vvvvv -oX -" # --script {}".format(name)
     if args:
-        cmd = "nmap {} -p {} -oX - -vvvvvv --script {} {}".format(args, port, name, ip)
-    else:
-        cmd = "nmap -p {} -oX - -vvvvvv --script {} {}".format(port,name,ip)
-
+        cmd += " {}".format(args)
+    if port:
+        cmd += " -p {}".format(port)
+    if name:
+        cmd += " --script {}".format(name)
     if scriptargs:
         cmd += " --script-args {}".format(scriptargs)
+    cmd += " {}".format(ip)
 
     nmap_proc = subprocess.Popen(args=shlex.split(cmd),
                                 stdout=subprocess.PIPE,
                                 stderr=subprocess.PIPE,
                                 universal_newlines=True,
-                                bufsize=0)
+                                bufsize=1)
     xmloutput = []
     while nmap_proc.poll() is None:
         for streamline in iter(nmap_proc.stdout.readline, ''):

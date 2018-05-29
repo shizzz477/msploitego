@@ -1,3 +1,4 @@
+import re
 from pprint import pprint
 
 from common.msploitdb import MetasploitXML
@@ -20,6 +21,10 @@ def dotransform(args):
     mt.parseArguments(args)
     fn = mt.getVar("fromfile")
     ip = mt.getVar("address")
+    mac = mt.getVar("mac")
+    osname = mt.getVar("osname")
+    osfamily = mt.getVar("osfamily")
+    machinename = mt.getVar("name")
     servicecount = int(mt.getVar("servicecount"))
     if servicecount > 0:
         for service in MetasploitXML(fn).gethost(ip).services:
@@ -165,11 +170,68 @@ def dotransform(args):
                 if etag in service.getTags():
                     val = service.getVal(etag)
                     hostservice.addAdditionalFields(etag, etag, False, val)
+            if mac:
+                macentity = mt.addEntity("maltego.MacAddress", mac)
+                macentity.setValue(mac)
+                macentity.addAdditionalFields("ip", "IP Address", False, ip)
+            if machinename and re.match("^[a-zA-z]+",machinename):
+                hostentity = mt.addEntity("msploitego.Hostname", machinename)
+                hostentity.setValue(machinename)
+                hostentity.addAdditionalFields("ip", "IP Address", False, ip)
+            """ OS determination """
+            osentityname = "msploitego.OperatingSystem"
+            if osname or osfamily:
+                if osfamily:
+                    if osname:
+                        if "windows 2003" in osname.lower():
+                            osentityname = "msploitego.Windows2003"
+                        elif "windows 2008" in osname.lower():
+                            osentityname = "msploitego.Windows2008"
+                        elif "windows 2012" in osname.lower():
+                            osentityname = "msploitego.Windows2012"
+                        elif "windows 2000" in osname.lower():
+                            osentityname = "msploitego.Windows2000"
+                        elif "windows xp" in osname.lower():
+                            osentityname = "msploitego.WindowsXP"
+                        elif "windows 7" in osname.lower():
+                            osentityname = "msploitego.Windows7"
+                        elif "freebsd" in osname.lower():
+                            osentityname = "msploitego.FreeBSD"
+                        elif "solaris" in osname.lower():
+                            osentityname = "msploitego.Solaris"
+                        elif "linux" in osname.lower():
+                            osentityname = "msploitego.LinuxOperatingSystem"
+                        elif "embedded" in osname.lower():
+                            osentityname = "msploitego.EmbeddedOS"
+                        osdescription = osname
+                    else:
+                        if "windows" in osfamily.lower():
+                            osentityname = "msploitego.WindowsOperatingSystem"
+                        elif "freebsd" in osfamily.lower():
+                            osentityname = "msploitego.FreeBSD"
+                        elif "linux" in osfamily.lower():
+                            osentityname = "msploitego.LinuxOperatingSystem"
+                        osdescription = osfamily
+                elif osname:
+                    if "embedded" in osname.lower():
+                        osentityname = "msploitego.EmbeddedOS"
+                    elif "linux" in osname.lower():
+                        osentityname = "msploitego.LinuxOperatingSystem"
+                    osdescription = osname
+
+                osentity = mt.addEntity(osentityname, osdescription)
+                osentity.setValue(osdescription)
+                osentity.addAdditionalFields("ip", "IP Address", False, ip)
+                    # elif "linux" in osfamily.lower():
+                    #     osfament = mt.addEntity("msploitego.LinuxOperatingSystem", osfamily)
+                    #     osfament.setValue(osfamily)
+                    #     osfament.addAdditionalFields("ip", "IP Address", False, ip)
+
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
 # args = ['enumservices.py',
-#  '10.11.1.8',
-#  'ipv4-address=10.11.1.8#ipaddress.internal=false#notecount=31#address=10.11.1.8#purpose=server#mac=00:50:56:b8:20:14#osfamily=Linux#servicecount=10#name=10.11.1.8#state=alive#vulncount=31#fromfile=/root/data/report_pack/msploitdb20180524.xml#osname=Linux']
+#  '10.11.1.49',
+#  'ipv4-address=10.11.1.49#ipaddress.internal=false#notecount=9#address=10.11.1.49#purpose=server#mac=00:50:56:b8:94:17#osfamily=Windows#servicecount=1003#name=BETHANY#state=alive#vulncount=0#fromfile=/root/data/report_pack/msploitdb20180524.xml#osname=Windows 2012 R2']
 # dotransform(args)
