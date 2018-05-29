@@ -2,6 +2,8 @@
 
 import shlex
 import subprocess
+
+import time
 from libnmap.parser import NmapParser
 import sys
 
@@ -47,6 +49,7 @@ def scriptrunner(port,name,ip,args=None,scriptargs=None):
                                 universal_newlines=True,
                                 bufsize=1)
     xmloutput = []
+    time.sleep(2)
     while nmap_proc.poll() is None:
         for streamline in iter(nmap_proc.stdout.readline, ''):
             xmloutput.append(streamline)

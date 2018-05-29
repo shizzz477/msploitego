@@ -43,11 +43,13 @@ def bucketparser(regex,data,sep=":",method="match"):
             details = []
             i += 1
             while i <= nextindex and i < len(data):
-                q = data[i].lstrip().split(sep,1)
+                q = data[i].lstrip().replace("http://","http//").replace("https://","https//").split(sep, 1)
                 if len(q) > 1:
                     item.update({q[0].lstrip().capitalize():q[1].lstrip().rstrip()})
                 else:
-                    details.append(q)
+                    for line in q:
+                        if line and line.strip():
+                            details.append(line)
                 i += 1
             if details:
                 item['Details'] = details
