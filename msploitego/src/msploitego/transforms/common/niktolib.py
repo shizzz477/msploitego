@@ -31,6 +31,9 @@ class Niktodetail(object):
                 setattr(self, prop.tag, prop.text)
                 self._dict.update({prop.tag:prop.text})
 
+    def get(self,tag):
+        return self._dict.get(tag)
+
 if __name__ == "__main__":
     nr = NiktoReport("/root/proj/oscp-maltego/msploitego/src/msploitego/resources/10.11.1.22-80.xml")
     dets = []

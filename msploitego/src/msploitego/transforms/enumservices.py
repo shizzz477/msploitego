@@ -120,8 +120,10 @@ def dotransform(args):
                     entityname = "msploitego.tcpwrapped"
                 elif "mysql" in servicename:
                     entityname = "msploitego.mysql"
-                elif "mssql" in servicename:
+                elif any(x in servicename for x in ["mssql","ms-sql"]):
                     entityname = "msploitego.mssql"
+                elif any(x in servicename for x in ["nat-pmp","upnp"]):
+                    entityname = "msploitego.natpmp"
                 elif "ajp" in servicename:
                     entityname = "msploitego.ajp"
                 elif "llmnr" in servicename.lower():
@@ -130,25 +132,41 @@ def dotransform(args):
                     entityname = "msploitego.kerberos"
                 elif "msexchange-logcopier" in servicename.lower():
                     entityname = "msploitego.MSExchangeLogCopier"
-                elif "nfs_acl" in servicename.lower():
+                elif "nfs" in servicename.lower():
                     entityname = "msploitego.nfsacl"
+                elif "x11" in servicename.lower():
+                    entityname = "msploitego.X11"
                 elif "fmtp" in servicename.lower():
                     entityname = "msploitego.fmtp"
                 elif "telnet" in servicename.lower():
                     entityname = "msploitego.telnet"
-                elif "rdp" in servicename.lower():
+                elif any(x in servicename.lower() for x in ["rdp","xdmcp"]):
                     entityname = "msploitego.rdp"
                 elif "ipp" in servicename.lower():
                     entityname = "msploitego.ipp"
                 elif "vnc" in servicename.lower():
                     entityname = "msploitego.vnc"
+                elif "wap-wsp" in servicename.lower():
+                    entityname = "msploitego.wapwsp"
+                elif "backorifice" in servicename.lower():
+                    entityname = "msploitego.backorifice"
                 elif "rtsp" in servicename.lower():
                     entityname = "msploitego.rtsp"
+                elif "bacnet" in servicename.lower():
+                    entityname = "msploitego.Bacnet"
+                elif "wfremotertm" in servicename.lower():
+                    entityname = "msploitego.wfremotertm"
+                elif "msdp" in servicename.lower():
+                    entityname = "msploitego.msdp"
+                elif all(x in servicename.lower() for x in ["afs","fileserver"]):
+                    entityname = "msploitego.AFS"
+                elif "adobeserver" in servicename.lower():
+                    entityname = "msploitego.AdobeserverService"
                 elif "ms-wbt-server" in servicename.lower():
                     entityname = "msploitego.MicrosoftTerminalServices"
                 elif servicename.lower() in ["rmiregistry", "java-rmi"]:
                     entityname = "msploitego.JavaRMI"
-                #msploitego.JavaRMI
+                #msploitego.AdobeserverService
             hostservice = mt.addEntity(entityname, "{}/{}:{}".format(servicename,service.port,service.hostid))
             hostservice.setValue = "{}/{}:{}".format(servicename,service.port,service.hostid)
             hostservice.addAdditionalFields("ip","IP Address",False,ip)

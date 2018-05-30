@@ -1,0 +1,34 @@
+from pprint import pprint
+
+from common.MaltegoTransform import *
+
+__author__ = 'Marc Gurreri'
+__copyright__ = 'Copyright 2018, msploitego Project'
+__credits__ = []
+__license__ = 'GPLv3'
+__version__ = '0.1'
+__maintainer__ = 'Marc Gurreri'
+__email__ = 'me@me.com'
+__status__ = 'Development'
+
+def dotransform(args):
+    mt = MaltegoTransform()
+    # mt.debug(pprint(args))
+    mt.parseArguments(args)
+    ip = mt.getVar("ip")
+    port = mt.getVar("port")
+    hostid = mt.getVar("hostid")
+    dir = mt.getValue()
+
+    website = mt.addEntity("maltego.URL", "http://{}:{}{}".format(ip,port,dir))
+    website.setValue("http://{}:{}{}".format(ip,port,dir))
+    website.addAdditionalFields("dir", "Directory", False, dir)
+    website.addAdditionalFields("url", "URL", False, "http://{}:{}{}".format(ip,port,dir))
+    website.addAdditionalFields("ip", "IP Address", False, ip)
+    website.addAdditionalFields("port", "Port", False, port)
+    mt.returnOutput()
+    mt.addUIMessage("completed!")
+
+dotransform(sys.argv)
+# args = ['tourl.py', '/xmlrpc.php', 'directory.name=/xmlrpc.php#port=80#ip=10.11.1.50']
+# dotransform(args)

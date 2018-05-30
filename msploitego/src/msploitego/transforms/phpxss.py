@@ -19,7 +19,7 @@ def dotransform(args):
     ip = mt.getVar("ip")
     port = mt.getVar("port")
     hostid = mt.getVar("hostid")
-    rep = scriptrunner(port, "http-phpself-xss", ip)
+    rep = scriptrunner(port, "http-phpself-xss,http-stored-xss", ip)
 
     if rep.hosts[0].status == "up":
         for res in rep.hosts[0].services[0].scripts_results:

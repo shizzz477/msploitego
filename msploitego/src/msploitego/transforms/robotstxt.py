@@ -28,6 +28,8 @@ def dotransform(args):
                     for d in line.lstrip().strip().split():
                         webdirentity = mt.addEntity("maltego.WebDir", d)
                         webdirentity.setValue(d)
+                        webdirentity.addAdditionalFields("ip", "IP Address", False, ip)
+                        webdirentity.addAdditionalFields("port", "Port", False, port)
     else:
         mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
     mt.returnOutput()
