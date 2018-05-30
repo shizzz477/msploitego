@@ -115,11 +115,6 @@ class Nelement(object):
     def __init__(self, elem):
         if elem is not None:
             self._dict = elem.get_dict()
-            # for item in elem:
-            #     cleantag = item.tag.replace('-', '')
-            #     if item.text and item.text.strip():
-            #         setattr(self, cleantag, item.text)
-            #         self._dict.update({cleantag:item.text})
 
     def getVal(self,tag):
         return self._dict.get(tag)
