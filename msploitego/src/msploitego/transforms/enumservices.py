@@ -152,7 +152,7 @@ def dotransform(args):
             hostservice = mt.addEntity(entityname, "{}/{}:{}".format(servicename,service.port,service.hostid))
             hostservice.setValue = "{}/{}:{}".format(servicename,service.port,service.hostid)
             hostservice.addAdditionalFields("ip","IP Address",False,ip)
-            if servicename and servicename.lower() in ["http","www","https"]:
+            if servicename and servicename.lower() in ["http","https","possible_wls","www","ncacn_http","ccproxy-http","ssl/http","http-proxy"]:
                 hostservice.addAdditionalFields("niktofile", "Nikto File", False, '')
             hostservice.addAdditionalFields("fromfile", "Source File", False, fn)
             hostservice.addAdditionalFields("service.name", "Service Name", False, servicename)

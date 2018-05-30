@@ -49,7 +49,7 @@ def scriptrunner(port,name,ip,args=None,scriptargs=None):
                                 universal_newlines=True,
                                 bufsize=1)
     xmloutput = []
-    time.sleep(2)
+    # time.sleep(5)
     while nmap_proc.poll() is None:
         for streamline in iter(nmap_proc.stdout.readline, ''):
             xmloutput.append(streamline)
