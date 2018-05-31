@@ -33,12 +33,11 @@ def dotransform(args):
             det.addAdditionalFields("ip", "IP", False, ip)
             det.addAdditionalFields("port", "IP", False, port)
             if len(d.get("uri")) > 2:
-                if d.get("iplink"):
-                    webdir = mt.addEntity("maltego.URL", d.get("iplink"))
-                    webdir.setValue(d.get("iplink"))
-                elif d.get("namelink"):
-                    webdir = mt.addEntity("maltego.URL", d.get("namelink"))
-                    webdir.setValue(d.get("namelink"))
+                webdir = mt.addEntity("maltego.URL", d.get("iplink"))
+                webdir.setValue(d.get("iplink"))
+                # elif d.get("namelink"):
+                #     webdir = mt.addEntity("maltego.URL", d.get("namelink"))
+                #     webdir.setValue(d.get("namelink"))
                 webdir.addAdditionalFields("ip", "IP", False, ip)
                 webdir.addAdditionalFields("port", "IP", False, port)
 

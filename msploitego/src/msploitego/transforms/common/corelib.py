@@ -59,9 +59,10 @@ def bucketparser(regex,data,sep=":",method="match"):
     return bucket
 
 class XMLElement(object):
-    def __init__(self, elem, classmapping=None):
+    def __init__(self, elem, classmapping=None, ignore=None):
         self._dict = {}
         self._mapping = classmapping
+
         if len(elem) > 0:
             for item in elem:
                 self._setprop(item.tag, item)
@@ -71,6 +72,9 @@ class XMLElement(object):
     def __iter__(self):
         for x,y in self._dict.items():
             yield [x,y]
+
+    def get(self,tag):
+        return self._dict.get(tag)
 
     def _setprop(self,prop,val):
         dictval = None

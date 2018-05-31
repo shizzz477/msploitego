@@ -30,6 +30,8 @@ def dotransform(args):
             for item in bucket:
                 userentity = mt.addEntity("msploitego.SambaUser", item.get("Header"))
                 userentity.setValue(item.get("Header"))
+                userentity.addAdditionalFields("ip", "IP Address", False, ip)
+                userentity.addAdditionalFields("port", "Port", False, port)
                 for k,v in item.items():
                     userentity.addAdditionalFields(k, k.capitalize(), False, v.strip())
     else:

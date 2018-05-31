@@ -21,16 +21,20 @@ __status__ = 'Development'
 @static_var("TCP_SYN", "-sS")
 
 class Nmaprunner(object):
-    def __init__(self, ip, port, callback, safemode=False):
-        self.scantype = self.TCP_SYN
-        self.options = "-vv {} -p {} {}".format(self.scantype, port, ip)
+    def __init__(self, ip, port, callback, options=None,safemode=False):
+        if options:
+            options = "-vvvvv "+ options
+        else:
+            options = "-vvvvv"
+        # self.options = "-vv {} -p {} {}".format(self.scantype, port, ip)
         self.ip = ip
         self.port = port
         self.callback = callback
         self.nmap_proc = NmapProcess(targets=self.ip,
-                                    options=self.options,
+                                    options=options,
                                     event_callback=self.callback,
                                      safe_mode=safemode)
+
     def runnmap(self):
         self.nmap_proc.run()
         return NmapParser.parse(self.nmap_proc.stdout)

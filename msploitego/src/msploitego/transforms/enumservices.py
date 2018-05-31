@@ -26,8 +26,25 @@ def dotransform(args):
     osfamily = mt.getVar("osfamily")
     machinename = mt.getVar("name")
     servicecount = int(mt.getVar("servicecount"))
+    mdb = MetasploitXML(fn)
     if servicecount > 0:
-        for service in MetasploitXML(fn).gethost(ip).services:
+        host =  mdb.gethost(ip)
+        for form in host.webforms:
+            formentity = mt.addEntity("maltego.URL", "http://{}:{}{}".format(ip,form.port,form.path))
+            formentity.setValue("http://{}:{}{}".format(ip,form.port,form.path))
+            formentity.addAdditionalFields("ip", "IP Address", False, ip)
+            for k,v in form:
+                if v and v.strip():
+                    formentity.addAdditionalFields(k, k.capitalize(), False, v)
+        for page in host.webpages:
+            if page.path[-1] == "/":
+                pageentity = mt.addEntity("maltego.URL", "http://{}:{}{}".format(ip, page.port, page.path))
+                pageentity.setValue("http://{}:{}{}".format(ip, form.port, form.path))
+                pageentity.addAdditionalFields("ip", "IP Address", False, ip)
+                for k, v in page:
+                    if v and v.strip():
+                        pageentity.addAdditionalFields(k, k.capitalize(), False, v)
+        for service in host.services:
             entityname = "msploitego.MetasploitService"
             try:
                 servicename = service.name
@@ -110,8 +127,26 @@ def dotransform(args):
                     entityname = "msploitego.winrm"
                 elif "ldap" in servicename.lower():
                     entityname = "msploitego.LDAP"
+                elif "compressnet" in servicename.lower():
+                    entityname = "msploitego.compressnet"
+                elif "ansys" in servicename.lower():
+                    entityname = "msploitego.ansys"
+                elif "boinc" in servicename.lower():
+                    entityname = "msploitego.boinc"
+                elif "bakbone" in servicename.lower():
+                    entityname = "msploitego.bakbonenetvault"
+                elif "cisco" in servicename.lower():
+                    entityname = "msploitego.CISCO"
                 elif "ntp" in servicename:
                     entityname = "msploitego.ntp"
+                elif "dhcp" in servicename:
+                    entityname = "msploitego.DHCP"
+                elif "dbase" in servicename.lower():
+                    entityname = "msploitego.dBase"
+                elif "chargen" in servicename.lower():
+                    entityname = "msploitego.chargen"
+                elif "directplaysrvr" in servicename:
+                    entityname = "msploitego.directplaysrvr"
                 elif "smtp" in servicename:
                     entityname = "msploitego.smtp"
                 elif "snmp" in servicename:
@@ -148,7 +183,9 @@ def dotransform(args):
                     entityname = "msploitego.vnc"
                 elif "wap-wsp" in servicename.lower():
                     entityname = "msploitego.wapwsp"
-                elif "backorifice" in servicename.lower():
+                elif "blackjack" in servicename.lower():
+                    entityname = "msploitego.blackjack"
+                elif any(x in servicename.lower() for x in ["backorifice","bo2k"]):
                     entityname = "msploitego.backorifice"
                 elif "rtsp" in servicename.lower():
                     entityname = "msploitego.rtsp"
@@ -248,8 +285,8 @@ def dotransform(args):
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
-dotransform(sys.argv)
-# args = ['enumservices.py',
-#  '10.11.1.49',
-#  'ipv4-address=10.11.1.49#ipaddress.internal=false#notecount=9#address=10.11.1.49#purpose=server#mac=00:50:56:b8:94:17#osfamily=Windows#servicecount=1003#name=BETHANY#state=alive#vulncount=0#fromfile=/root/data/report_pack/msploitdb20180524.xml#osname=Windows 2012 R2']
-# dotransform(args)
+# dotransform(sys.argv)
+args = ['enumservices.py',
+ '10.11.1.22',
+ 'ipv4-address=10.11.1.22#ipaddress.internal=false#notecount=9#address=10.11.1.22#purpose=server#mac=00:50:56:b8:94:17#osfamily=Windows#servicecount=1003#name=BETHANY#state=alive#vulncount=0#fromfile=/root/data/report_pack/msploitdb20180531.xml#osname=Windows 2012 R2']
+dotransform(args)
