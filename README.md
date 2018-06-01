@@ -1,4 +1,5 @@
 **msploitego - The Pentesting suite for Maltego**
+=================================================
 
 THIS IS A BETA RELEASE, please be nice and report any issues
 
