@@ -8,3 +8,7 @@
 /python-libnmap/
 /msploitego/src/msploitego/transforms/helloworld.py
 /msploitego/src/msploitego/transforms/metasploitdb-canari.py
+
+*.pyc
+
+msploitego/src/msploitego/transforms/common/scratch\.py
