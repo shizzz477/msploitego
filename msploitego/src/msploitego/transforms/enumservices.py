@@ -30,20 +30,19 @@ def dotransform(args):
     if servicecount > 0:
         host =  mdb.gethost(ip)
         for form in host.webforms:
-            formentity = mt.addEntity("maltego.URL", "http://{}:{}{}".format(ip,form.port,form.path))
+            formentity = mt.addEntity("maltego.Website", "http://{}:{}{}".format(ip,form.port,form.path))
             formentity.setValue("http://{}:{}{}".format(ip,form.port,form.path))
-            formentity.addAdditionalFields("ip", "IP Address", False, ip)
+            formentity.addAdditionalFields("ip", "IP Address", True, ip)
             for k,v in form:
                 if v and v.strip():
-                    formentity.addAdditionalFields(k, k.capitalize(), False, v)
+                    formentity.addAdditionalFields(k, k.capitalize(), True, v)
         for page in host.webpages:
-            if page.path[-1] == "/":
-                pageentity = mt.addEntity("maltego.URL", "http://{}:{}{}".format(ip, page.port, page.path))
-                pageentity.setValue("http://{}:{}{}".format(ip, form.port, form.path))
-                pageentity.addAdditionalFields("ip", "IP Address", False, ip)
-                for k, v in page:
-                    if v and v.strip():
-                        pageentity.addAdditionalFields(k, k.capitalize(), False, v)
+            pageentity = mt.addEntity("maltego.Website", "http://{}:{}{}".format(ip, page.port, page.path))
+            pageentity.setValue("http://{}:{}{}".format(ip, page.port, page.path))
+            for k, v in page:
+                if v and v.strip():
+                    pageentity.addAdditionalFields(k, k.capitalize(), True, v)
+            pageentity.addAdditionalFields("ip", "IP Address", True, ip)
         for service in host.services:
             entityname = "msploitego.MetasploitService"
             try:
@@ -206,33 +205,33 @@ def dotransform(args):
                 #msploitego.AdobeserverService
             hostservice = mt.addEntity(entityname, "{}/{}:{}".format(servicename,service.port,service.hostid))
             hostservice.setValue = "{}/{}:{}".format(servicename,service.port,service.hostid)
-            hostservice.addAdditionalFields("ip","IP Address",False,ip)
+            hostservice.addAdditionalFields("ip","IP Address",True,ip)
             if servicename and servicename.lower() in ["http","https","possible_wls","www","ncacn_http","ccproxy-http","ssl/http","http-proxy"]:
-                hostservice.addAdditionalFields("niktofile", "Nikto File", False, '')
-            hostservice.addAdditionalFields("fromfile", "Source File", False, fn)
-            hostservice.addAdditionalFields("service.name", "Service Name", False, servicename)
+                hostservice.addAdditionalFields("niktofile", "Nikto File", True, '')
+            hostservice.addAdditionalFields("fromfile", "Source File", True, fn)
+            hostservice.addAdditionalFields("service.name", "Service Name", True, servicename)
             if service.containsTag("info"):
-                hostservice.addAdditionalFields("banner", "Banner", False, service.info)
+                hostservice.addAdditionalFields("banner", "Banner", True, service.info)
                 if servicename in ["samba", "netbios-ssn", "smb", "microsoft-ds"]:
                     if "workgroup" in service.info.lower():
                         groupname = service.info.lower().split("workgroup:",1)[-1].lstrip()
                         workgroup = mt.addEntity("maltego.Domain", groupname)
                         workgroup.setValue(groupname)
-                        workgroup.addAdditionalFields("ip", "IP Address", False, ip)
+                        workgroup.addAdditionalFields("ip", "IP Address", True, ip)
             else:
-                hostservice.addAdditionalFields("banner", "Banner", False, "{}-No info".format(servicename))
+                hostservice.addAdditionalFields("banner", "Banner", True, "{}-No info".format(servicename))
             for etag in entitytags:
                 if etag in service.getTags():
                     val = service.getVal(etag)
-                    hostservice.addAdditionalFields(etag, etag, False, val)
+                    hostservice.addAdditionalFields(etag, etag, True, val)
             if mac:
                 macentity = mt.addEntity("maltego.MacAddress", mac)
                 macentity.setValue(mac)
-                macentity.addAdditionalFields("ip", "IP Address", False, ip)
+                macentity.addAdditionalFields("ip", "IP Address", True, ip)
             if machinename and re.match("^[a-zA-z]+",machinename):
                 hostentity = mt.addEntity("msploitego.Hostname", machinename)
                 hostentity.setValue(machinename)
-                hostentity.addAdditionalFields("ip", "IP Address", False, ip)
+                hostentity.addAdditionalFields("ip", "IP Address", True, ip)
             """ OS determination """
             osentityname = "msploitego.OperatingSystem"
             if osname or osfamily:
@@ -276,17 +275,17 @@ def dotransform(args):
 
                 osentity = mt.addEntity(osentityname, osdescription)
                 osentity.setValue(osdescription)
-                osentity.addAdditionalFields("ip", "IP Address", False, ip)
+                osentity.addAdditionalFields("ip", "IP Address", True, ip)
                     # elif "linux" in osfamily.lower():
                     #     osfament = mt.addEntity("msploitego.LinuxOperatingSystem", osfamily)
                     #     osfament.setValue(osfamily)
-                    #     osfament.addAdditionalFields("ip", "IP Address", False, ip)
+                    #     osfament.addAdditionalFields("ip", "IP Address", True, ip)
 
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
-# dotransform(sys.argv)
-args = ['enumservices.py',
- '10.11.1.22',
- 'ipv4-address=10.11.1.22#ipaddress.internal=false#notecount=9#address=10.11.1.22#purpose=server#mac=00:50:56:b8:94:17#osfamily=Windows#servicecount=1003#name=BETHANY#state=alive#vulncount=0#fromfile=/root/data/report_pack/msploitdb20180531.xml#osname=Windows 2012 R2']
-dotransform(args)
+dotransform(sys.argv)
+# args = ['enumservices.py',
+#  '10.11.1.22',
+#  'ipv4-address=10.11.1.22#ipaddress.internal=false#notecount=9#address=10.11.1.22#purpose=server#mac=00:50:56:b8:94:17#osfamily=Windows#servicecount=1003#name=BETHANY#state=alive#vulncount=0#fromfile=/root/data/report_pack/msploitdb20180531.xml#osname=Windows 2012 R2']
+# dotransform(args)

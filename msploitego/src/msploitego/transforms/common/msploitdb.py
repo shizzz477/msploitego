@@ -25,7 +25,6 @@ import xml.etree.ElementTree as ET
 from pprint import pprint
 
 from corelib import XMLElement
-from entities import Host
 
 #TODO:make exclusively for MetasploitDB, create derived entity
 
@@ -64,7 +63,7 @@ class MetasploitXML(XMLElement):
                         host.addwebpage(page)
                 for site in self.websites:
                     if site.host == ip:
-                        host.addwebpage(site)
+                        host.addwebsite(site)
                 return host
 
 class Mhost(XMLElement):

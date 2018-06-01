@@ -36,21 +36,21 @@ def dotransform(args):
                 dname = res.get("Domain").lstrip(":")
                 domain = mt.addEntity("maltego.Domain", dname)
                 domain.setValue(dname)
-                domain.addAdditionalFields("ip", "IP Address", False, ip)
-                domain.addAdditionalFields("port", "Port", False, port)
+                domain.addAdditionalFields("ip", "IP Address", True, ip)
+                domain.addAdditionalFields("port", "Port", True, port)
             if res.get("Hostname"):
                 hname = res.get("Hostname").lstrip(":")
                 hostname = mt.addEntity("msploitego.Hostname", hname)
                 hostname.setValue(hname)
-                hostname.addAdditionalFields("ip", "IP Address", False, ip)
-                hostname.addAdditionalFields("port", "Port", False, port)
+                hostname.addAdditionalFields("ip", "IP Address", True, ip)
+                hostname.addAdditionalFields("port", "Port", True, port)
         elif "user accounts" in header:
             for user in res.keys():
                 if any(x in user for x in ["Details", "Header"]):
                     continue
                 alias = mt.addEntity("maltego.Alias", user)
                 alias.setValue(user)
-                alias.addAdditionalFields("ip", "IP Address", False, ip)
+                alias.addAdditionalFields("ip", "IP Address", True, ip)
         elif "routing information" in header:
             ipprefix = ".".join(ip.split(".")[0:2])
             for k,v in res.items():
@@ -60,14 +60,14 @@ def dotransform(args):
                     if re.search(ipprefix,ipr) and ipr != ip:
                         iprout = mt.addEntity("msploitego.RoutingIP", ipr)
                         iprout.setValue(ipr)
-                        iprout.addAdditionalFields("ip", "IP Address", False, ip)
+                        iprout.addAdditionalFields("ip", "IP Address", True, ip)
         elif "network services" in header:
             for k,v in res.items():
                 if any(x in k for x in ["Details", "Header","Index"]):
                     continue
                 nservice = mt.addEntity("msploitego.NetworkService", v)
                 nservice.setValue(v)
-                nservice.addAdditionalFields("ip", "IP Address", False, ip)
+                nservice.addAdditionalFields("ip", "IP Address", True, ip)
         elif "processes" in header:
             for k,v in res.items():
                 if any(x in k for x in ["Details", "Header"]):
@@ -75,8 +75,8 @@ def dotransform(args):
                 if "running" in v.lower():
                     process = mt.addEntity("msploitego.Process", v.split()[-1])
                     process.setValue(v.split()[-1])
-                    process.addAdditionalFields("ip", "IP Address", False, ip)
-                    process.addAdditionalFields("pid","Process ID", False, k)
+                    process.addAdditionalFields("ip", "IP Address", True, ip)
+                    process.addAdditionalFields("pid","Process ID", True, k)
         elif "device information" in header:
             for k,v in res.items():
                 if any(x in k for x in ["Details", "Header", "Id"]):
@@ -84,27 +84,27 @@ def dotransform(args):
                 if any(x in v for x in ["unknown","running"]):
                     device = mt.addEntity("maltego.Device", " ".join(v.split()[2::]))
                     device.setValue(" ".join(v.split()[2::]))
-                    device.addAdditionalFields("ip", "IP Address", False, ip)
+                    device.addAdditionalFields("ip", "IP Address", True, ip)
         elif "software components" in header:
             for k,v in res.items():
                 if any(x in k for x in ["Details","Index","Header"]):
                     continue
                 iprout = mt.addEntity("msploitego.SotwareComponents", v)
                 iprout.setValue(v)
-                iprout.addAdditionalFields("ip", "IP Address", False, ip)
+                iprout.addAdditionalFields("ip", "IP Address", True, ip)
         elif "share" in header:
             path = res.get("Path").lstrip(":")
             name = res.get("Name").lstrip(":")
             networkshare = mt.addEntity("msploitego.NetworkShare", path)
             networkshare.setValue(path)
-            networkshare.addAdditionalFields("ip", "IP Address", False, ip)
-            networkshare.addAdditionalFields("name", "Share Name", False, name)
+            networkshare.addAdditionalFields("ip", "IP Address", True, ip)
+            networkshare.addAdditionalFields("name", "Share Name", True, name)
 
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
-# dotransform(sys.argv)
-args = ['snmpcheck.py',
- 'snmp/161:516',
- 'properties.metasploitservice=snmp/161:516#name=snmp#proto=udp#hostid=516#service.name=snmp#port=161#banner=snmp-No info#properties.service= #ip=10.11.1.227#state=open#fromfile=/root/data/report_pack/msploitdb20180524.xml']
-dotransform(args)
+dotransform(sys.argv)
+# args = ['snmpcheck.py',
+#  'snmp/161:516',
+#  'properties.metasploitservice=snmp/161:516#name=snmp#proto=udp#hostid=516#service.name=snmp#port=161#banner=snmp-No info#properties.service= #ip=10.11.1.227#state=open#fromfile=/root/data/report_pack/msploitdb20180524.xml']
+# dotransform(args)
