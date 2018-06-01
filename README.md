@@ -44,3 +44,9 @@ TODO's
 ======
 - Connect directly to the postgres database
 - Much, much, much more tranforms for actions generated entities.
+
+![maltegosnapshot01](https://user-images.githubusercontent.com/9602322/40849078-f941f302-658e-11e8-83b1-62aea49c5b65.png)
+
+![maltegosnapshot02a](https://user-images.githubusercontent.com/9602322/40849101-0abae328-658f-11e8-976a-25a9c70498e6.png)
+
+![maltegosnapshot03a](https://user-images.githubusercontent.com/9602322/40849110-109aa79c-658f-11e8-92fc-75631c49c2a6.png)
