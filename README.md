@@ -19,11 +19,13 @@ software installations
 Installation
 ============
 checkout and update the transform path inside Maltego
+
 In Maltego import config from msploitego/src/msploitego/resources/maltego/msploitego.mtz
 
 General Use
 ===========
 run a db_nmap scan in metatasploit, or import a previous scan
+
 a) msf> db_nmap -vvvv -T5 -A -sS -ST -Pn <target>
 b) msf> db_import /path/to/your/nmapfile.xml
   
@@ -31,6 +33,7 @@ export the database to an xml file
 msf> db_export -f xml /path/to/your/output.xml
 
 In Maltego drag a MetasploitDBXML entity onto the graph.
+
 Update the entity with the path to your metasploit database file.
 run the MetasploitDB transform to enumerate hosts.
 from there several transforms are available to enumerate services, vulnerabilities stored in the metasploit DB
