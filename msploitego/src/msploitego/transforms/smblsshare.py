@@ -1,6 +1,8 @@
-from common.nsescriptlib import scriptrunner
-from common.MaltegoTransform import *
+from pprint import pprint
 
+import unicodedata
+from smb.SMBConnection import SMBConnection
+from common.MaltegoTransform import *
 import re
 
 __author__ = 'Marc Gurreri'
@@ -19,34 +21,43 @@ def dotransform(args):
     ip = mt.getVar("ip")
     port = mt.getVar("port")
     hostid = mt.getVar("hostid")
-
-    scriptarg = "share={}".format(mt.getVar("sharename"))
-    rep = scriptrunner(port, "smb-ls", ip, scriptargs=scriptarg)
-    if rep.hosts[0].status == "up":
-        for res in rep.hosts[0].scripts_results:
-            output = res.get("output")
-            # dirlist = [x for x in output.split("\n") if x.strip()]
-            d2 = [ [ y.split()[0],y.split()[-1] ] for y in [x for x in output.split("\n") if x.strip()]]
-            # dirlist = [ [y.split()[0],y.split()[-1]] for y in [x for x in output.split("\n")] ]
-            for line in d2:
-                if re.match("^\<DIR\>", line[0]) and not re.match("^\.{1,2}", line[1]):
-                    entityname = "msploitego.SambaShare"
-                elif re.match("^[\d]+", line[0]):
-                    entityname = "msploitego.SambaFile"
-                else:
-                    continue
-                childentity = mt.addEntity(entityname, line[1])
-                childentity.setValue(line[1])
-                childentity.addAdditionalFields("sharename", "Share Name", False, mt.getVar("sharename"))
-                childentity.addAdditionalFields("ip", "IP Address", False, ip)
-                childentity.addAdditionalFields("port", "Port", False, port)
-    else:
-        mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
+    server = mt.getVar("server")
+    workgroup = mt.getVar("workgroup")
+    account = mt.getVar("account_used")
+    path = mt.getVar("path")
+    domaindns = mt.getVar("domain_dns")
+    sharename = mt.getVar("sharename")
+    conn = SMBConnection('', '', "localhost", server, domain=workgroup, use_ntlm_v2=True,is_direct_tcp=True)
+    conn.connect(ip, int(port))
+    regex = re.compile("^\.{1,2}$")
+    for file in conn.listPath(sharename, path):
+        filename = unicodedata.normalize("NFKD", file.filename).encode('ascii', 'ignore')
+        if file.isDirectory:
+            if not regex.match(filename):
+                entityname = "msploitego.SambaShare"
+                newpath = "{}/{}".format(path,filename)
+            else:
+                continue
+        else:
+            entityname = "msploitego.SambaFile"
+            newpath = "{}/{}".format(path, filename)
+        sambaentity = mt.addEntity(entityname,"{}/{}{}".format(ip,sharename,newpath))
+        sambaentity.setValue("{}/{}{}".format(ip,sharename,newpath))
+        sambaentity.addAdditionalFields("ip", "IP Address", False, ip)
+        sambaentity.addAdditionalFields("port", "Port", False, port)
+        sambaentity.addAdditionalFields("server", "Server", False, server)
+        sambaentity.addAdditionalFields("workgroup", "Workgroup", False, workgroup)
+        sambaentity.addAdditionalFields("filename", "Filename", False, filename)
+        sambaentity.addAdditionalFields("path", "Path", False, newpath)
+        sambaentity.addAdditionalFields("hostid", "Hostid", False, hostid)
+        sambaentity.addAdditionalFields("domain_dns", "Domain DNS", False, domaindns)
+        sambaentity.addAdditionalFields("sharename", "Share Name", False, sharename)
+    conn.close()
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
 # args = ['smblsshare.py',
-#  '\\\\10.11.1.31\\wwwroot: ',
-#  'directory.name=\\\\\\\\10.11.1.31\\\\wwwroot: #sharename=wwwroot#sambashare=\\\\\\\\10.11.1.31\\\\wwwroot: #ip=10.11.1.31#port=445#type=STYPE_DISKTREE#current user access=READ#anonymous access=<none>']
+#  '10.11.1.31/wwwroot/_vti_cnf',
+#  'directory.name=10.11.1.31/wwwroot/_vti_cnf#ip=10.11.1.31#port=445#server=RALPH#workgroup=THINC#filename=_vti_cnf#path=//_vti_cnf/#hostid=548#domain_dns=ralph#sharename=wwwroot']
 # dotransform(args)

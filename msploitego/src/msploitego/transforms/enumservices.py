@@ -96,7 +96,9 @@ def dotransform(args):
                             entityname = "msploitego.WebService"
                     else:
                         entityname = "msploitego.WebService"
-                elif servicename in ["samba","netbios-ssn","smb","microsoft-ds"]:
+                elif service.port == "32768":
+                    entityname = "msploitego.PotentialBackdoor"
+                elif any(x in servicename for x in  ["samba","netbios-ssn","smb","microsoft-ds","netbios-ns","netbios-dgm"]):
                     entityname = "msploitego.SambaService"
                 elif servicename == "ssh":
                     entityname = "msploitego.SSHService"
@@ -122,8 +124,10 @@ def dotransform(args):
                     entityname = "msploitego.finger"
                 elif "imap" in servicename:
                     entityname = "msploitego.imap"
-                elif "winrm" in servicename:
+                elif "winrm" in servicename.lower():
                     entityname = "msploitego.winrm"
+                elif "nmap" in servicename.lower():
+                    entityname = "msploitego.Nmap"
                 elif "ldap" in servicename.lower():
                     entityname = "msploitego.LDAP"
                 elif "compressnet" in servicename.lower():
@@ -146,30 +150,42 @@ def dotransform(args):
                     entityname = "msploitego.chargen"
                 elif "directplaysrvr" in servicename:
                     entityname = "msploitego.directplaysrvr"
-                elif "smtp" in servicename:
+                elif "smtp" in servicename.lower():
                     entityname = "msploitego.smtp"
-                elif "snmp" in servicename:
+                elif "ident" in servicename.lower():
+                    entityname = "msploitego.ident"
+                elif any(x in servicename.lower()for x in ["snmp", "smux"]):
                     entityname = "msploitego.SNMP"
                 elif "tcpwrapped" in servicename:
                     entityname = "msploitego.tcpwrapped"
                 elif "mysql" in servicename:
                     entityname = "msploitego.mysql"
-                elif any(x in servicename for x in ["mssql","ms-sql"]):
+                elif any(x in servicename.lower() for x in ["mssql","ms-sql","dbm"]):
                     entityname = "msploitego.mssql"
-                elif any(x in servicename for x in ["nat-pmp","upnp"]):
+                elif any(x in servicename for x in ["nat-pmp","upnp", "natpmp"]):
                     entityname = "msploitego.natpmp"
+                elif any(x in servicename.lower() for x in ["confluent", "kafka"]):
+                    entityname = "msploitego.ApacheKafka"
+                elif any(x in servicename for x in ["ndmp"]):
+                    entityname = "msploitego.NAS"
+                elif any(x in servicename.lower() for x in ["neod", "corba"]):
+                    entityname = "msploitego.ObjectRequestBroker"
                 elif "ajp" in servicename:
                     entityname = "msploitego.ajp"
                 elif "llmnr" in servicename.lower():
                     entityname = "msploitego.llmnr"
-                elif servicename.lower() in ["kerberos","kpasswd5","kerberos-sec"]:
+                elif any(x in servicename.lower() for x in ["keysrvr", "keyshadow"]):
+                    entityname = "msploitego.KeyServer"
+                elif servicename.lower() in ["kerberos","kpasswd5","kerberos-sec","krb524"]:
                     entityname = "msploitego.kerberos"
                 elif "msexchange-logcopier" in servicename.lower():
                     entityname = "msploitego.MSExchangeLogCopier"
-                elif "nfs" in servicename.lower():
+                elif any(x in servicename.lower() for x in ["nfs", "lockd","amiganetfs"]):
                     entityname = "msploitego.nfsacl"
                 elif "x11" in servicename.lower():
                     entityname = "msploitego.X11"
+                elif "sip" == servicename.lower():
+                    entityname = "msploitego.SIP"
                 elif "fmtp" in servicename.lower():
                     entityname = "msploitego.fmtp"
                 elif "telnet" in servicename.lower():
@@ -190,10 +206,14 @@ def dotransform(args):
                     entityname = "msploitego.rtsp"
                 elif "bacnet" in servicename.lower():
                     entityname = "msploitego.Bacnet"
+                elif "msdtc" in servicename.lower():
+                    entityname = "msploitego.msdtc"
                 elif "wfremotertm" in servicename.lower():
                     entityname = "msploitego.wfremotertm"
                 elif "msdp" in servicename.lower():
                     entityname = "msploitego.msdp"
+                elif "ssl" in servicename.lower():
+                    entityname = "msploitego.ssl"
                 elif all(x in servicename.lower() for x in ["afs","fileserver"]):
                     entityname = "msploitego.AFS"
                 elif "adobeserver" in servicename.lower():

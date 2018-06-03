@@ -19,11 +19,12 @@ def dotransform(args):
     mt.parseArguments(args)
     ip = mt.getVar("ip")
     port = mt.getVar("port")
-    rep = scriptrunner(port, "ftp-vuln-cve2010-4221,ftp-vsftpd-backdoor", ip)
+    hostid = mt.getVar("hostid")
+    rep = scriptrunner(port, "ftp-vuln-cve2010-4221,ftp-vsftpd-backdoor,ftp-anon,ftp-libopie,ftp-proftpd-backdoor", ip)
 
     for scriptrun in rep.hosts[0].services[0].scripts_results:
-        vulnentity = mt.addEntity("msploitego.FTPVulnerability", scriptrun.get("id"))
-        vulnentity.setValue(scriptrun.get("id"))
+        vulnentity = mt.addEntity("msploitego.FTPVulnerability", "{}:{}".format(scriptrun.get("id"),hostid))
+        vulnentity.setValue("{}:{}".format(scriptrun.get("id"),hostid))
         vulnentity.addAdditionalFields("description", "Description",False,scriptrun.get("output"))
         vulnentity.addAdditionalFields("ip", "IP Address", False, ip)
         vulnentity.addAdditionalFields("port", "Port", False, port)
@@ -34,5 +35,5 @@ def dotransform(args):
 dotransform(sys.argv)
 # args = ['ftpvulnscan.py',
 #  'ftp/21:506',
-#  'properties.metasploitservice=ftp/21:506#info=220 Femitter FTP Server ready.\\\\x0d\\\\x0a#name=ftp#proto=tcp#hostid=506#service.name=ftp#port=21#banner=220 Femitter FTP Server ready.\\\\x0d\\\\x0a#properties.service= #ip=10.11.1.128#state=open#fromfile=/root/data/report_pack/msploitdb20180524.xml']
+#  'properties.metasploitservice=ftp/21:506#info=220 Femitter FTP Server ready.\\\\x0d\\\\x0a#name=ftp#proto=tcp#hostid=506#service.name=ftp#port=21#banner=220 Femitter FTP Server ready.\\\\x0d\\\\x0a#properties.service= #ip=10.11.1.125#state=open#fromfile=/root/data/report_pack/msploitdb20180601.xml']
 # dotransform(args)

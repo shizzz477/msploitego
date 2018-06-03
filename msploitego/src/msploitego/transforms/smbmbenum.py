@@ -29,8 +29,8 @@ def dotransform(args):
             bucket = bucketparser(regex,output,sep=" ")
             for item in bucket:
                 header = item.get("Header")
-                shareentity = mt.addEntity("msploitego.WindowsMasterBrowser", header)
-                shareentity.setValue(header)
+                shareentity = mt.addEntity("msploitego.WindowsMasterBrowser", "{}:{}".format(header,hostid))
+                shareentity.setValue("{}:{}".format(header,hostid))
                 shareentity.addAdditionalFields("ip", "IP Address", False, ip)
                 shareentity.addAdditionalFields("port", "Port", False, port)
                 for k,v in item.items():
