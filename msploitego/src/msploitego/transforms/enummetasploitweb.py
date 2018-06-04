@@ -25,6 +25,7 @@ def setentity(m,p):
     pageentity.addAdditionalFields("ip", "IP Address", True, p.host)
     pageentity.addAdditionalFields("properties.siteurl", "Site URL", True,
                                    "http://{}:{}{}".format(p.host, p.port, p.path))
+
     for k, v in p:
         if v and v.strip():
             pageentity.addAdditionalFields(k, k.capitalize(), True, v)
