@@ -28,6 +28,8 @@ def dotransform(args):
                 groupentity.setValue(d[0])
                 groupentity.addAdditionalFields("groupname", "Group Name", False, d[0])
                 groupentity.addAdditionalFields("details", "Details", False, " ".join(d[1::]))
+                groupentity.addAdditionalFields("ip", "IP Address", False, ip)
+                groupentity.addAdditionalFields("port", "Port", False, port)
     else:
         mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
     mt.returnOutput()

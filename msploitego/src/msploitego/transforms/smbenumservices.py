@@ -28,9 +28,11 @@ def dotransform(args):
             regex = re.compile("^\s\s[a-zA-Z0-9_.-]+")
             bucket = bucketparser(regex,output)
             for item in bucket:
-                userentity = mt.addEntity("maltego.Service", item.get("Header"))
-                userentity.setValue(item.get("Header"))
-                userentity.addAdditionalFields("displayname", "Service Name", False, item.get("Display_name"))
+                serviceent = mt.addEntity("maltego.Service", "{}:{}".format(item.get("Header"),hostid))
+                serviceent.setValue("{}:{}".format(item.get("Header"),hostid))
+                serviceent.addAdditionalFields("displayname", "Service Name", False, item.get("Display_name"))
+                serviceent.addAdditionalFields("ip", "IP Address", False, ip)
+                serviceent.addAdditionalFields("port", "Port", False, port)
     else:
         mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
     mt.returnOutput()
