@@ -29,20 +29,21 @@ def dotransform(args):
     mdb = MetasploitXML(fn)
     if servicecount > 0:
         host =  mdb.gethost(ip)
-        for form in host.webforms:
-            formentity = mt.addEntity("maltego.Website", "http://{}:{}{}".format(ip,form.port,form.path))
-            formentity.setValue("http://{}:{}{}".format(ip,form.port,form.path))
-            formentity.addAdditionalFields("ip", "IP Address", True, ip)
-            for k,v in form:
-                if v and v.strip():
-                    formentity.addAdditionalFields(k, k.capitalize(), True, v)
-        for page in host.webpages:
-            pageentity = mt.addEntity("maltego.Website", "http://{}:{}{}".format(ip, page.port, page.path))
-            pageentity.setValue("http://{}:{}{}".format(ip, page.port, page.path))
-            for k, v in page:
-                if v and v.strip():
-                    pageentity.addAdditionalFields(k, k.capitalize(), True, v)
-            pageentity.addAdditionalFields("ip", "IP Address", True, ip)
+        # for form in host.webforms:
+        #     formentity = mt.addEntity("msploitego.SiteURL", "http://{}:{}{}".format(ip,form.port,form.path))
+        #     formentity.setValue("http://{}:{}{}".format(ip,form.port,form.path))
+        #     formentity.addAdditionalFields("ip", "IP Address", True, ip)
+        #     for k,v in form:
+        #         if v and v.strip():
+        #             formentity.addAdditionalFields(k, k.capitalize(), True, v)
+        # for page in host.webpages:
+        #     pageentity = mt.addEntity("msploitego.SiteURL", "http://{}:{}{}".format(ip, page.port, page.path))
+        #     pageentity.setValue("http://{}:{}{}".format(ip, page.port, page.path))
+        #     pageentity.addAdditionalFields("ip", "IP Address", True, ip)
+        #     for k, v in page:
+        #         if v and v.strip():
+        #             pageentity.addAdditionalFields(k, k.capitalize(), True, v)
+
         for service in host.services:
             entityname = "msploitego.MetasploitService"
             try:
@@ -306,6 +307,6 @@ def dotransform(args):
 
 dotransform(sys.argv)
 # args = ['enumservices.py',
-#  '10.11.1.22',
-#  'ipv4-address=10.11.1.22#ipaddress.internal=false#notecount=9#address=10.11.1.22#purpose=server#mac=00:50:56:b8:94:17#osfamily=Windows#servicecount=1003#name=BETHANY#state=alive#vulncount=0#fromfile=/root/data/report_pack/msploitdb20180531.xml#osname=Windows 2012 R2']
+#  '10.11.1.50',
+#  'ipv4-address=10.11.1.50#ipaddress.internal=false#notecount=6#address=10.11.1.50#purpose=server#mac=00:50:56:b8:f0:4a#osfamily=Windows#servicecount=10#name=BETHANY2#state=alive#vulncount=0#fromfile=/root/data/report_pack/msploitdb20180601.xml#osname=Windows 2012 R2']
 # dotransform(args)

@@ -16,7 +16,7 @@ __status__ = 'Development'
 
 def dotransform(args):
     mt = MaltegoTransform()
-    # mt.debug(pprint(args))
+    mt.debug(pprint(args))
     mt.parseArguments(args)
     ip = mt.getVar("ip")
     port = mt.getVar("port")
@@ -26,9 +26,10 @@ def dotransform(args):
     account = mt.getVar("account_used")
     path = mt.getVar("sambapath")
     domaindns = mt.getVar("domain_dns")
+
     if not path:
         path = "/"
-    conn = SMBConnection('', '', "localhost", server, domain=workgroup, use_ntlm_v2=True,
+    conn = SMBConnection('admin', 'admin', "localhost", server, domain=workgroup, use_ntlm_v2=True,
                          is_direct_tcp=True)
     conn.connect(ip, int(port))
     shares = conn.listShares()
@@ -63,8 +64,9 @@ def dotransform(args):
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
-dotransform(sys.argv)
-# args = ['smbenumall.py',
-#  'RALPH:THINC',
-#  'properties.samba=RALPH:THINC#ip=10.11.1.31#port=445#server=RALPH#workgroup=THINC#hostid=548#info=Windows Server 2003 3790 Service Pack 1#name=ralph#banner.text=Windows Server 2003 3790 Service Pack 1#service.name=microsoft-ds/445:548#properties.service=microsoft-ds/445:548#proto=tcp#fqdn=ralph#authentication_level=user#os=Windows Server 2003 3790 Service Pack 1#cpe=cpe:/o:microsoft:windows_server_2003::sp1#message_signing=disabled#domain_dns=ralph#challenge_response=supported#date=2018-06-02T12:23:39-05:00#account_used=guest#lanmanager=Windows Server 2003 5.2']
-# dotransform(args)
+# dotransform(sys.argv)
+args = ['smbenumall.py',
+ 'OBSERVER:THINC',
+ 'properties.samba=OBSERVER:THINC#date=2013-12-27T23:37:02-08:00#lanmanager=Windows 7 Professional 6.1#server=OBSERVER#workgroup=THINC#account_used=guest#os=Windows 7 Professional 7601 Service Pack 1#service.name=microsoft-ds/445:510#fqdn=observer.thinc.local#ip=10.11.1.218#hostid=510#challenge_response=supported#banner.text=Windows 7 Professional 7601 Service Pack 1#domain_dns=thinc.local#forest_dns=thinc.local#port=445#properties.service=microsoft-ds/445:510#proto=tcp#name=observer.thinc.local#cpe=cpe:/o:microsoft:windows_7::sp1:professional#authentication_level=user#info=Windows 7 Professional 7601 Service Pack 1#message_signing=disabled']
+
+dotransform(args)

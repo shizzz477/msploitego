@@ -27,6 +27,7 @@ def dotransform(args):
     path = mt.getVar("path")
     domaindns = mt.getVar("domain_dns")
     sharename = mt.getVar("sharename")
+
     conn = SMBConnection('', '', "localhost", server, domain=workgroup, use_ntlm_v2=True,is_direct_tcp=True)
     conn.connect(ip, int(port))
     regex = re.compile("^\.{1,2}$")
