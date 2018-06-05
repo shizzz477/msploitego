@@ -43,3 +43,12 @@ class MsploitPostgres(object):
     def getforHost(self,host,table):
         self._cur.execute("SELECT hosts.address,hosts.id,{}.* FROM public.hosts, public.{} WHERE hosts.id = {}.host_id and hosts.address = '{}'".format(table,table,table,host))
         return self._cur.fetchall()
+
+    def getForAllHosts(self,table):
+        self._cur.execute(
+            "SELECT hosts.address,hosts.id,{}.* FROM public.hosts, public.{} WHERE hosts.id = {}.host_id".format(table, table, table))
+        return self._cur.fetchall()
+
+    def getSessionDetails(self,sessionid):
+        self._cur.execute("SELECT sessions.id,session_events.* FROM public.sessions, public.session_events WHERE sessions.id = session_events.session_id and sessions.id = '{}'".format(sessionid))
+        return self._cur.fetchall()
