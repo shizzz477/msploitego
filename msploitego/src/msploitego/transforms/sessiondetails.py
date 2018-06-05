@@ -20,7 +20,10 @@ def dotransform(args):
     # mt.debug(pprint(args))
     mt.parseArguments(args)
     sessionid = mt.getValue()
-    mpost = MsploitPostgres("msf", "unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE=", "msf")
+    db = mt.getVar("db")
+    user = mt.getVar("user")
+    password = mt.getVar("password").replace("\\", "")
+    mpost = MsploitPostgres(user, password, db)
     for detail in mpost.getSessionDetails(sessionid):
         detailent = mt.addEntity("msploitego.SessionDetail", str(detail.get("id")))
         detailent.setValue(str(detail.get("id")))
@@ -29,6 +32,9 @@ def dotransform(args):
                 detailent.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
             elif v and str(v).strip():
                 detailent.addAdditionalFields(k, k.capitalize(), False, str(v))
+        detailent.addAdditionalFields("user", "User", False, user)
+        detailent.addAdditionalFields("password", "Password", False, password)
+        detailent.addAdditionalFields("db", "db", False, db)
     mt.returnOutput()
     mt.addUIMessage("completed!")
 

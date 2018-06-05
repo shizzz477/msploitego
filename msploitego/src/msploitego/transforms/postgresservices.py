@@ -26,8 +26,10 @@ def dotransform(args):
     os_name = mt.getVar("os_name")
     os_sp = mt.getVar("os_sp")
     hostid = mt.getVar("id")
-
-    mpost = MsploitPostgres("msf", "unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE=", "msf")
+    db = mt.getVar("db")
+    user = mt.getVar("user")
+    password = mt.getVar("password").replace("\\", "")
+    mpost = MsploitPostgres(user, password, db)
     for service in mpost.getforHost(ip, "services"):
         entityname = getserviceentity(service)
         hostservice = mt.addEntity(entityname, "{}/{}:{}".format(service.get("name"), service.get("port"), hostid))
@@ -38,6 +40,9 @@ def dotransform(args):
                 hostservice.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
             elif v and str(v).strip():
                 hostservice.addAdditionalFields(k, k.capitalize(), False, str(v))
+        hostservice.addAdditionalFields("user", "User", False, user)
+        hostservice.addAdditionalFields("password", "Password", False, password)
+        hostservice.addAdditionalFields("db", "db", False, db)
     if mac:
         macentity = mt.addEntity("maltego.MacAddress", mac)
         macentity.setValue(mac)
@@ -58,6 +63,7 @@ def dotransform(args):
 
 dotransform(sys.argv)
 # args = ['postgresservices.py',
-#  '10.11.1.5',
-#  'ipv4-address=10.11.1.5#ipaddress.internal=false#updated_at=23/1/2018#vuln_count=21#exploit_attempt_count=7#id=517#state=alive#os_family=Windows#os_name=Windows XP#workspace_id=18#note_count=36#mac=00:50:56:B8:55:EC#service_count=8#purpose=client#address=10.11.1.5#arch=x86#os_sp=SP1#name=ALICE#created_at=23/1/2018#virtual_host=VMWare']
+#  '10.11.1.10',
+#  'ipv4-address=10.11.1.10#ipaddress.internal=false#updated_at=23/1/2018#vuln_count=8#exploit_attempt_count=6#id=531#state=alive#os_family=Windows#os_name=Windows 2003#workspace_id=18#note_count=9#mac=00:50:56:B8:76:82#service_count=2#purpose=server#address=10.11.1.10#os_sp=SP2#name=10.11.1.10#created_at=23/1/2018#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\\\\\=#db=msf']
+#
 # dotransform(args)
