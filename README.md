@@ -9,7 +9,7 @@
 
 THIS IS A BETA RELEASE, please be nice and report any issues
 
-msploitego leverages the data gathered in a Metasploit database by enumerating and creating specific entities for services.  Services like samba, smtp, snmp, http have transforms to enumerate even further
+msploitego leverages the data gathered in a Metasploit database by enumerating and creating specific entities for services.  Services like samba, smtp, snmp, http have transforms to enumerate even further.  Entities can either be loaded from a Metasploit XML file or taken directly from the Postgres msf database
 
 Requirements
 ============
@@ -21,7 +21,6 @@ Requirements
   - enum4linux
   - smtp-check
   - nikto
-  
 
 Installation
 ============
@@ -30,17 +29,24 @@ Installation
 
 General Use
 ===========
+Using exported Metasploit xml file
+----------------------------------
 - run a db_nmap scan in metatasploit, or import a previous scan
   - msf> db_nmap -vvvv -T5 -A -sS -ST -Pn <target>
   - msf> db_import /path/to/your/nmapfile.xml
   
-- export the database to an xml file
+  - export the database to an xml file
   - msf> db_export -f xml /path/to/your/output.xml
 
-- In Maltego drag a MetasploitDBXML entity onto the graph.
-- Update the entity with the path to your metasploit database file.
-- run the MetasploitDB transform to enumerate hosts.
-- from there several transforms are available to enumerate services, vulnerabilities stored in the metasploit DB
+  - In Maltego drag a MetasploitDBXML entity onto the graph.
+  - Update the entity with the path to your metasploit database file.
+  - run the MetasploitDB transform to enumerate hosts.
+  - from there several transforms are available to enumerate services, vulnerabilities stored in the metasploit DB
+
+Using Postgres
+--------------
+- drag and drop a Postgresql DB entity onto the canvas, enter DB details.
+- run the Postgresql transforms directly against a running DB
 
 Notes
 =====
@@ -48,7 +54,7 @@ Notes
 
 TODO's
 ======
-- Connect directly to the postgres database
-- Much, much, much more tranforms for actions generated entities.
+- Connect directly to the postgres database - **in progress**
+- Much, much, much more tranforms for actions on generated entities.
 
 
