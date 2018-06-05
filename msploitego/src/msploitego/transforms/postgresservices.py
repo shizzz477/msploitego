@@ -64,6 +64,4 @@ def dotransform(args):
 dotransform(sys.argv)
 # args = ['postgresservices.py',
 #  '10.11.1.10',
-#  'ipv4-address=10.11.1.10#ipaddress.internal=false#updated_at=23/1/2018#vuln_count=8#exploit_attempt_count=6#id=531#state=alive#os_family=Windows#os_name=Windows 2003#workspace_id=18#note_count=9#mac=00:50:56:B8:76:82#service_count=2#purpose=server#address=10.11.1.10#os_sp=SP2#name=10.11.1.10#created_at=23/1/2018#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\\\\\=#db=msf']
-#
 # dotransform(args)
