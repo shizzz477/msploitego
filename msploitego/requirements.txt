@@ -3,3 +3,4 @@ deprecated
 NmapParser
 NmapProcess
 pysmbc
+psycopg2

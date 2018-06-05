@@ -1,0 +1,16 @@
+machine("msploitego.enumerate.host",
+    displayName:"Enumerate Host",
+    author:"Marc Gurreri",
+    description:"This performs serveral enumerations on the host from the Metasploit DB) {
+
+    start {
+        //services, forms
+        log("Performing Service Enumeration",showEntities:false)
+        status("Phase 1 - Service Enumeration")
+        paths {
+            run("msploitego.EnumMetasploitServices")
+            run("msploitego.EnumMetasploitformsandpages")
+            run("msploitego.EnumMetasploitDBVulns")
+        }
+    }
+}
