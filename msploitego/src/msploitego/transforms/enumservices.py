@@ -29,21 +29,6 @@ def dotransform(args):
     mdb = MetasploitXML(fn)
     if servicecount > 0:
         host =  mdb.gethost(ip)
-        # for form in host.webforms:
-        #     formentity = mt.addEntity("msploitego.SiteURL", "http://{}:{}{}".format(ip,form.port,form.path))
-        #     formentity.setValue("http://{}:{}{}".format(ip,form.port,form.path))
-        #     formentity.addAdditionalFields("ip", "IP Address", True, ip)
-        #     for k,v in form:
-        #         if v and v.strip():
-        #             formentity.addAdditionalFields(k, k.capitalize(), True, v)
-        # for page in host.webpages:
-        #     pageentity = mt.addEntity("msploitego.SiteURL", "http://{}:{}{}".format(ip, page.port, page.path))
-        #     pageentity.setValue("http://{}:{}{}".format(ip, page.port, page.path))
-        #     pageentity.addAdditionalFields("ip", "IP Address", True, ip)
-        #     for k, v in page:
-        #         if v and v.strip():
-        #             pageentity.addAdditionalFields(k, k.capitalize(), True, v)
-
         for service in host.services:
             entityname = "msploitego.MetasploitService"
             try:
@@ -223,7 +208,6 @@ def dotransform(args):
                     entityname = "msploitego.MicrosoftTerminalServices"
                 elif servicename.lower() in ["rmiregistry", "java-rmi"]:
                     entityname = "msploitego.JavaRMI"
-                #msploitego.AdobeserverService
             hostservice = mt.addEntity(entityname, "{}/{}:{}".format(servicename,service.port,service.hostid))
             hostservice.setValue = "{}/{}:{}".format(servicename,service.port,service.hostid)
             hostservice.addAdditionalFields("ip","IP Address",True,ip)
