@@ -17,6 +17,8 @@ def dotransform(args):
     ip = mt.getVar("ip")
     port = mt.getVar("port")
     hostid = mt.getVar("hostid")
+    if not hostid:
+        hostid = mt.getVar("id")
     rep = scriptrunner(port, "smtp-commands,smtp-enum-users,smtp-open-relay,smtp-vuln-cve2011-1764", ip)
 
     if rep.hosts[0].status == "up":
@@ -26,6 +28,7 @@ def dotransform(args):
             infoentity.addAdditionalFields("description", "Description",False,scriptrun.get("output"))
             infoentity.addAdditionalFields("ip", "IP Address", False, ip)
             infoentity.addAdditionalFields("port", "Port", False, port)
+            infoentity.addAdditionalFields("hostid", "Host Id", False, hostid)
     else:
         mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
     mt.returnOutput()

@@ -32,8 +32,11 @@ def dotransform(args):
     mpost = MsploitPostgres(user, password, db)
     for service in mpost.getforHost(ip, "services"):
         entityname = getserviceentity(service)
-        hostservice = mt.addEntity(entityname, "{}/{}:{}".format(service.get("name"), service.get("port"), hostid))
-        hostservice.setValue("{}/{}:{}".format(service.get("name"), service.get("port"), hostid))
+        servicename = service.get("name")
+        if not servicename:
+            servicename = "unknown"
+        hostservice = mt.addEntity(entityname, "{}/{}:{}".format(servicename, service.get("port"), hostid))
+        hostservice.setValue("{}/{}:{}".format(servicename, service.get("port"), hostid))
         hostservice.addAdditionalFields("ip", "IP Address", True, ip)
         for k,v in service.items():
             if isinstance(v,datetime):

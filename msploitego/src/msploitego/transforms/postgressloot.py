@@ -39,6 +39,7 @@ def dotransform(args):
         lootentity.addAdditionalFields("user", "User", False, user)
         lootentity.addAdditionalFields("password", "Password", False, password)
         lootentity.addAdditionalFields("db", "db", False, db)
+        lootentity.addAdditionalFields("ip", "IP Address", False, ip)
     mt.returnOutput()
     mt.addUIMessage("completed!")
 

@@ -16,11 +16,12 @@ Requirements
 - Python 2.7
 - Has only been tested on Kali Linux
 - software installations
-  - Metasploit
+  - Metasploit Framework
   - nmap
   - enum4linux
   - smtp-check
   - nikto
+  - exploitdb
 
 Installation
 ============
