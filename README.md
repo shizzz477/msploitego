@@ -19,7 +19,7 @@ Requirements
   - Metasploit Framework
   - nmap
   - enum4linux
-  - smtp-check
+  - snmp-check
   - nikto
   - exploitdb
 

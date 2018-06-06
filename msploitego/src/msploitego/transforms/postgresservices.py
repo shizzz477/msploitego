@@ -26,6 +26,8 @@ def dotransform(args):
     os_name = mt.getVar("os_name")
     os_sp = mt.getVar("os_sp")
     hostid = mt.getVar("id")
+    if not hostid:
+        hostid = mt.getVar("hostid")
     db = mt.getVar("db")
     user = mt.getVar("user")
     password = mt.getVar("password").replace("\\", "")
@@ -38,6 +40,12 @@ def dotransform(args):
         hostservice = mt.addEntity(entityname, "{}/{}:{}".format(servicename, service.get("port"), hostid))
         hostservice.setValue("{}/{}:{}".format(servicename, service.get("port"), hostid))
         hostservice.addAdditionalFields("ip", "IP Address", True, ip)
+        if service.get("info"):
+            hostservice.addAdditionalFields("banner.text", "Service Banner", True, service.get("info"))
+        else:
+            hostservice.addAdditionalFields("banner.text", "Service Banner", True, "")
+        hostservice.addAdditionalFields("service.name", "Description", True, "{}/{}".format(service.get("port"),servicename))
+
         for k,v in service.items():
             if isinstance(v,datetime):
                 hostservice.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
