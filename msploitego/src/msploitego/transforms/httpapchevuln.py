@@ -30,6 +30,7 @@ def dotransform(args):
                     for key,value in details.items():
                         if value and value.strip():
                             apachevuln.addAdditionalFields(key, key, False, value.strip())
+                apachevuln.addAdditionalFields(ip, "IP Address", False, ip)
     else:
         mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
     mt.returnOutput()

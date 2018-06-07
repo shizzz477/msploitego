@@ -23,8 +23,11 @@ def dotransform(args):
     rep = scriptrunner(port, "ftp-vuln-cve2010-4221,ftp-vsftpd-backdoor,ftp-anon,ftp-libopie,ftp-proftpd-backdoor", ip)
 
     for scriptrun in rep.hosts[0].services[0].scripts_results:
-        vulnentity = mt.addEntity("msploitego.FTPVulnerability", "{}:{}".format(scriptrun.get("id"),hostid))
-        vulnentity.setValue("{}:{}".format(scriptrun.get("id"),hostid))
+        scriptid = scriptrun.get("id")
+        if scriptid.lower() == "ftp-vuln-cve2010-4221":
+            scriptid = "cve-2010-4221"
+        vulnentity = mt.addEntity("msploitego.FTPVulnerability", scriptid)
+        vulnentity.setValue(scriptid)
         vulnentity.addAdditionalFields("description", "Description",False,scriptrun.get("output"))
         vulnentity.addAdditionalFields("ip", "IP Address", False, ip)
         vulnentity.addAdditionalFields("port", "Port", False, port)

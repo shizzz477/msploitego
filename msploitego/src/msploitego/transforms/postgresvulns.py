@@ -26,8 +26,8 @@ def dotransform(args):
     password = mt.getVar("password").replace("\\", "")
     mpost = MsploitPostgres(user, password, db)
     for vuln in mpost.getforHost(ip, "vulns"):
-        vulnentity = mt.addEntity("maltego.Vulnerability", vuln.get("name"))
-        vulnentity.setValue(vuln.get("name"))
+        vulnentity = mt.addEntity("maltego.Vulnerability", "{}:{}".format(vuln.get("name"),hostid))
+        vulnentity.setValue("{}:{}".format(vuln.get("name"),hostid))
         vulnentity.addAdditionalFields("ip", "IP Address", True, ip)
         for k,v in vuln.items():
             if isinstance(v,datetime):
