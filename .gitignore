@@ -12,3 +12,5 @@
 *.pyc
 
 msploitego/src/msploitego/transforms/common/scratch\.py
+/msploitego/src/msploitego/transforms/msrpcscan.py
+/msploitego/src/msploitego/transforms/toservice.py

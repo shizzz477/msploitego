@@ -46,7 +46,9 @@ def dotransform(args):
         else:
             hostservice.addAdditionalFields("banner.text", "Service Banner", True, "")
         # hostservice.addAdditionalFields("service.name", "Description", True, "{}/{}".format(service.get("port"),servicename))
-
+        if servicename in ["http", "https", "possible_wls", "www", "ncacn_http", "ccproxy-http", "ssl/http",
+                           "http-proxy"]:
+            hostservice.addAdditionalFields("niktofile", "Nikto File", True, '')
         for k,v in service.items():
             if isinstance(v,datetime):
                 hostservice.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
