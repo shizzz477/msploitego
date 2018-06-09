@@ -21,12 +21,13 @@ class MsploitPostgres(object):
         self._cur = self._connect()
 
     def _connect(self):
-        try:
-            conn = psycopg2.connect("dbname='{}' user='{}' host='localhost' password='{}'".format(self._db,self._user,self._password))
-        except Exception:
-            print "I am unable to connect to the database"
-        else:
-            return conn.cursor(cursor_factory=self._cursorfactory)
+        # try:
+        # conn = psycopg2.connect("dbname='{}' user='{}' host='localhost' password='{}'".format(self._db,self._user,self._password))
+        conn = psycopg2.connect(dbname=self._db, user=self._user, host="localhost", password=self._password)
+        # except Exception:
+        #     print "I am unable to connect to the database"
+        # else:
+        return conn.cursor(cursor_factory=self._cursorfactory)
 
     def getAllHosts(self):
         self._cur.execute("SELECT * FROM public.hosts")
@@ -51,4 +52,8 @@ class MsploitPostgres(object):
 
     def getSessionDetails(self,sessionid):
         self._cur.execute("SELECT sessions.id,session_events.* FROM public.sessions, public.session_events WHERE sessions.id = session_events.session_id and sessions.id = '{}'".format(sessionid))
+        return self._cur.fetchall()
+
+    def getCredentials(self):
+        self._cur.execute("SELECT metasploit_credential_privates.id, metasploit_credential_privates.type, metasploit_credential_privates.data, metasploit_credential_privates.jtr_format, metasploit_credential_publics.id,   metasploit_credential_publics.username, metasploit_credential_cores.origin_type FROM   public.metasploit_credential_privates, public.metasploit_credential_publics, public.metasploit_credential_cores WHERE   metasploit_credential_cores.private_id = metasploit_credential_privates.id AND metasploit_credential_cores.public_id = metasploit_credential_publics.id;")
         return self._cur.fetchall()
