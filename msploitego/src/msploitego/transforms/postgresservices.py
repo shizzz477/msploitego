@@ -41,6 +41,8 @@ def dotransform(args):
         hostservice.setValue("{}/{}:{}".format(servicename, service.get("port"), hostid))
         hostservice.addAdditionalFields("ip", "IP Address", True, ip)
         hostservice.addAdditionalFields("service.name", "Description", True, "{}/{}:{}".format(servicename, service.get("port"), hostid))
+        if machinename:
+            hostservice.addAdditionalFields("machinename", "Machine Name", True, machinename)
         if service.get("info"):
             hostservice.addAdditionalFields("banner.text", "Service Banner", True, service.get("info"))
         else:
@@ -61,7 +63,8 @@ def dotransform(args):
         macentity = mt.addEntity("maltego.MacAddress", mac)
         macentity.setValue(mac)
         macentity.addAdditionalFields("ip", "IP Address", True, ip)
-    if machinename and re.match("^[a-zA-z]+", machinename):
+    # if machinename and re.match("^[a-zA-z]+", machinename):
+    if machinename:
         hostentity = mt.addEntity("msploitego.Hostname", machinename)
         hostentity.setValue(machinename)
         hostentity.addAdditionalFields("ip", "IP Address", True, ip)
