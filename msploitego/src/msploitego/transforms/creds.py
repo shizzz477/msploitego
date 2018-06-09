@@ -22,8 +22,7 @@ def dotransform(args):
     db = mt.getValue()
     user = mt.getVar("user")
     password = mt.getVar("password").replace("\\","")
-    mpost = MsploitPostgres(user, "unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE=", "msf")
-    # mpost = MsploitPostgres(user, password, db)
+    mpost = MsploitPostgres(user, password, db)
     creds = mpost.getCredentials()
     for cred in mpost.getCredentials():
         if cred.get("type") == "Metasploit::Credential::Password":
