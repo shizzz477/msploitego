@@ -57,3 +57,8 @@ class MsploitPostgres(object):
     def getCredentials(self):
         self._cur.execute("SELECT metasploit_credential_privates.id, metasploit_credential_privates.type, metasploit_credential_privates.data, metasploit_credential_privates.jtr_format, metasploit_credential_publics.id,   metasploit_credential_publics.username, metasploit_credential_cores.origin_type FROM   public.metasploit_credential_privates, public.metasploit_credential_publics, public.metasploit_credential_cores WHERE   metasploit_credential_cores.private_id = metasploit_credential_privates.id AND metasploit_credential_cores.public_id = metasploit_credential_publics.id;")
         return self._cur.fetchall()
+
+    def getwebpagesforhost(self,host):
+        sql = "SELECT web_sites.vhost, web_sites.comments, web_sites.options, web_sites.id as websiteid,web_pages.web_site_id,web_pages.path,web_pages.query,web_pages.code,web_pages.cookie,web_pages.headers,  web_pages.body,web_sites.service_id,services.id as serviceid,services.port,services.proto,services.state,   services.name as protoname, services.info FROM public.web_sites, public.web_pages, public.services WHERE   web_sites.service_id = services.id AND web_sites.id = web_pages.web_site_id AND web_sites.vhost = '{}';".format(host)
+        self._cur.execute(sql)
+        return self._cur.fetchall()
