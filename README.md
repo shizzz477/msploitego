@@ -11,6 +11,8 @@ THIS IS A BETA RELEASE, please be nice and report any issues
 
 msploitego leverages the data gathered in a Metasploit database by enumerating and creating specific entities for services.  Services like samba, smtp, snmp, http have transforms to enumerate even further.  Entities can either be loaded from a Metasploit XML file or taken directly from the Postgres msf database
 
+**I am open to hearing suggestions for new transforms and enhancements!!!**
+
 Requirements
 ============
 - Python 2.7
@@ -51,10 +53,13 @@ Using Postgres
 - drag and drop a Postgresql DB entity onto the canvas, enter DB details.
 - run the Postgresql transforms directly against a running DB
 
-Notes
-=====
-- Import results from Nessus or OpenVAS into Metasploit and use the Enum Vulnerabilities transform. 
-- Instead of running a **nikto** scan directly from Maltego, I've opted to include a field to for a Nikto XML file. Nikto can take long time to run so best to manage that directly from the os.  Enter the full path filename in the 'Nikto File' field, then run the Nikto parser to enumerate.
+Recommendations
+===============
+- Start by beefing up your Metasploit DB
+    - run a detailed nmap scan.  i.e. db_nmap -vvvv -sS -sV -sU -A -T5 1.1.1.1/24
+    - Import results from Nessus or OpenVAS into Metasploit and use the Enum Vulnerabilities transform. 
+    - Run the auxiliary/crawler/msfcrawler on all http/https ports.  This will gather useful data.
+- Run **nikto** scan with xml output then enter the full path filename in the 'Nikto File' field. Run the Nikto parser to enumerate.
 
 TODO's
 ======
