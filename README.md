@@ -47,8 +47,9 @@ Using exported Metasploit xml file
   - Update the entity with the path to your metasploit database file.
   - run the MetasploitDB transform to enumerate hosts.
   - from there several transforms are available to enumerate services, vulnerabilities stored in the metasploit DB
+- This method is not recommended due to performance constraints.  If the XML file is large then running transforms will consume a lot of memory
 
-Using Postgres
+Using Postgres(recommended!)
 --------------
 - drag and drop a Postgresql DB entity onto the canvas, enter DB details.
 - run the Postgresql transforms directly against a running DB
@@ -56,6 +57,7 @@ Using Postgres
 Recommendations
 ===============
 - Start by beefing up your Metasploit DB
+    - look at msploitstarter.sh in the scripts directory.  It's run nmap and then tons of auxiliary modules to fatten up your Metasploit DB.
     - run a detailed nmap scan.  i.e. db_nmap -vvvv -sS -sV -sU -A -T5 1.1.1.1/24
     - Import results from Nessus or OpenVAS into Metasploit and use the Enum Vulnerabilities transform. 
     - Run the auxiliary/crawler/msfcrawler on all http/https ports.  This will gather useful data.

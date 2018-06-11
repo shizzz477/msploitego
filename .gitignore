@@ -3,17 +3,12 @@
 /msploitego/build/
 /msploitego/dist/
 /msploitego/src/msploitego.egg-info/
-/oscp/
-/osint/
-/python-libnmap/
 /msploitego/src/msploitego/transforms/helloworld.py
 /msploitego/src/msploitego/transforms/metasploitdb-canari.py
 
 *.pyc
 
 msploitego/src/msploitego/transforms/common/scratch\.py
-/msploitego/src/msploitego/transforms/msrpcscan.py
 /msploitego/src/msploitego/transforms/toservice.py
 /msploitego/src/msploitego/transforms/smblistshares.py
 /msploitego/src/msploitego/transforms/toHashFile.py
-!/msploitego/src/msploitego/transforms/msrpcscan.py
