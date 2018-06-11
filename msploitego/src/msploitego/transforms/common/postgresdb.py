@@ -62,3 +62,8 @@ class MsploitPostgres(object):
         sql = "SELECT web_sites.vhost, web_sites.comments, web_sites.options, web_sites.id as websiteid,web_pages.web_site_id,web_pages.path,web_pages.query,web_pages.code,web_pages.cookie,web_pages.headers,  web_pages.body,web_sites.service_id,services.id as serviceid,services.port,services.proto,services.state,   services.name as protoname, services.info FROM public.web_sites, public.web_pages, public.services WHERE   web_sites.service_id = services.id AND web_sites.id = web_pages.web_site_id AND web_sites.vhost = '{}';".format(host)
         self._cur.execute(sql)
         return self._cur.fetchall()
+
+    def getwebformsforhost(self,host):
+        sql = "SELECT web_forms.web_site_id, web_forms.created_at, web_forms.id, web_forms.path, web_forms.method,   web_forms.params, web_forms.query, web_sites.id, web_sites.vhost, web_sites.options, web_sites.comments,  services.port, services.proto, services.name as protoname, services.info FROM public.web_forms, public.web_sites,   public.services WHERE web_sites.id = web_forms.web_site_id AND web_sites.service_id = services.id AND web_sites.vhost = '{}';".format(host)
+        self._cur.execute(sql)
+        return self._cur.fetchall()

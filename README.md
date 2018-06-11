@@ -53,6 +53,7 @@ Using Postgres
 
 Notes
 =====
+- Import results from Nessus or OpenVAS into Metasploit and use the Enum Vulnerabilities transform. 
 - Instead of running a **nikto** scan directly from Maltego, I've opted to include a field to for a Nikto XML file. Nikto can take long time to run so best to manage that directly from the os.  Enter the full path filename in the 'Nikto File' field, then run the Nikto parser to enumerate.
 
 TODO's

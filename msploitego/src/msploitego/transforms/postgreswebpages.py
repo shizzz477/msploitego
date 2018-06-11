@@ -1,7 +1,6 @@
 from pprint import pprint
 
 from datetime import datetime
-
 from common.MaltegoTransform import *
 from common.postgresdb import MsploitPostgres
 import sys
@@ -37,23 +36,21 @@ def dotransform(args):
             elif v and str(v).strip():
                 pageent.addAdditionalFields(k, k.capitalize(), False, str(v))
             pageent.addAdditionalFields("ip", "IP Address", False, ip)
+    for form in mpost.getwebformsforhost(ip):
+        urlstring = "http"
+        if "ssl" in form.get("protoname"):
+            urlstring += "s"
+        urlstring += "://{}:{}{}".format(ip,form.get("port"),form.get("path"))
+        forment = mt.addEntity("msploitego.WebForm",urlstring)
+        forment.setValue(urlstring)
+        for k,v in form.items():
+            if isinstance(v,datetime):
+                forment.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
+            elif v and str(v).strip():
+                forment.addAdditionalFields(k, k.capitalize(), False, str(v))
+            forment.addAdditionalFields("ip", "IP Address", False, ip)
 
-    #     if loot.get("name"):
-    #         lootentity = mt.addEntity("msploitego.MetasploitLoot", loot.get("name"))
-    #         lootentity.setValue(loot.get("name"))
-    #     else:
-    #         lootentity = mt.addEntity("msploitego.MetasploitLoot", loot.get("ltype"))
-    #         lootentity.setValue(loot.get("ltype"))
-
-    #     lootentity.addAdditionalFields("user", "User", False, user)
-    #     lootentity.addAdditionalFields("password", "Password", False, password)
-    #     lootentity.addAdditionalFields("db", "db", False, db)
-    #     lootentity.addAdditionalFields("ip", "IP Address", False, ip)
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['postgreswebpages.py',
-#  '10.11.1.31',
-#  'ipv4-address=10.11.1.31#ipaddress.internal=false#vuln_count=21#address=10.11.1.31#os_family=Windows#purpose=client#service_count=8#os_sp=SP1#created_at=23/1/2018#mac=00:50:56:B8:55:EC#workspace_id=18#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=23/1/2018#exploit_attempt_count=7#name=ALICE#os_name=Windows XP#id=517#state=alive#arch=x86#user=msf#note_count=36#db=msf#virtual_host=VMWare']
-# dotransform(args)
