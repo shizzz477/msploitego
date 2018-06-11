@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from common.nsescriptlib import scriptrunner
 from common.MaltegoTransform import *
 from common.corelib import bucketparser
@@ -20,7 +22,8 @@ def dotransform(args):
     ip = mt.getVar("ip")
     port = mt.getVar("port")
     hostid = mt.getVar("hostid")
-    rep = scriptrunner(port, "smb-enum-shares", ip)
+    machinename = mt.getVar("machinename")
+    rep = scriptrunner(port, "smb-enum-shares", ip, args="-sU -sS")
 
     if rep.hosts[0].status == "up":
         for res in rep.hosts[0].scripts_results:
@@ -28,14 +31,21 @@ def dotransform(args):
             regex = re.compile("\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")
             bucket = bucketparser(regex,output,method="search")
             for item in bucket:
+                warning = item.get("Warning")
+                if warning and re.search("denied",warning, re.I):
+                    enitiyname = "msploitego.AccessDenied"
+                else:
+                    enitiyname = "msploitego.SambaShare"
                 header = item.get("Header")
-                shareentity = mt.addEntity("msploitego.SambaShare", header)
+                shareentity = mt.addEntity(enitiyname, header)
                 shareentity.setValue(header)
                 sharename = header.split("\\")[-1].strip().strip(":")
                 shareentity.addAdditionalFields("sharename", "Share Name", False, sharename)
                 shareentity.addAdditionalFields("sambashare", "Samba Share", False, header)
                 shareentity.addAdditionalFields("ip", "IP Address", False, ip)
                 shareentity.addAdditionalFields("port", "Port", False, port)
+                if machinename:
+                    shareentity.addAdditionalFields("machinename", "Machine Name", False, machinename)
                 for k,v in item.items():
                     if k == "Header":
                         continue
@@ -46,7 +56,8 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['smbenumservices.py',
-#  'smb/445:39',
-#  'properties.metasploitservice=smb/445:39#info=Windows 2000 SP0 - 4 (language:English) (name:JD)#name=smb#proto=tcp#hostid=39#service.name=smb#port=445#banner=Windows 2000 SP0 - 4 (language:English) (name:JD)#properties.service= #ip=10.11.1.24#state=open#fromfile=/root/data/report_pack/msploitdb_oscp-20180325.xml']
+# args = ['smbenumshares.py',
+#  'microsoft-ds/445:517',
+#  'properties.samba=microsoft-ds/445:517#ip=10.11.1.5#service.name=microsoft-ds/445:517#macinename=ALICE#banner.text=Microsoft Windows XP microsoft-ds#info=Microsoft Windows XP microsoft-ds#name=microsoft-ds#proto=tcp#created_at=11/3/2018#updated_at=11/3/2018#id=6824#state=open#address=10.11.1.5#host_id=517#port=445#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#db=msf']
+#
 # dotransform(args)

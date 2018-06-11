@@ -18,17 +18,16 @@ def dotransform(args):
     ip = mt.getVar("ip")
     port = mt.getVar("port")
     hostid = mt.getVar("hostid")
-    diry = mt.getValue()
+    module = mt.getValue()
 
-    website = mt.addEntity("maltego.URL", "http://{}:{}{}".format(ip,port,diry))
-    website.setValue("http://{}:{}{}".format(ip,port,diry))
-    website.addAdditionalFields("dir", "Directory", False, diry)
-    website.addAdditionalFields("url", "URL", False, "http://{}:{}{}".format(ip,port,diry))
-    website.addAdditionalFields("ip", "IP Address", False, ip)
-    website.addAdditionalFields("port", "Port", False, port)
+    falsepos = mt.addEntity("msploitego.IsVulnerable", "{}:{}".format(module,ip,port))
+    falsepos.setValue("{}:{}".format(module,ip,port))
+    falsepos.addAdditionalFields("ip", "IP Address", False, ip)
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['tourl.py', '/xmlrpc.php', 'directory.name=/xmlrpc.php#port=80#ip=10.11.1.50']
+# args = ['convertofalsetrue.py',
+#  'auxiliary/scanner/smb/smb_ms17_010',
+# 'properties.metasploitmodule=auxiliary/scanner/smb/smb_ms17_010#rank=normal#details=MS17-010 SMB RCE Detection\n#ip=10.11.1.73']
 # dotransform(args)

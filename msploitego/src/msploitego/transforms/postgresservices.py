@@ -26,23 +26,45 @@ def dotransform(args):
     os_name = mt.getVar("os_name")
     os_sp = mt.getVar("os_sp")
     hostid = mt.getVar("id")
-
-    mpost = MsploitPostgres("msf", "unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE=", "msf")
+    if not hostid:
+        hostid = mt.getVar("hostid")
+    db = mt.getVar("db")
+    user = mt.getVar("user")
+    password = mt.getVar("password").replace("\\", "")
+    mpost = MsploitPostgres(user, password, db)
     for service in mpost.getforHost(ip, "services"):
         entityname = getserviceentity(service)
-        hostservice = mt.addEntity(entityname, "{}/{}:{}".format(service.get("name"), service.get("port"), hostid))
-        hostservice.setValue("{}/{}:{}".format(service.get("name"), service.get("port"), hostid))
+        servicename = service.get("name")
+        if not servicename:
+            servicename = "unknown"
+        hostservice = mt.addEntity(entityname, "{}/{}:{}".format(servicename, service.get("port"), hostid))
+        hostservice.setValue("{}/{}:{}".format(servicename, service.get("port"), hostid))
         hostservice.addAdditionalFields("ip", "IP Address", True, ip)
+        hostservice.addAdditionalFields("service.name", "Description", True, "{}/{}:{}".format(servicename, service.get("port"), hostid))
+        if machinename:
+            hostservice.addAdditionalFields("machinename", "Machine Name", True, machinename)
+        if service.get("info"):
+            hostservice.addAdditionalFields("banner.text", "Service Banner", True, service.get("info"))
+        else:
+            hostservice.addAdditionalFields("banner.text", "Service Banner", True, "")
+        # hostservice.addAdditionalFields("service.name", "Description", True, "{}/{}".format(service.get("port"),servicename))
+        if servicename in ["http", "https", "possible_wls", "www", "ncacn_http", "ccproxy-http", "ssl/http",
+                           "http-proxy"]:
+            hostservice.addAdditionalFields("niktofile", "Nikto File", True, '')
         for k,v in service.items():
             if isinstance(v,datetime):
                 hostservice.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
             elif v and str(v).strip():
                 hostservice.addAdditionalFields(k, k.capitalize(), False, str(v))
+        hostservice.addAdditionalFields("user", "User", False, user)
+        hostservice.addAdditionalFields("password", "Password", False, password)
+        hostservice.addAdditionalFields("db", "db", False, db)
     if mac:
         macentity = mt.addEntity("maltego.MacAddress", mac)
         macentity.setValue(mac)
         macentity.addAdditionalFields("ip", "IP Address", True, ip)
-    if machinename and re.match("^[a-zA-z]+", machinename):
+    # if machinename and re.match("^[a-zA-z]+", machinename):
+    if machinename:
         hostentity = mt.addEntity("msploitego.Hostname", machinename)
         hostentity.setValue(machinename)
         hostentity.addAdditionalFields("ip", "IP Address", True, ip)
@@ -58,6 +80,7 @@ def dotransform(args):
 
 dotransform(sys.argv)
 # args = ['postgresservices.py',
-#  '10.11.1.5',
-#  'ipv4-address=10.11.1.5#ipaddress.internal=false#updated_at=23/1/2018#vuln_count=21#exploit_attempt_count=7#id=517#state=alive#os_family=Windows#os_name=Windows XP#workspace_id=18#note_count=36#mac=00:50:56:B8:55:EC#service_count=8#purpose=client#address=10.11.1.5#arch=x86#os_sp=SP1#name=ALICE#created_at=23/1/2018#virtual_host=VMWare']
+#  '10.11.1.8',
+#  'ipv4-address=10.11.1.8#ipaddress.internal=false#vuln_count=31#address=10.11.1.8#os_family=Linux#purpose=server#service_count=11#os_sp=2.6.X#created_at=23/1/2018#mac=00:50:56:B8:20:14#workspace_id=18#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=23/1/2018#exploit_attempt_count=11#name=10.11.1.8#os_name=Linux#id=547#state=alive#user=msf#note_count=37#db=msf']
+#
 # dotransform(args)

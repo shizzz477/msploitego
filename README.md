@@ -16,16 +16,19 @@ Requirements
 - Python 2.7
 - Has only been tested on Kali Linux
 - software installations
-  - Metasploit
+  - Metasploit Framework
   - nmap
   - enum4linux
-  - smtp-check
+  - snmp-check
   - nikto
+  - exploitdb
 
 Installation
 ============
-- checkout and update the transform path inside Maltego
 - In Maltego import config from msploitego/src/msploitego/resources/maltego/msploitego.mtz
+- checkout and update the transform path inside Maltego
+    - easiest way would be to create a symbolic link to the transforms directory in /root/)
+    - ln -s /path/to/your/msploitego/src/msploitego/transforms /root/
 
 General Use
 ===========
@@ -50,11 +53,12 @@ Using Postgres
 
 Notes
 =====
-- Instead of running a **nikto** scan directly from Maltego, I've opted to include a field to for a Nikto XML file.  Nikto can take  long time to run so best to manage that directly from the os.
+- Import results from Nessus or OpenVAS into Metasploit and use the Enum Vulnerabilities transform. 
+- Instead of running a **nikto** scan directly from Maltego, I've opted to include a field to for a Nikto XML file. Nikto can take long time to run so best to manage that directly from the os.  Enter the full path filename in the 'Nikto File' field, then run the Nikto parser to enumerate.
 
 TODO's
 ======
-- Connect directly to the postgres database - **in progress**
+- Connect directly to the postgres database - **BETA**
 - Much, much, much more tranforms for actions on generated entities.
 
 

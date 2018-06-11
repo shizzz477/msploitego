@@ -18,17 +18,18 @@ def dotransform(args):
     ip = mt.getVar("ip")
     port = mt.getVar("port")
     hostid = mt.getVar("hostid")
-    diry = mt.getValue()
+    path = mt.getVar("uri")
+    namelink = mt.getVar("namelink")
 
-    website = mt.addEntity("maltego.URL", "http://{}:{}{}".format(ip,port,diry))
-    website.setValue("http://{}:{}{}".format(ip,port,diry))
-    website.addAdditionalFields("dir", "Directory", False, diry)
-    website.addAdditionalFields("url", "URL", False, "http://{}:{}{}".format(ip,port,diry))
-    website.addAdditionalFields("ip", "IP Address", False, ip)
-    website.addAdditionalFields("port", "Port", False, port)
+    urlent = mt.addEntity("msploitego.SiteURL", namelink)
+    urlent.setValue(namelink)
+    urlent.addAdditionalFields("ip", "IP Address", False, ip)
+    urlent.addAdditionalFields("port", "Port", False, port)
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['tourl.py', '/xmlrpc.php', 'directory.name=/xmlrpc.php#port=80#ip=10.11.1.50']
+# args = ['/root/transforms/toURL.py',
+#  '/files/: Directory indexing found.',
+#  'properties.niktodetail=/files/: Directory indexing found.#description=/files/: Directory indexing found.#iplink=https://10.11.1.35:443/files/#namelink=https://10.11.1.35:443/files/#uri=/files/#ip=10.11.1.35#port=443']
 # dotransform(args)

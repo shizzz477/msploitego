@@ -25,7 +25,7 @@ def dotransform(args):
         nr = NiktoReport(fn)
         for d in nr.details:
             det = mt.addEntity("msploitego.niktodetail", d.description)
-            det.setValue(d.description[0:25])
+            det.setValue(d.description[0:45])
             det.addAdditionalFields("description","Description",False,d.description)
             det.addAdditionalFields("iplink", "IP Link", False, d.iplink)
             det.addAdditionalFields("namelink", "Name Link", False, d.namelink)

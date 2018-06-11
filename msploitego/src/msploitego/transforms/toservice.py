@@ -13,19 +13,19 @@ __status__ = 'Development'
 
 def dotransform(args):
     mt = MaltegoTransform()
-    # mt.debug(pprint(args))
+    mt.debug(pprint(args))
     mt.parseArguments(args)
     ip = mt.getVar("ip")
     port = mt.getVar("port")
     hostid = mt.getVar("hostid")
     diry = mt.getValue()
 
-    website = mt.addEntity("maltego.URL", "http://{}:{}{}".format(ip,port,diry))
-    website.setValue("http://{}:{}{}".format(ip,port,diry))
-    website.addAdditionalFields("dir", "Directory", False, diry)
-    website.addAdditionalFields("url", "URL", False, "http://{}:{}{}".format(ip,port,diry))
-    website.addAdditionalFields("ip", "IP Address", False, ip)
-    website.addAdditionalFields("port", "Port", False, port)
+    # website = mt.addEntity("maltego.URL", "http://{}:{}{}".format(ip,port,diry))
+    # website.setValue("http://{}:{}{}".format(ip,port,diry))
+    # website.addAdditionalFields("dir", "Directory", False, diry)
+    # website.addAdditionalFields("url", "URL", False, "http://{}:{}{}".format(ip,port,diry))
+    # website.addAdditionalFields("ip", "IP Address", False, ip)
+    # website.addAdditionalFields("port", "Port", False, port)
     mt.returnOutput()
     mt.addUIMessage("completed!")
 

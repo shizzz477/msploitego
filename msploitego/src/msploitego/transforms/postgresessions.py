@@ -19,7 +19,10 @@ def dotransform(args):
     mt = MaltegoTransform()
     # mt.debug(pprint(args))
     mt.parseArguments(args)
-    mpost = MsploitPostgres("msf", "unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE=", "msf")
+    db = mt.getValue()
+    user = mt.getVar("user")
+    password = mt.getVar("password").replace("\\", "")
+    mpost = MsploitPostgres(user, password, db)
     for session in mpost.getForAllHosts("sessions"):
         sessionentity = mt.addEntity("msploitego.MeterpreterSession", str(session.get("id")))
         sessionentity.setValue(str(session.get("id")))
@@ -28,6 +31,9 @@ def dotransform(args):
                 sessionentity.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
             elif v and str(v).strip():
                 sessionentity.addAdditionalFields(k, k.capitalize(), False, str(v))
+        sessionentity.addAdditionalFields("user", "User", False, user)
+        sessionentity.addAdditionalFields("password", "Password", False, password)
+        sessionentity.addAdditionalFields("db", "db", False, db)
     mt.returnOutput()
     mt.addUIMessage("completed!")
 

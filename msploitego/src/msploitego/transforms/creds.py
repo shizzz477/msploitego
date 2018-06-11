@@ -23,24 +23,29 @@ def dotransform(args):
     user = mt.getVar("user")
     password = mt.getVar("password").replace("\\","")
     mpost = MsploitPostgres(user, password, db)
-    for host in mpost.getAllHosts():
-        hostentity = mt.addEntity("maltego.IPv4Address", host.get("address"))
-        hostentity.setValue(host.get("address"))
-        for k,v in host.items():
+    creds = mpost.getCredentials()
+    for cred in mpost.getCredentials():
+        if cred.get("type") == "Metasploit::Credential::Password":
+            entityname = "msploitego.Password"
+            data = cred.get("data").split(":")[0]
+        elif cred.get("type") == "Metasploit::Credential::NTLMHash":
+            entityname = "msploitego.EncryptedPassword"
+            data = cred.get("data")
+        else:
+            entityname = "msploitego.Credentials"
+            data = cred.get("data")
+        hostentity = mt.addEntity(entityname, data)
+        hostentity.setValue(data)
+        for k,v in cred.items():
             if isinstance(v,datetime):
                 hostentity.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
             elif v and str(v).strip():
                 hostentity.addAdditionalFields(k, k.capitalize(), False, str(v))
-        hostentity.addAdditionalFields("user", "User", False, user)
-        hostentity.addAdditionalFields("password", "Password", False, password)
-        hostentity.addAdditionalFields("db", "db", False, db)
-
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
 # args = ['postgreshosts.py',
 #  'msf',
-#  'properties.postgresqldb=msf#user=msf#password==']
-#
+#  'properties.postgresqldb=msf#user=msf#password=password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=']
 # dotransform(args)

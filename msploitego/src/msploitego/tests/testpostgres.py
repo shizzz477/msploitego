@@ -8,7 +8,7 @@ import psycopg2.extras
 class TestPostgresDb(unittest.TestCase):
 
     def setUp(self):
-        self.mpost = MsploitPostgres("msf","unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE=", "msf")
+        self.mpost = MsploitPostgres("msf","msf", "msf")
         self.assertIsNotNone(self.mpost)
 
     def tearDown(self):

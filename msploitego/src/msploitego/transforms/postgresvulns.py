@@ -4,7 +4,6 @@ from datetime import datetime
 from common.MaltegoTransform import *
 from common.postgresdb import MsploitPostgres
 import sys
-from common.servicefactory import getserviceentity, getosentity
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
@@ -22,7 +21,10 @@ def dotransform(args):
     ip = mt.getValue()
     hostid = mt.getVar("id")
 
-    mpost = MsploitPostgres("msf", "unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE=", "msf")
+    db = mt.getVar("db")
+    user = mt.getVar("user")
+    password = mt.getVar("password").replace("\\", "")
+    mpost = MsploitPostgres(user, password, db)
     for vuln in mpost.getforHost(ip, "vulns"):
         vulnentity = mt.addEntity("maltego.Vulnerability", "{}:{}".format(vuln.get("name"),hostid))
         vulnentity.setValue("{}:{}".format(vuln.get("name"),hostid))
@@ -32,6 +34,8 @@ def dotransform(args):
                 vulnentity.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
             elif v and str(v).strip():
                 vulnentity.addAdditionalFields(k, k.capitalize(), False, str(v))
+        vulnentity.addAdditionalFields("user", "User", False, user)
+        vulnentity.addAdditionalFields("db", "db", False, db)
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
