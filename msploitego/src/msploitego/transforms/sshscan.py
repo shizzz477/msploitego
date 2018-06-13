@@ -31,7 +31,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['sshauthmethod.py',
-#  'ssh/22:265',
-#  'properties.metasploitservice=ssh/22:265#info=OpenSSH 7.4p1 Debian 10+deb9u2 protocol 2.0#name=ssh#proto=tcp#hostid=265#service.name=80/Apache 9#port=22#banner=Apache 9#properties.service= #ip=10.11.1.234#state=open#fromfile=/root/data/scan/hthebox/msploitdb-20180508.xml']
 # dotransform(args)

@@ -34,8 +34,5 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['smbvuln.py',
-#  'smb/445:22',
-#  'properties.metasploitservice=smb/445:22#info=Windows 2008 Standard SP1 (build:6001) (name:HELPDESK) (workgroup:WORKGROUP )#name=smb#proto=tcp#hostid=22#service.name=80/Apache 9#port=445#banner=Apache 9#properties.service= #ip=10.11.1.145#state=open#fromfile=/root/data/report_pack/msploitdb_oscp-20180325.xml']
 # dotransform(args)
 

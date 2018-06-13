@@ -47,7 +47,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['rdpvuln.py',
-#  'msrdp/3389:512',
-#  'properties.metasploitservice=msrdp/3389:512#name=msrdp#proto=tcp#hostid=512#service.name=msrdp#port=3389#banner=msrdp-No info#properties.service= #ip=10.11.1.247#state=open#fromfile=/root/data/report_pack/msploitdb20180524.xml']
 # dotransform(args)

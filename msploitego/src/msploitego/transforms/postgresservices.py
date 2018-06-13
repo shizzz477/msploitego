@@ -79,8 +79,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['postgresservices.py',
-#  '10.11.1.8',
-#  'ipv4-address=10.11.1.8#ipaddress.internal=false#vuln_count=31#address=10.11.1.8#os_family=Linux#purpose=server#service_count=11#os_sp=2.6.X#created_at=23/1/2018#mac=00:50:56:B8:20:14#workspace_id=18#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=23/1/2018#exploit_attempt_count=11#name=10.11.1.8#os_name=Linux#id=547#state=alive#user=msf#note_count=37#db=msf']
-#
 # dotransform(args)

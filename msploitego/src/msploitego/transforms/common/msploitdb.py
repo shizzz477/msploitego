@@ -133,17 +133,4 @@ class Mwebvuln(XMLElement):
     def __init__(self,elem):
         super(Mwebvuln, self).__init__(elem)
 
-# mdb = MetasploitXML("/root/data/scan/hthebox/msploitdb-20180508.xml")
-# print "class loaded"
-# for h in mdb.hosts:
-#     for s in h.services:
-#         pprint(s)
-#     for v in h.vulns:
-#         pprint(v)
-#         if v.refs:
-#             for ref in v.refs:
-#                 pprint(ref)
-#     for n in h.notes:
-#         pprint(n)
-
 

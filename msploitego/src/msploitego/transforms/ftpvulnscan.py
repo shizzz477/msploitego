@@ -36,7 +36,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['ftpvulnscan.py',
-#  'ftp/21:506',
-#  'properties.metasploitservice=ftp/21:506#info=220 Femitter FTP Server ready.\\\\x0d\\\\x0a#name=ftp#proto=tcp#hostid=506#service.name=ftp#port=21#banner=220 Femitter FTP Server ready.\\\\x0d\\\\x0a#properties.service= #ip=10.11.1.125#state=open#fromfile=/root/data/report_pack/msploitdb20180601.xml']
 # dotransform(args)

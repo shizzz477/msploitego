@@ -27,7 +27,3 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['convertofalsetrue.py',
-#  'auxiliary/scanner/smb/smb_ms17_010',
-# 'properties.metasploitmodule=auxiliary/scanner/smb/smb_ms17_010#rank=normal#details=MS17-010 SMB RCE Detection\n#ip=10.11.1.73']
-# dotransform(args)

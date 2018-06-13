@@ -53,7 +53,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['smbscan.py',
-#  'smb/445:520',
-#  'properties.samba=smb/445:520#ip=10.11.1.145#service.name=smb/445:520#machinename=HELPDESK#banner.text=Windows 2008 Service Pack 1 (Unknown)#info=Windows 2008 Service Pack 1 (Unknown)#name=smb#proto=tcp#created_at=11/3/2018#updated_at=11/6/2018#id=6837#state=open#address=10.11.1.145#host_id=520#port=445#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#db=msf']
 # dotransform(args)

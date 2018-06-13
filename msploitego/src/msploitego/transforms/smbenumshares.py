@@ -56,8 +56,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['smbenumshares.py',
-#  'microsoft-ds/445:517',
-#  'properties.samba=microsoft-ds/445:517#ip=10.11.1.5#service.name=microsoft-ds/445:517#macinename=ALICE#banner.text=Microsoft Windows XP microsoft-ds#info=Microsoft Windows XP microsoft-ds#name=microsoft-ds#proto=tcp#created_at=11/3/2018#updated_at=11/3/2018#id=6824#state=open#address=10.11.1.5#host_id=517#port=445#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#db=msf']
-#
 # dotransform(args)

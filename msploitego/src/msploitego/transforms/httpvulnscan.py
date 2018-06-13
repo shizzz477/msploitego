@@ -45,7 +45,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['httpvulnscan.py',
-#  'http/80:547',
-#  'properties.metasploitservice=http/80:547#info=Apache httpd 2.0.52 (CentOS)#name=http#proto=tcp#service.name=80/Apache 9#port=80#banner=Apache httpd 2.0.52 (CentOS)#properties.service= #ip=10.11.1.10#created_at=24/2/2018#updated_at=24/2/2018#id=6950#state=open#address=10.11.1.8#host_id=547#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#db=msf']
 # dotransform(args)

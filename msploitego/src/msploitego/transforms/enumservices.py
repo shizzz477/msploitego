@@ -85,7 +85,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['enumservices.py',
-#  '10.11.1.50',
-#  'ipv4-address=10.11.1.50#ipaddress.internal=false#notecount=6#address=10.11.1.50#purpose=server#mac=00:50:56:b8:f0:4a#osfamily=Windows#servicecount=10#name=BETHANY2#state=alive#vulncount=0#fromfile=/root/data/report_pack/msploitdb20180601.xml#osname=Windows 2012 R2']
 # dotransform(args)

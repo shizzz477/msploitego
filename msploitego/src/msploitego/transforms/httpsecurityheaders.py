@@ -33,8 +33,5 @@ def dotransform(args):
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
-# dotransform(sys.argv)
-args = ['httpenum.py',
- 'http/80:249',
- 'properties.metasploitservice=http/80:249#info=Microsoft IIS httpd 10.0#name=http#proto=tcp#hostid=249#service.name=80/Apache 9#port=80#banner=Apache 9#properties.service= #ip=10.10.10.83#fromfile=/root/proj/oscp-maltego/oscp/src/oscp/transforms/common/msploitdb20180501.xml#state=open']
-dotransform(args)
+dotransform(sys.argv)
+# dotransform(args)

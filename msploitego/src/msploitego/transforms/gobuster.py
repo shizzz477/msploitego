@@ -33,7 +33,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['gobuster.py',
-#  'http://10.11.1.24:80',
-# 'fqdn=http://10.11.1.24:80#website.ssl-enabled=false#ports=80#url=http://10.11.1.24:80#ip=10.11.1.24#port=80']
 # dotransform(args)

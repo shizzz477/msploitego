@@ -39,13 +39,6 @@ def _reg(st,meth,reg):
     elif meth == "search":
         return reg.search(st)
 
-# def removebadchars(s):
-#     newstring = ""
-#     for i in s:
-#         if ord(i) < 128:
-#             newstring += i
-#     return newstring
-
 def _checkstring(s):
     if isinstance(s,unicode):
         return s.encode('ascii', 'replace')

@@ -28,8 +28,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['towebsite.py',
-#  'possible_wls/80:545',
-#  'properties.metasploitservice=possible_wls/80:545#info=Apache/2.2.4 (Ubuntu) PHP/5.2.3-1ubuntu6 ( Powered by PHP/5.2.3-1ubuntu6 )#name=possible_wls#proto=tcp#hostid=545#service.name=possible_wls#port=80#banner=Apache/2.2.4 (Ubuntu) PHP/5.2.3-1ubuntu6 ( Powered by PHP/5.2.3-1ubuntu6 )#properties.service= #ip=10.11.1.24#niktofile=/root/data/oscp_prep/scan_pack/nikto/10.11.1.24-80.xml#state=open#fromfile=/root/data/report_pack/msploitdb20180524.xml']
-#
 # dotransform(args)

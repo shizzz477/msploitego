@@ -35,7 +35,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['smtpenumusers.py',
-#  'smtp/25:298',
-#  'properties.metasploitservice=smtp/25:298#info=JAMES smtpd 2.3.2#name=smtp#proto=tcp#hostid=298#service.name=80/Apache 9#port=110#banner=Apache 9#properties.service= #ip=10.11.1.24#state=open#fromfile=/root/data/scan/hthebox/msploitdb20180517.xml']
 # dotransform(args)
