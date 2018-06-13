@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+import codecs
+import unicodedata
+import chardet
+import io
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
@@ -13,7 +17,9 @@ __all__ = [
     'XMLElement',
     'Nelement',
     'static_var',
-    'bucketparser'
+    'bucketparser',
+    'checkAndConvertToAscii',
+    'getFileContents'
 ]
 
 def static_var(varname, value):
@@ -32,6 +38,36 @@ def _reg(st,meth,reg):
         return reg.match(st)
     elif meth == "search":
         return reg.search(st)
+
+# def removebadchars(s):
+#     newstring = ""
+#     for i in s:
+#         if ord(i) < 128:
+#             newstring += i
+#     return newstring
+
+def _checkstring(s):
+    if isinstance(s,unicode):
+        return s.encode('ascii', 'replace')
+    return s
+
+def checkAndConvertToAscii(s):
+    if isinstance(s,list):
+        newlist = []
+        for line in s:
+            newlist.append(_checkstring(line))
+        return newlist
+    return _checkstring(s)
+
+def getFileContents(fn):
+    contents = []
+    with io.open(fn, 'r', encoding="ascii") as f:
+        for line in f:
+            if "Target path" in line:
+                continue
+            asciiline = checkAndConvertToAscii(line)
+            contents.append(asciiline.replace('\x00',''))
+    return contents
 
 def bucketparser(regex,data,sep=":",method="match"):
     i = 0

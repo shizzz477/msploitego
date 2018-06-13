@@ -1,11 +1,11 @@
 from pprint import pprint
 
-import unicodedata
 from smb.base import NotReadyError
 
 from smb.SMBConnection import SMBConnection
 from common.MaltegoTransform import *
 import re
+from common.corelib import checkAndConvertToAscii
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
@@ -43,9 +43,9 @@ def dotransform(args):
         accessdenied = mt.addEntity("msploitego.AccessDenied",sharename)
         accessdenied.setValue(sharename)
     else:
-        for file in files:
-            filename = unicodedata.normalize("NFKD", file.filename).encode('ascii', 'ignore')
-            if file.isDirectory:
+        for f in files:
+            filename = checkAndConvertToAscii(f.filename)
+            if f.isDirectory:
                 if not regex.match(filename):
                     entityname = "msploitego.SambaShare"
                     newpath = "{}/{}".format(path,filename)

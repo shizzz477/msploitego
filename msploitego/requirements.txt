@@ -4,3 +4,4 @@ NmapParser
 NmapProcess
 pysmbc
 psycopg2
+chardet

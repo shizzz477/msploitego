@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import re
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
@@ -60,6 +61,8 @@ def getserviceentity(s):
                     return "msploitego.OracleXMLDB"
                 elif "goahead" in s.get("info").lower():
                     return "msploitego.GoAheadWebServer"
+                elif "webmin" in s.get("info").lower():
+                    return "msploitego.Webmin"
                 else:
                     return "msploitego.WebService"
             else:
@@ -191,6 +194,12 @@ def getserviceentity(s):
             return "msploitego.MicrosoftTerminalServices"
         elif servicename.lower() in ["rmiregistry", "java-rmi"]:
             return "msploitego.JavaRMI"
+        elif re.match("^ams$", servicename, re.I):
+            return "msploitego.AdvancedMultithreadedServer"
+        elif re.search("landesk", servicename, re.I):
+            return "msploitego.Landesk"
+        elif any(x in servicename.lower() for x in ["lansource","citrix"]):
+            return "msploitego.Lansource"
     return entityname
 
 def getosentity(osfamily,osname):

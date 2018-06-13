@@ -47,7 +47,7 @@ def dotransform(args):
             hostservice.addAdditionalFields("banner.text", "Service Banner", True, service.get("info"))
         else:
             hostservice.addAdditionalFields("banner.text", "Service Banner", True, "")
-        # hostservice.addAdditionalFields("service.name", "Description", True, "{}/{}".format(service.get("port"),servicename))
+
         if servicename in ["http", "https", "possible_wls", "www", "ncacn_http", "ccproxy-http", "ssl/http",
                            "http-proxy"]:
             hostservice.addAdditionalFields("niktofile", "Nikto File", True, '')
