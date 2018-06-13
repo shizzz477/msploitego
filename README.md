@@ -53,6 +53,7 @@ Using Postgres(recommended!)
 --------------
 - drag and drop a Postgresql DB entity onto the canvas, enter DB details.
 - run the Postgresql transforms directly against a running DB
+- **if you dont know the password for your postgresql instance look in /usr/share/metasploit-framework/config/database.yml**
 
 Recommendations
 ===============
@@ -68,4 +69,6 @@ TODO's
 - Connect directly to the postgres database - **BETA**
 - Much, much, much more tranforms for actions on generated entities.
 
-
+Known Issues
+============
+- some Metasploit enitities like loot files sometimes contain a bad character which the MaltegoTransform class cannot process. This causes an exception and nothing returned. I've beaten my head against the wall trying to 'cleanse'/decode the data but to no avail.
