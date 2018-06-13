@@ -20,23 +20,26 @@ def dotransform(args):
     mt.parseArguments(args)
     ip = mt.getValue()
     db = mt.getVar("db")
+    hostid = mt.getVar("id")
     user = mt.getVar("user")
     password = mt.getVar("password").replace("\\", "")
     mpost = MsploitPostgres(user, password, db)
-    for page in mpost.getwebpagesforhost(ip):
+    for page in mpost.getwebpagesforhost(hostid):
         urlstring = "http"
         if "ssl" in page.get("protoname"):
             urlstring += "s"
         urlstring += "://{}:{}{}".format(ip,page.get("port"),page.get("path"))
         pageent = mt.addEntity("msploitego.WebURL",urlstring)
         pageent.setValue(urlstring)
+        pageent.addAdditionalFields("ip", "IP Address", False, ip)
+        pageent.addAdditionalFields("hostid", "Host Id", False, hostid)
         for k,v in page.items():
             if isinstance(v,datetime):
                 pageent.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
             elif v and str(v).strip():
                 pageent.addAdditionalFields(k, k.capitalize(), False, str(v))
-            pageent.addAdditionalFields("ip", "IP Address", False, ip)
-    for form in mpost.getwebformsforhost(ip):
+
+    for form in mpost.getwebformsforhost(hostid):
         urlstring = "http"
         if "ssl" in form.get("protoname"):
             urlstring += "s"
@@ -51,6 +54,9 @@ def dotransform(args):
             forment.addAdditionalFields("ip", "IP Address", False, ip)
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
+# args = ['postgreswebpages.py',
+#  '10.11.1.252',
+#  'ipv4-address=10.11.1.252#ipaddress.internal=false#vuln_count=11#workspace=default#address=10.11.1.252#os_family=Linux#purpose=server#service_count=4#os_sp=2.6#created_at=23/1/2018#mac=00:50:56:B8:58:1D#workspace_id=18#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=23/1/2018#name=10.11.1.252#os_name=Linux#id=533#state=alive#user=msf#note_count=15#db=msf']
+# dotransform(args)

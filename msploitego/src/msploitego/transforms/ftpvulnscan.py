@@ -33,7 +33,7 @@ def dotransform(args):
         vulnentity.addAdditionalFields("port", "Port", False, port)
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # dotransform(args)

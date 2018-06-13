@@ -34,6 +34,6 @@ def dotransform(args):
     else:
         mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+
 
 dotransform(sys.argv)

@@ -68,7 +68,7 @@ def dotransform(args):
             sambaentity.addAdditionalFields("sharename", "Share Name", False, sharename)
     conn.close()
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # dotransform(args)

@@ -30,7 +30,7 @@ def dotransform(args):
         webdir.addAdditionalFields("url", "URL", False, url)
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # dotransform(args)

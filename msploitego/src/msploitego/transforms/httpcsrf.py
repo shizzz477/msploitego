@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from common.nsescriptlib import scriptrunner
 from common.MaltegoTransform import *
 import sys
@@ -17,27 +19,27 @@ def dotransform(args):
     mt.parseArguments(args)
     ip = mt.getVar("ip")
     port = mt.getVar("port")
-    name = mt.getVar("name")
-    rep = scriptrunner(port, "http-csrf", ip)
+    servicename = mt.getVar("servicename")
+    serviceid = mt.getVar("serviceid")
+    hostid = mt.getVar("hostid")
+    workspace = mt.getVar("workspace")
 
-    tags = ["Path", "Form id", "Form action"]
+    rep = scriptrunner(port, "http-csrf", ip)
     for scriptrun in rep.hosts[0].services[0].scripts_results:
         output = scriptrun.get("output")
-        csrfentity = None
-        for line in output.split("\n"):
-            if any(x in line for x in tags):
-                sline = line.split(":")
-                tag = sline[0].lstrip()
-                data = ":".join(sline[1::])
-                if tag == "Path":
-                    csrfentity = mt.addEntity("msploitego.CSFR", data)
-                    csrfentity.setValue(data)
-                elif tag == "Form id":
-                    csrfentity.addAdditionalFields("formid", "Form ID", True, data)
-                elif tag == "Form action":
-                    csrfentity.addAdditionalFields("formaction", "Form Action", True, data)
+        csrfentity = mt.addEntity("msploitego.CSFR", scriptrun.get("id"))
+        csrfentity.setValue(scriptrun.get("id"))
+        csrfentity.addAdditionalFields("data", "Data", True, output)
+        csrfentity.addAdditionalFields("servicename", "Service Name", True, servicename)
+        csrfentity.addAdditionalFields("serviceid", "Service Id", True, serviceid)
+        csrfentity.addAdditionalFields("hostid", "Host Id", True, hostid)
+        csrfentity.addAdditionalFields("workspace", "Workspace", True, workspace)
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+
 
 dotransform(sys.argv)
+# args = ['httpcsrf.py',
+#  'http/80:531',
+#  'properties.metasploitservice=http/80:531#info=Microsoft-IIS/6.0#proto=tcp#hostid=531#service.name=http/80:531#port=80#banner=Microsoft-IIS/6.0#properties.service= #ip=10.11.1.10#machinename=10.11.1.10#servicename=http#created_at=24/2/2018#updated_at=11/6/2018#workspaceid=18#state=open#serviceid=6877#workspace=default#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#db=msf']
+# dotransform(args)

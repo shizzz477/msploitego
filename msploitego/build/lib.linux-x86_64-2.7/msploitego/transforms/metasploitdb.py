@@ -32,7 +32,7 @@ for host in mdb.hosts:
     mt.addUIMessage("found host {}".format(ipv4))
     mt.addEntity("sploitego.IPv4Address", ipv4)
 
-mt.addUIMessage("completed!")
+
 mt.returnOutput()
 
 """

@@ -66,7 +66,7 @@ def dotransform(args):
                     sambaentity.addAdditionalFields("sharename", "Share Name", False, sharename)
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # args = ['smbenumall.py',

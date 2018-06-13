@@ -31,7 +31,7 @@ def dotransform(args):
             smbvuln.addAdditionalFields("Port", "Port", False, ip)
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # dotransform(args)

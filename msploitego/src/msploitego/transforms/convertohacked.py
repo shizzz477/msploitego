@@ -24,6 +24,6 @@ def dotransform(args):
     falsepos.setValue("{}:{}".format(module,ip,port))
     falsepos.addAdditionalFields("ip", "IP Address", False, ip)
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)

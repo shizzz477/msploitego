@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-import codecs
-import unicodedata
-import chardet
 import io
 
 __author__ = 'Marc Gurreri'

@@ -82,7 +82,7 @@ def dotransform(args):
             osentity.addAdditionalFields("ip", "IP Address", True, ip)
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # dotransform(args)

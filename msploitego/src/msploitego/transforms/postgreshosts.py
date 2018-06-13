@@ -19,11 +19,13 @@ def dotransform(args):
     mt = MaltegoTransform()
     # mt.debug(pprint(args))
     mt.parseArguments(args)
-    db = mt.getValue()
+    workspace = mt.getValue()
+    workspaceid = mt.getVar("workspaceid")
+    db = mt.getVar("db")
     user = mt.getVar("user")
     password = mt.getVar("password").replace("\\","")
     mpost = MsploitPostgres(user, password, db)
-    for host in mpost.getAllHosts():
+    for host in mpost.getAllHosts(workspaceid):
         hostentity = mt.addEntity("maltego.IPv4Address", host.get("address"))
         hostentity.setValue(host.get("address"))
         for k,v in host.items():
@@ -34,9 +36,12 @@ def dotransform(args):
         hostentity.addAdditionalFields("user", "User", False, user)
         hostentity.addAdditionalFields("password", "Password", False, password)
         hostentity.addAdditionalFields("db", "db", False, db)
-
+        hostentity.addAdditionalFields("workspace", "Workspace Name", False, workspace)
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
+# args = ['postgreshosts.py',
+#  'default',
+#  'properties.metasploitworkspace=default#workspaceid=18#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#db=msf']
 # dotransform(args)

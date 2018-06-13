@@ -24,7 +24,7 @@ def dotransform(args):
 
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 # dotransform(sys.argv)
 args = ['smbenumservices.py',

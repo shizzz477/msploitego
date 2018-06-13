@@ -47,7 +47,7 @@ def dotransform(args):
 
     conn.close()
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # dotransform(args)

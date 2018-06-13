@@ -26,7 +26,7 @@ def dotransform(args):
     password = mt.getVar("password").replace("\\", "")
     mpost = MsploitPostgres(user, password, db)
     # for loot in mpost.getLootforHost(ip):
-    for loot in mpost.getLootforHost(ip):
+    for loot in mpost.getLootforHost(hostid):
         if loot.get("name"):
             lootentity = mt.addEntity("msploitego.MetasploitLoot", "{}:{}".format(loot.get("name"),hostid))
             lootentity.setValue("{}:{}".format(loot.get("name"),hostid))
@@ -47,7 +47,9 @@ def dotransform(args):
         lootentity.addAdditionalFields("db", "db", False, db)
         lootentity.addAdditionalFields("ip", "IP Address", False, ip)
     mt.returnOutput()
-    mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
+# args = ['postgressloot.py',
+#  '10.11.1.5',
+#  'ipv4-address=10.11.1.5#ipaddress.internal=false#vuln_count=21#workspace=default#os_family=Windows#purpose=client#os_sp=SP1#created_at=23/1/2018#mac=00:50:56:B8:55:EC#workspace_id=18#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=23/1/2018#exploit_attempt_count=7#id=517#state=alive#note_count=84#virtual_host=VMWare#address=10.11.1.5#service_count=8#name=ALICE#os_name=Windows XP#arch=x86#user=msf#db=msf']
 # dotransform(args)

@@ -21,7 +21,7 @@ def dotransform(args):
     fn = mt.getVar("description")
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # args = ['metasploitdb.py',

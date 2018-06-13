@@ -26,7 +26,7 @@ def dotransform(args):
     # urlent.addAdditionalFields("ip", "IP Address", False, ip)
     # urlent.addAdditionalFields("port", "Port", False, port)
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+
 
 # dotransform(sys.argv)
 args = ['toHashFile.py',
