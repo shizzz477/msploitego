@@ -50,7 +50,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['postgressloot.py',
-# '10.11.1.202',
-#  'ipv4-address=10.11.1.202#ipaddress.internal=false#vuln_count=151#address=10.11.1.202#os_family=Windows#purpose=server#service_count=20#os_sp=SP4#created_at=23/1/2018#mac=00:50:56:b8:e8:cc#workspace_id=18#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=11/6/2018#exploit_attempt_count=15#name=ORACLE#os_name=Windows 2000#id=542#state=alive#arch=x86#user=msf#note_count=95#db=msf']
 # dotransform(args)

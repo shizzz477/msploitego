@@ -33,7 +33,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['metasploitdb.py',
-#  '/root/data/report_pack/msploitdb20180524.xml',
-#  'description=/root/data/report_pack/msploitdb20180524.xml']
 # dotransform(args)

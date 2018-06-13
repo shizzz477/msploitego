@@ -39,7 +39,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['enumvulns.py',
-#  '10.10.10.63',
-#  'ipv4-address=10.10.10.63#ipaddress.internal=false#notecount=25#address=10.10.10.63#purpose=client#osfamily=Windows#servicecount=16#name=JEEVES#state=alive#vulncount=39#fromfile=/root/data/scan/hthebox/msplotdb20180522.xml#osname=Windows 10#osflavor=Pro']
 # dotransform(args)

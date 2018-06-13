@@ -32,7 +32,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['linuxfile.py',
-#  'cnpilot_snmp_loot.txt',
-# 'properties.metasploitloot=cnpilot_snmp_loot.txt#info=Cambium cnPilot configuration data#ltype=snmp_loot#workspace_id=18#created_at=31/5/2018#address=10.11.1.14#updated_at=31/5/2018#content_type=text/plain#host_id=537#path=/root/.msf4/loot/20180531131742_default_10.11.1.14_snmp_loot_022307.txt#id=137#name=cnpilot_snmp_loot.txt#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#db=msf']
 # dotransform(args)

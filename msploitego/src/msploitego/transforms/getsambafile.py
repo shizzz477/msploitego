@@ -50,7 +50,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['getsambafile.py',
-#  '10.11.1.31/wwwroot//_vti_cnf//iisstart.htm',
-#  'properties.sambafile=10.11.1.31/wwwroot//_vti_cnf//iisstart.htm#ip=10.11.1.31#port=445#server=RALPH#workgroup=THINC#filename=iisstart.htm#path=//_vti_cnf//iisstart.htm#hostid=548#domain_dns=ralph#sharename=wwwroot']
 # dotransform(args)

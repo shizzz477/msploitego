@@ -34,7 +34,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['imapscan.py',
-# 'imap/143:545',
-#  'properties.metasploitservice=imap/143:545#info=Dovecot imapd#name=imap#proto=tcp#hostid=545#service.name=imap#port=143#banner=Dovecot imapd#properties.service= #ip=10.11.1.24#state=open#fromfile=/root/data/report_pack/msploitdb20180601.xml']
 # dotransform(args)

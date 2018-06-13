@@ -71,7 +71,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['smblsshare.py',
-#  '\\\\10.11.1.5\\C$: ',
-#  'directory.name=\\\\\\\\10.11.1.5\\\\C$: #sharename=C$#sambashare=\\\\\\\\10.11.1.5\\\\C$: #ip=10.11.1.5#port=139#machinename=ALICE#comment=Default share#type=STYPE_DISKTREE_HIDDEN#anonymous access=<none>']
 # dotransform(args)

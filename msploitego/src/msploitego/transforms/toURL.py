@@ -29,7 +29,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['/root/transforms/toURL.py',
-#  '/files/: Directory indexing found.',
-#  'properties.niktodetail=/files/: Directory indexing found.#description=/files/: Directory indexing found.#iplink=https://10.11.1.35:443/files/#namelink=https://10.11.1.35:443/files/#uri=/files/#ip=10.11.1.35#port=443']
 # dotransform(args)

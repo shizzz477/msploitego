@@ -37,7 +37,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['httpapchevuln.py',
-#  'http/80:294',
-#  'properties.metasploitservice=http/80:294#info=Apache httpd 2.4.7 (Ubuntu)#name=http#proto=tcp#hostid=294#service.name=80/Apache 9#port=8080#banner=Apache 9#properties.service= #ip=10.10.10.61#state=open#fromfile=/root/data/scan/hthebox/msploitdb20180517.xml']
 # dotransform(args)

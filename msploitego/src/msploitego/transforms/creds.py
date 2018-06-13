@@ -45,7 +45,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['postgreshosts.py',
-#  'msf',
-#  'properties.postgresqldb=msf#user=msf#password=password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=']
 # dotransform(args)

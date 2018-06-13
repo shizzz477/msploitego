@@ -28,8 +28,4 @@ def dotransform(args):
     mt.returnOutput()
     mt.addUIMessage("completed!")
 
-# dotransform(sys.argv)
-args = ['dnsnsid.py',
- 'dns/53:259',
- 'properties.metasploitservice=dns/53:259#info=Microsoft DNS 6.1.7601 (1DB15D39) Windows Server 2008 R2 SP1#name=dns#proto=udp#hostid=259#service.name=80/Apache 9#port=53#banner=Apache 9#properties.service= #ip=10.10.10.71#state=open#fromfile=/root/data/scan/hthebox/msploitdb20180517.xml']
-dotransform(args)
+dotransform(sys.argv)

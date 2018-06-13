@@ -104,7 +104,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['snmpcheck.py',
-#  'snmp/161:516',
-#  'properties.metasploitservice=snmp/161:516#name=snmp#proto=udp#hostid=516#service.name=snmp#port=161#banner=snmp-No info#properties.service= #ip=10.11.1.227#state=open#fromfile=/root/data/report_pack/msploitdb20180524.xml']
 # dotransform(args)

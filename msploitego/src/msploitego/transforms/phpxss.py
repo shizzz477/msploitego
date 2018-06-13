@@ -40,7 +40,4 @@ def dotransform(args):
     mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['phpxss.py',
-#  'possible_wls/80:507',
-#  'properties.metasploitservice=possible_wls/80:507#info=Apache/2.2.22 (Debian)#name=possible_wls#proto=tcp#hostid=507#service.name=possible_wls#port=80#banner=Apache/2.2.22 (Debian)#properties.service= #ip=10.11.1.116#state=open#fromfile=/root/data/report_pack/msploitdb20180524.xml']
 # dotransform(args)
