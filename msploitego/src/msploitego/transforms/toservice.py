@@ -27,8 +27,7 @@ def dotransform(args):
     # website.addAdditionalFields("ip", "IP Address", False, ip)
     # website.addAdditionalFields("port", "Port", False, port)
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
-# args = ['tourl.py', '/xmlrpc.php', 'directory.name=/xmlrpc.php#port=80#ip=10.11.1.50']
 # dotransform(args)

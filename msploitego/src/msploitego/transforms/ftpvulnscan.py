@@ -22,18 +22,19 @@ def dotransform(args):
     hostid = mt.getVar("hostid")
     rep = scriptrunner(port, "ftp-vuln-cve2010-4221,ftp-vsftpd-backdoor,ftp-anon,ftp-libopie,ftp-proftpd-backdoor", ip)
 
-    for scriptrun in rep.hosts[0].services[0].scripts_results:
-        scriptid = scriptrun.get("id")
-        if scriptid.lower() == "ftp-vuln-cve2010-4221":
-            scriptid = "cve-2010-4221"
-        vulnentity = mt.addEntity("msploitego.FTPVulnerability", scriptid)
-        vulnentity.setValue(scriptid)
-        vulnentity.addAdditionalFields("description", "Description",False,scriptrun.get("output"))
-        vulnentity.addAdditionalFields("ip", "IP Address", False, ip)
-        vulnentity.addAdditionalFields("port", "Port", False, port)
-
+    if rep:
+        for scriptrun in rep.hosts[0].services[0].scripts_results:
+            scriptid = scriptrun.get("id")
+            if scriptid.lower() == "ftp-vuln-cve2010-4221":
+                scriptid = "cve-2010-4221"
+            vulnentity = mt.addEntity("msploitego.FTPVulnerability", scriptid)
+            vulnentity.setValue(scriptid)
+            vulnentity.addAdditionalFields("description", "Description",False,scriptrun.get("output"))
+            vulnentity.addAdditionalFields("ip", "IP Address", False, ip)
+            vulnentity.addAdditionalFields("port", "Port", False, port)
+    else:
+        mt.addUIMessage("host is either down or not responding on this port")
     mt.returnOutput()
-    mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
 # dotransform(args)

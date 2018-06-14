@@ -37,7 +37,7 @@ def dotransform(args):
             commententity.addAdditionalFields("path", "Path", False, v)
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+
 
 dotransform(sys.argv)
 # dotransform(args)

@@ -22,7 +22,7 @@ def dotransform(args):
     hostid = mt.getVar("hostid")
     rep = scriptrunner(port, "smb-mbenum", ip)
 
-    if rep.hosts[0].status == "up":
+    if rep:
         for res in rep.hosts[0].scripts_results:
             output = res.get("output").split("\n")
             regex = re.compile("^\s{2}\w")
@@ -38,9 +38,9 @@ def dotransform(args):
                         continue
                     shareentity.addAdditionalFields(k.lower(), k, False, "{}/{}".format(k,v))
     else:
-        mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # dotransform(args)

@@ -36,7 +36,7 @@ def dotransform(args):
         detailent.addAdditionalFields("password", "Password", False, password)
         detailent.addAdditionalFields("db", "db", False, db)
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # dotransform(args)

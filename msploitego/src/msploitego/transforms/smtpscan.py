@@ -21,7 +21,7 @@ def dotransform(args):
         hostid = mt.getVar("id")
     rep = scriptrunner(port, "smtp-commands,smtp-enum-users,smtp-open-relay,smtp-vuln-cve2011-1764", ip)
 
-    if rep.hosts[0].status == "up":
+    if rep:
         for scriptrun in rep.hosts[0].services[0].scripts_results:
             infoentity = mt.addEntity("msploitego.RelevantInformation", "{}:{}".format(scriptrun.get("id"),hostid))
             infoentity.setValue("{}:{}".format(scriptrun.get("id"),hostid))
@@ -30,9 +30,9 @@ def dotransform(args):
             infoentity.addAdditionalFields("port", "Port", False, port)
             infoentity.addAdditionalFields("hostid", "Host Id", False, hostid)
     else:
-        mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+
 
 dotransform(sys.argv)
 # dotransform(args)

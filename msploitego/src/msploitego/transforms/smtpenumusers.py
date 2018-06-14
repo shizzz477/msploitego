@@ -28,7 +28,7 @@ def dotransform(args):
             userentity.addAdditionalFields("sourceip", "Source IP", False, ip)
             userentity.addAdditionalFields("sourceport", "Source Port", False, port)
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+
 
 dotransform(sys.argv)
 # dotransform(args)

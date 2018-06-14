@@ -22,7 +22,7 @@ def dotransform(args):
     hostid = mt.getVar("hostid")
     rep = scriptrunner(port, "smb-enum-users", ip)
 
-    if rep.hosts[0].status == "up":
+    if rep:
         for res in rep.hosts[0].scripts_results:
             output = res.get("output").strip().split("\n")
             regex = re.compile("^[\sa-zA-Z0-9_.-]+\\\\")
@@ -35,9 +35,9 @@ def dotransform(args):
                 for k,v in item.items():
                     userentity.addAdditionalFields(k, k.capitalize(), False, v.strip())
     else:
-        mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # dotransform(args)

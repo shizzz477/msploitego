@@ -20,7 +20,7 @@ def dotransform(args):
     port = mt.getVar("port")
     rep = scriptrunner(port, "http-robots.txt", ip)
 
-    if rep.hosts[0].status == "up":
+    if rep:
         for scriptrun in rep.hosts[0].services[0].scripts_results:
             output = scriptrun.get("output")
             for line in output.split("\n"):
@@ -31,9 +31,9 @@ def dotransform(args):
                         webdirentity.addAdditionalFields("ip", "IP Address", False, ip)
                         webdirentity.addAdditionalFields("port", "Port", False, port)
     else:
-        mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # dotransform(args)

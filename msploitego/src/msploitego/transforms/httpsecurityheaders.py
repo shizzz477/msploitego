@@ -18,20 +18,28 @@ def dotransform(args):
     mt.parseArguments(args)
     ip = mt.getVar("ip")
     port = mt.getVar("port")
+    servicename = mt.getVar("servicename")
+    serviceid = mt.getVar("serviceid")
+    hostid = mt.getVar("hostid")
+    workspace = mt.getVar("workspace")
     rep = scriptrunner(port, "http-security-headers", ip)
 
-    for scriptrun in rep.hosts[0].services[0].scripts_results:
-        output = scriptrun.get("output")
-        lines = output.split("\n")
-        for line in lines:
-            if not line.strip():
-                lines.remove(line)
-        secheader = mt.addEntity("msploitego.httpsecureheaders", output)
-        secheader.setValue(output[0:25])
-        secheader.addAdditionalFields("details", "Details", False, output)
-
+    if rep:
+        for res in rep.hosts[0].services[0].scripts_results:
+            output = res.get("output").strip()
+            if output:
+                secheader = mt.addEntity("msploitego.httpsecureheaders", res.get("id"))
+                secheader.setValue(res.get("id"))
+                secheader.addAdditionalFields("details", "Details", False, output)
+                secheader.addAdditionalFields("servicename", "Service Name", True, servicename)
+                secheader.addAdditionalFields("serviceid", "Service Id", True, serviceid)
+                secheader.addAdditionalFields("hostid", "Host Id", True, hostid)
+                secheader.addAdditionalFields("workspace", "Workspace", True, workspace)
+                secheader.addAdditionalFields("ip", "IP Address", False, ip)
+                secheader.addAdditionalFields("port", "Port", False, port)
+    else:
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
-    mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
 # dotransform(args)

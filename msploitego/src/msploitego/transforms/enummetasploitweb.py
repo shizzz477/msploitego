@@ -42,6 +42,6 @@ def dotransform(args):
         setentity(mt,form)
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)

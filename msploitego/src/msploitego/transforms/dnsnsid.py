@@ -26,6 +26,6 @@ def dotransform(args):
             dnsnsid.setValue("{}:{}".format(id,hostid))
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)

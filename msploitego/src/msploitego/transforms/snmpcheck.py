@@ -101,7 +101,7 @@ def dotransform(args):
             networkshare.addAdditionalFields("name", "Share Name", True, name)
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+
 
 dotransform(sys.argv)
 # dotransform(args)

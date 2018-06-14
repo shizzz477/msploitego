@@ -35,7 +35,7 @@ def dotransform(args):
         webfile.addAdditionalFields("ip", "IP Address", False, ip)
         webfile.addAdditionalFields("port", "Port", False, port)
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+
 
 dotransform(sys.argv)
 # dotransform(args)
