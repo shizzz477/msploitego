@@ -35,7 +35,4 @@ def dotransform(args):
     mt.returnOutput()
 
 dotransform(sys.argv)
-# args = ['towebsite.py',
-#  'http/80:544',
-#  'properties.metasploitservice=http/80:544#info=Apache httpd 2.2.11 (Ubuntu) PHP/5.2.6-3ubuntu4.4 with Suhosin-Patch#proto=tcp#hostid=544#service.name=http/80:544#port=80#banner=Apache httpd 2.2.11 (Ubuntu) PHP/5.2.6-3ubuntu4.4 with Suhosin-Patch#properties.service= #ip=10.11.1.251#machinename=10.11.1.251#servicename=http#created_at=24/2/2018#updated_at=24/2/2018#workspaceid=18#state=open#serviceid=6936#workspace=default#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#db=msf']
 # dotransform(args)

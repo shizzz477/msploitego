@@ -43,7 +43,4 @@ def dotransform(args):
     mt.returnOutput()
 
 dotransform(sys.argv)
-# args = ['dnsscan.py',
-#  'domain/53:800',
-#  'service.name=domain/53:800#port=53#banner=ISC BIND 9.9.5-3ubuntu0.14 Ubuntu Linux#properties.service= #workspace=space2#ip=10.10.10.79#hostid=800#created_at=16/5/2018#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=16/5/2018#proto=tcp#servicename=domain#state=open#serviceid=7688#user=msf#db=msf#info=ISC BIND 9.9.5-3ubuntu0.14 Ubuntu Linux#workspaceid=19']
 # dotransform(args)

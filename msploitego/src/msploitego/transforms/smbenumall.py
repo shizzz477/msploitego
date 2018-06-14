@@ -66,10 +66,6 @@ def dotransform(args):
                     sambaentity.addAdditionalFields("sharename", "Share Name", False, sharename)
 
     mt.returnOutput()
-    
 
 dotransform(sys.argv)
-# args = ['smbenumall.py',
-#  'HELPDESK:WORKGROUP',
-#  'properties.samba=HELPDESK:WORKGROUP#ip=10.11.1.145#port=445#server=HELPDESK#workgroup=WORKGROUP#hostid=520#info=Windows Server (R) 2008 Standard 6001 Service Pack 1#name=HELPDESK#banner.text=Windows Server (R) 2008 Standard 6001 Service Pack 1#service.name=smb/445:520#properties.service=smb/445:520#proto=tcp#account_used=guest#message_signing=disabled#authentication_level=user#lanmanager=Windows Server (R) 2008 Standard 6.0#cpe=cpe:/o:microsoft:windows_server_2008::sp1#domain_dns=HELPDESK#challenge_response=supported#date=2018-06-12T16:46:08-07:00']
 # dotransform(args)

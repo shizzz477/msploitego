@@ -36,8 +36,5 @@ def dotransform(args):
         mt.addUIMessage("host is either down or not responding on this port")
     mt.returnOutput()
 
-# dotransform(sys.argv)
-args = ['ftpvulnscan.py',
- 'ftp/21:793',
- 'service.name=ftp/21:793#port=21#banner=Microsoft ftpd#properties.service= #workspace=space2#ip=10.10.10.59#hostid=793#created_at=30/4/2018#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=30/4/2018#proto=tcp#machinename=TALLY#servicename=ftp#state=open#serviceid=7602#user=msf#db=msf#info=Microsoft ftpd#workspaceid=19']
-dotransform(args)
+dotransform(sys.argv)
+# dotransform(args)

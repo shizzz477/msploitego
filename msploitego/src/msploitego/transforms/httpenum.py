@@ -41,7 +41,4 @@ def dotransform(args):
     mt.returnOutput()
 
 dotransform(sys.argv)
-# args = ['httpenum.py',
-#  'http/80:782',
-#  'properties.metasploitservice=http/80:782#proto=tcp#hostid=782#service.name=http/80:782#port=80#properties.service= #workspace=space2#ip=10.10.10.64#created_at=2/5/2018#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=2/5/2018#machinename=10.10.10.64#servicename=http#state=open#serviceid=7571#user=msf#db=msf#workspaceid=19']
 # dotransform(args)

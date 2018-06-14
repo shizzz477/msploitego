@@ -56,7 +56,4 @@ def dotransform(args):
     mt.returnOutput()
 
 dotransform(sys.argv)
-# args = ['postgreswebpages.py',
-#  '10.11.1.252',
-#  'ipv4-address=10.11.1.252#ipaddress.internal=false#vuln_count=11#workspace=default#address=10.11.1.252#os_family=Linux#purpose=server#service_count=4#os_sp=2.6#created_at=23/1/2018#mac=00:50:56:B8:58:1D#workspace_id=18#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=23/1/2018#name=10.11.1.252#os_name=Linux#id=533#state=alive#user=msf#note_count=15#db=msf']
 # dotransform(args)

@@ -47,8 +47,5 @@ def dotransform(args):
         mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
 
-# dotransform(sys.argv)
-args = ['httpapchevuln.py',
- 'http/80:776',
- 'properties.metasploitservice=http/80:776#info=Apache httpd 2.4.10 (Debian)#proto=tcp#hostid=776#service.name=http/80:776#port=80#banner=Apache httpd 2.4.10 (Debian)#properties.service= #workspace=space2#ip=10.10.10.61#created_at=8/5/2018#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=13/6/2018#machinename=10.10.10.61#servicename=http#state=open#serviceid=7495#user=msf#db=msf#workspaceid=19']
-dotransform(args)
+dotransform(sys.argv)
+# dotransform(args)

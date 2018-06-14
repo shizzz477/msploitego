@@ -30,5 +30,4 @@ def dotransform(args):
     
 
 dotransform(sys.argv)
-# args = ['tourl.py', '/xmlrpc.php', 'directory.name=/xmlrpc.php#port=80#ip=10.11.1.50']
 # dotransform(args)

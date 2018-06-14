@@ -11,6 +11,20 @@
 
 THIS IS A BETA RELEASE, please be nice and report any issues
 
+Whats New
+=========
+* New Features
+    * Now supporting multiple workspaces for Metasploit via Postgres queries
+    * A bash script that runs tons of auxiliary modules against targets.  Really 'fattens' up the Metasploit DB
+    * transforms:
+        * Enum Metasploit Workspaces
+        * Nikto Parser [from file]
+        * Enum4linux paser from file
+        * DNS scan
+* Bug Fixs
+    * nmap based transforms returning false negative
+    * bad paths
+
 msploitego leverages the data gathered in a Metasploit database by enumerating and creating specific entities for services.  Services like samba, smtp, snmp, http have transforms to enumerate even further.  Entities can either be loaded from a Metasploit XML file or taken directly from the Postgres msf database
 
 **I am open to hearing suggestions for new transforms and enhancements!!!**

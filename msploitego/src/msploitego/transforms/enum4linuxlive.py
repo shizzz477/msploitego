@@ -5,6 +5,7 @@ from common.MaltegoTransform import *
 import sys
 
 from common.corelib import getFileContents, bucketparser
+from common.linuxtaskrunner import bashrunner
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
@@ -35,11 +36,8 @@ def dotransform(args):
     serviceid = mt.getVar("serviceid")
     hostid = mt.getVar("hostid")
     workspace = mt.getVar("workspace")
-    fn = mt.getVar("enum4linux")
-    if not fn:
-        mt.addException(fn)
-        mt.returnOutput()
-    contents = getFileContents(fn)
+
+    contents = bashrunner("")
     regex = re.compile("^\|\s+")
     ignore = re.compile("={3,}|Looking\s|padding\d|unknown_\d|logon_hrs|\[V\]\sAttempting\sto\sget|\*unknown\*|\[V\]\sassuming\sthat\suser|\[V\]\sprocessing\ssid\s|\[E\]", re.I)
     headsignore = re.compile("target\sinformation|getting\sprinter", re.I)

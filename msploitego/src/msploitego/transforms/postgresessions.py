@@ -37,10 +37,6 @@ def dotransform(args):
         sessionentity.addAdditionalFields("password", "Password", False, password)
         sessionentity.addAdditionalFields("db", "db", False, db)
     mt.returnOutput()
-    
 
 dotransform(sys.argv)
-# args = ['postgreshosts.py',
-#  'default',
-#  'properties.metasploitworkspace=default#workspaceid=18#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#db=msf']
 # dotransform(args)

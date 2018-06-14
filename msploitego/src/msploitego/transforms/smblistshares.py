@@ -21,13 +21,8 @@ def dotransform(args):
     port = mt.getVar("port")
     hostid = mt.getVar("hostid")
 
-
-
     mt.returnOutput()
     
 
-# dotransform(sys.argv)
-args = ['smbenumservices.py',
- 'smb/445:39',
- 'properties.metasploitservice=smb/445:39#info=Windows 2000 SP0 - 4 (language:English) (name:JD)#name=smb#proto=tcp#hostid=39#service.name=smb#port=445#banner=Windows 2000 SP0 - 4 (language:English) (name:JD)#properties.service= #ip=10.11.1.31#state=open#fromfile=/root/data/report_pack/msploitdb_oscp-20180325.xml']
-dotransform(args)
+dotransform(sys.argv)
+# dotransform(args)

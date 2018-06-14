@@ -32,9 +32,5 @@ def dotransform(args):
         wsentity.addAdditionalFields("db", "db", False, db)
     mt.returnOutput()
     
-
 dotransform(sys.argv)
-# args = ['postgreswrkspaces.py',
-#  'msf',
-#  'properties.postgresqldb=msf#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=']
 # dotransform(args)

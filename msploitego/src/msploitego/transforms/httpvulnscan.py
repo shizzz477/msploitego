@@ -54,7 +54,4 @@ def dotransform(args):
     
 
 dotransform(sys.argv)
-# args = ['httpvulnscan.py',
-#  'http/80:535',
-# 'properties.metasploitservice=http/80:535#info=Apache httpd 2.0.40 (Red Hat Linux)#proto=tcp#hostid=535#service.name=http/80:535#port=80#banner=Apache httpd 2.0.40 (Red Hat Linux)#properties.service= #ip=10.11.1.115#machinename=10.11.1.115#servicename=http#created_at=24/2/2018#updated_at=24/2/2018#workspaceid=18#state=open#serviceid=6888#workspace=default#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#db=msf']
 # dotransform(args)
