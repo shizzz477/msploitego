@@ -1,5 +1,4 @@
 from pprint import pprint
-import re
 from datetime import datetime
 from common.MaltegoTransform import *
 from common.postgresdb import MsploitPostgres
@@ -52,6 +51,8 @@ def dotransform(args):
         if servicename in ["http", "https", "possible_wls", "www", "ncacn_http", "ccproxy-http", "ssl/http",
                            "http-proxy"]:
             hostservice.addAdditionalFields("niktofile", "Nikto File", True, '')
+        elif any(x in servicename for x in ["samba", "netbios-ssn", "smb", "microsoft-ds", "netbios-ns", "netbios-dgm"]):
+            hostservice.addAdditionalFields("enum4linux", "enum4linux File", True, '')
         for k,v in service.items():
             if isinstance(v,datetime):
                 hostservice.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
@@ -77,7 +78,6 @@ def dotransform(args):
     osentity.addAdditionalFields("ip", "IP Address", True, ip)
 
     mt.returnOutput()
-    
 
 dotransform(sys.argv)
 # args = ['postgresservices.py',

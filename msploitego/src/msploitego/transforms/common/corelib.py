@@ -59,7 +59,7 @@ def getFileContents(fn):
             contents.append(asciiline.replace('\x00',''))
     return contents
 
-def bucketparser(regex,data,sep=":",method="match"):
+def bucketparser(regex,data,sep=":",method="match",ignoreg=None):
     i = 0
     bucket = []
     while i < len(data):
@@ -69,6 +69,9 @@ def bucketparser(regex,data,sep=":",method="match"):
             details = []
             i += 1
             while i <= nextindex and i < len(data):
+                if ignoreg and ignoreg.search(data[i]):
+                    i += 1
+                    continue
                 q = data[i].lstrip().replace("http://","http//").replace("https://","https//").split(sep, 1)
                 if len(q) > 1:
                     item.update({q[0].lstrip().capitalize():q[1].lstrip().rstrip()})
