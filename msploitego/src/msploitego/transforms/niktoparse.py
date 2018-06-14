@@ -17,6 +17,10 @@ def dotransform(args):
     mt.parseArguments(args)
     ip = mt.getVar("ip")
     port = mt.getVar("port")
+    servicename = mt.getVar("servicename")
+    serviceid = mt.getVar("serviceid")
+    hostid = mt.getVar("hostid")
+    workspace = mt.getVar("workspace")
     fn = mt.getVar("niktofile")
     if not fn:
         mt.addException("Nikto file is either not attached or does not exist")
@@ -24,25 +28,20 @@ def dotransform(args):
     else:
         nr = NiktoReport(fn)
         for d in nr.details:
-            det = mt.addEntity("msploitego.niktodetail", d.description)
-            det.setValue(d.description[0:45])
+            det = mt.addEntity("msploitego.niktodetail", "{}:{}".format(d.description,hostid))
+            det.setValue("{}:{}".format(d.description,hostid))
             det.addAdditionalFields("description","Description",False,d.description)
             det.addAdditionalFields("iplink", "IP Link", False, d.iplink)
             det.addAdditionalFields("namelink", "Name Link", False, d.namelink)
             det.addAdditionalFields("uri", "URI", False, d.uri)
-            det.addAdditionalFields("ip", "IP", False, ip)
-            det.addAdditionalFields("port", "IP", False, port)
-            if len(d.get("uri")) > 2:
-                webdir = mt.addEntity("maltego.URL", d.get("iplink"))
-                webdir.setValue(d.get("iplink"))
-                # elif d.get("namelink"):
-                #     webdir = mt.addEntity("maltego.URL", d.get("namelink"))
-                #     webdir.setValue(d.get("namelink"))
-                webdir.addAdditionalFields("ip", "IP", False, ip)
-                webdir.addAdditionalFields("port", "IP", False, port)
+            det.addAdditionalFields("servicename", "Service Name", True, servicename)
+            det.addAdditionalFields("serviceid", "Service Id", True, serviceid)
+            det.addAdditionalFields("hostid", "Host Id", True, hostid)
+            det.addAdditionalFields("workspace", "Workspace", True, workspace)
+            det.addAdditionalFields("ip", "IP Address", False, ip)
+            det.addAdditionalFields("port", "Port", False, port)
 
         mt.returnOutput()
-        mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
 # dotransform(args)

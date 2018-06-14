@@ -17,15 +17,22 @@ def dotransform(args):
     mt.parseArguments(args)
     ip = mt.getVar("ip")
     port = mt.getVar("port")
+    servicename = mt.getVar("servicename")
+    serviceid = mt.getVar("serviceid")
     hostid = mt.getVar("hostid")
+    workspace = mt.getVar("workspace")
 
     website = mt.addEntity("maltego.Website", "http://{}:{}".format(ip,port))
     website.setValue("http://{}:{}".format(ip,port))
     website.addAdditionalFields("url", "Site URL", False, "http://{}:{}".format(ip,port))
     website.addAdditionalFields("ip", "IP Address", False, ip)
     website.addAdditionalFields("port", "Port", False, port)
+    website.addAdditionalFields("servicename", "Service Name", True, servicename)
+    website.addAdditionalFields("serviceid", "Service Id", True, serviceid)
+    website.addAdditionalFields("hostid", "Host Id", True, hostid)
+    website.addAdditionalFields("workspace", "Workspace", True, workspace)
+
     mt.returnOutput()
-    mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
 # dotransform(args)

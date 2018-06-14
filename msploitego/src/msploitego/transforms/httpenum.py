@@ -2,9 +2,6 @@ from pprint import pprint
 
 from common.nsescriptlib import scriptrunner
 from common.MaltegoTransform import *
-from common.corelib import bucketparser
-
-import re
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
@@ -21,22 +18,27 @@ def dotransform(args):
     mt.parseArguments(args)
     ip = mt.getVar("ip")
     port = mt.getVar("port")
+    servicename = mt.getVar("servicename")
+    serviceid = mt.getVar("serviceid")
     hostid = mt.getVar("hostid")
+    workspace = mt.getVar("workspace")
     rep = scriptrunner(port, "http-sitemap-generator", ip)
 
-    if rep.hosts[0].status == "up":
+    if rep:
         for res in rep.hosts[0].services[0].scripts_results:
-            output = res.get("output").strip().split("\n")
-            regex = re.compile("^\s{4}/")
-            for line in output:
-                if regex.match(line):
-                    webdir = mt.addEntity("maltego.WebDir", line.strip().lstrip())
-                    webdir.setValue(line.strip().lstrip())
-                    webdir.addAdditionalFields("ip", "IP Address", False, ip)
-                    webdir.addAdditionalFields("port", "Port", False, port)
+            output = res.get("output")
+            webdir = mt.addEntity("msploitego.WebDirectoryInfo", res.get("id"))
+            webdir.setValue("{}:{}".format(res.get("id"),hostid))
+            webdir.addAdditionalFields("data", "Data", True, output)
+            webdir.addAdditionalFields("servicename", "Service Name", True, servicename)
+            webdir.addAdditionalFields("serviceid", "Service Id", True, serviceid)
+            webdir.addAdditionalFields("hostid", "Host Id", True, hostid)
+            webdir.addAdditionalFields("workspace", "Workspace", True, workspace)
+            webdir.addAdditionalFields("ip", "IP Address", False, ip)
+            webdir.addAdditionalFields("port", "Port", False, port)
     else:
-        mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
-    mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
+# dotransform(args)

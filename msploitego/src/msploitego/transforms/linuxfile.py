@@ -29,7 +29,7 @@ def dotransform(args):
         fileent.addAdditionalFields("ip", "IP Address", False, ip)
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # dotransform(args)

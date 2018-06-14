@@ -36,7 +36,7 @@ def dotransform(args):
                     vulnent.addAdditionalFields(tag, tag.capitalize() , False, val)
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+
 
 dotransform(sys.argv)
 # dotransform(args)

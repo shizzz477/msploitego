@@ -26,7 +26,7 @@ def dotransform(args):
     password = mt.getVar("password").replace("\\", "")
     mpost = MsploitPostgres(user, password, db)
     # for loot in mpost.getLootforHost(ip):
-    for loot in mpost.getLootforHost(ip):
+    for loot in mpost.getLootforHost(hostid):
         if loot.get("name"):
             lootentity = mt.addEntity("msploitego.MetasploitLoot", "{}:{}".format(loot.get("name"),hostid))
             lootentity.setValue("{}:{}".format(loot.get("name"),hostid))
@@ -47,7 +47,6 @@ def dotransform(args):
         lootentity.addAdditionalFields("db", "db", False, db)
         lootentity.addAdditionalFields("ip", "IP Address", False, ip)
     mt.returnOutput()
-    mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
 # dotransform(args)

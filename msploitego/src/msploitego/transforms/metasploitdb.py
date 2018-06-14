@@ -30,7 +30,7 @@ def dotransform(args):
             if etag in tags:
                 hostentity.addAdditionalFields(etag, etag, False, host.getVal(etag))
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+    
 
 dotransform(sys.argv)
 # dotransform(args)

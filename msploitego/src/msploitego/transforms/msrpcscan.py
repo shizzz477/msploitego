@@ -23,7 +23,7 @@ def dotransform(args):
         hostid = mt.getVar("id")
     rep = scriptrunner(port, "msrpc-enum", ip)
 
-    if rep.hosts[0].status == "up":
+    if rep:
         for scriptrun in rep.hosts[0].services[0].scripts_results:
             popent = mt.addEntity("msploitego.RelevantInformation", "{}:{}".format(scriptrun.get("id"),hostid))
             popent.setValue("{}:{}".format(scriptrun.get("id"),hostid))
@@ -32,8 +32,7 @@ def dotransform(args):
             popent.addAdditionalFields("port", "Port", False, port)
             popent.addAdditionalFields("hostid", "Host Id", False, hostid)
     else:
-        mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
-    mt.addUIMessage("completed!")
 
 dotransform(sys.argv)

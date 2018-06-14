@@ -51,11 +51,3 @@ class Nservice(Nelement):
 class Nscriptresults(Nelement):
     def __init__(self,elem):
         super(Nscriptresults, self).__init__(elem)
-
-if __name__ == "__main__":
-    nr = Nmapreport("/root/proj/oscp-maltego/msploitego/src/msploitego/resources/SMB_Nmap_Vuln_Scan_139.xml")
-    print "report loaded"
-
-    for h in nr.hosts:
-        for s in h.services:
-            pprint(s)

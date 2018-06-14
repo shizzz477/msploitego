@@ -19,30 +19,33 @@ def dotransform(args):
     mt = MaltegoTransform()
     # mt.debug(pprint(args))
     mt.parseArguments(args)
-    db = mt.getValue()
+    db = mt.getVar("db")
+    workspaceid = mt.getVar("workspaceid")
     user = mt.getVar("user")
-    password = mt.getVar("password").replace("\\","")
-    mpost = MsploitPostgres(user, password, db)
-    creds = mpost.getCredentials()
-    for cred in mpost.getCredentials():
-        if cred.get("type") == "Metasploit::Credential::Password":
+    dbpassword = mt.getVar("password").replace("\\","")
+    mpost = MsploitPostgres(user, dbpassword, db)
+    for cred in mpost.getCredentials(workspaceid):
+        if cred.get("privtype") == "Metasploit::Credential::Password":
             entityname = "msploitego.Password"
-            data = cred.get("data").split(":")[0]
-        elif cred.get("type") == "Metasploit::Credential::NTLMHash":
+            password = cred.get("privdata").split(":")[0]
+        elif cred.get("privtype") == "Metasploit::Credential::NTLMHash":
             entityname = "msploitego.EncryptedPassword"
-            data = cred.get("data")
+            password = cred.get("privdata")
         else:
             entityname = "msploitego.Credentials"
-            data = cred.get("data")
-        hostentity = mt.addEntity(entityname, data)
-        hostentity.setValue(data)
+            password = cred.get("privdata")
+        username = cred.get("username")
+        coreid = cred.get("coreid")
+        credentity = mt.addEntity(entityname, "{}:{}".format(username,coreid))
+        credentity.setValue("{}:{}".format(username,coreid))
+        credentity.addAdditionalFields("password", "Password", False, password)
         for k,v in cred.items():
             if isinstance(v,datetime):
-                hostentity.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
+                credentity.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
             elif v and str(v).strip():
-                hostentity.addAdditionalFields(k, k.capitalize(), False, str(v))
+                credentity.addAdditionalFields(k, k.capitalize(), False, str(v))
     mt.returnOutput()
-    mt.addUIMessage("completed!")
+
 
 dotransform(sys.argv)
 # dotransform(args)

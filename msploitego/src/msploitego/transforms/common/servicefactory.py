@@ -13,7 +13,7 @@ __status__ = 'Development'
 def getserviceentity(s):
     entityname = "msploitego.MetasploitService"
     try:
-        servicename = s.get("name")
+        servicename = s.get("servicename")
     except AttributeError:
         servicename = "NoName"
     try:
@@ -63,6 +63,10 @@ def getserviceentity(s):
                     return "msploitego.GoAheadWebServer"
                 elif "webmin" in s.get("info").lower():
                     return "msploitego.Webmin"
+                elif "rocket" in s.get("info").lower():
+                    return "msploitego.RocketWebServer"
+                elif "squid" in s.get("info").lower():
+                    return "msploitego.SquidProxyServer"
                 else:
                     return "msploitego.WebService"
             else:

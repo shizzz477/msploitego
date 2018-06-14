@@ -21,10 +21,6 @@ def dotransform(args):
     fn = mt.getVar("description")
 
     mt.returnOutput()
-    mt.addUIMessage("completed!")
 
 dotransform(sys.argv)
-# args = ['metasploitdb.py',
-#  '/root/data/scan/hthebox/msploitdb-20180508.xml',
-#  'description=/root/data/scan/hthebox/msploitdb-20180508.xml']
 # dotransform(args)
