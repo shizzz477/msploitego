@@ -24,7 +24,7 @@ def dotransform(args):
     hostid = mt.getVar("hostid")
     rep = scriptrunner(port, "http-sitemap-generator", ip)
 
-    if rep.hosts[0].status == "up":
+    if rep:
         for res in rep.hosts[0].services[0].scripts_results:
             output = res.get("output").strip().split("\n")
             regex = re.compile("^\s{4}/")
@@ -35,7 +35,7 @@ def dotransform(args):
                     webdir.addAdditionalFields("ip", "IP Address", False, ip)
                     webdir.addAdditionalFields("port", "Port", False, port)
     else:
-        mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
     
 

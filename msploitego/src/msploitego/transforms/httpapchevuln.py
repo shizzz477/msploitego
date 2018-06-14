@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from common.nsescriptlib import scriptrunner
 from common.MaltegoTransform import *
 
@@ -17,9 +19,14 @@ def dotransform(args):
     ip = mt.getVar("ip")
     port = mt.getVar("port")
     hostid = mt.getVar("hostid")
+    workspace = mt.getVar("workspace")
+    workspaceid = mt.getVar("workspaceid")
+    servicename= mt.getVar("servicename")
+    serviceid = mt.getVar("serviceid")
+
     rep = scriptrunner(port, "http-apache-negotiation,http-apache-server-status,http-vuln-cve2011-3192,http-vuln-cve2011-3368,http-vuln-cve2017-5638 ", ip)
 
-    if rep.hosts[0].status == "up":
+    if rep:
         for res in rep.hosts[0].services[0].scripts_results:
             cve = res.get("elements").popitem()
             if len(cve) > 0:
@@ -31,10 +38,17 @@ def dotransform(args):
                         if value and value.strip():
                             apachevuln.addAdditionalFields(key, key, False, value.strip())
                 apachevuln.addAdditionalFields(ip, "IP Address", False, ip)
+                apachevuln.addAdditionalFields(hostid, "Host Id", False, hostid)
+                apachevuln.addAdditionalFields(workspace, "Workspace", False, workspace)
+                apachevuln.addAdditionalFields(workspaceid, "Workspace Id", False, workspaceid)
+                apachevuln.addAdditionalFields(servicename, "Servicename", False, servicename)
+                apachevuln.addAdditionalFields(serviceid, "Service Id", False, serviceid)
     else:
-        mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
-    
 
-dotransform(sys.argv)
-# dotransform(args)
+# dotransform(sys.argv)
+args = ['httpapchevuln.py',
+ 'http/80:776',
+ 'properties.metasploitservice=http/80:776#info=Apache httpd 2.4.10 (Debian)#proto=tcp#hostid=776#service.name=http/80:776#port=80#banner=Apache httpd 2.4.10 (Debian)#properties.service= #workspace=space2#ip=10.10.10.61#created_at=8/5/2018#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=13/6/2018#machinename=10.10.10.61#servicename=http#state=open#serviceid=7495#user=msf#db=msf#workspaceid=19']
+dotransform(args)

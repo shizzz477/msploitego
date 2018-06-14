@@ -24,7 +24,7 @@ def dotransform(args):
     workspace = mt.getVar("workspace")
     rep = scriptrunner(port, "http-phpself-xss,http-stored-xss", ip)
 
-    if rep.hosts[0].status == "up":
+    if rep:
         for res in rep.hosts[0].services[0].scripts_results:
             vulnentity = mt.addEntity("msploitego.XSSVulnerability", "{}:{}".format(res.get("id"),hostid))
             vulnentity.setValue("{}:{}".format(res.get("id"),hostid))
@@ -41,7 +41,7 @@ def dotransform(args):
                     if v and v.strip():
                         vulnentity.addAdditionalFields(k, k.capitalize(), False, v)
     else:
-        mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
 
 

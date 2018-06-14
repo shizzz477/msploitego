@@ -22,7 +22,7 @@ def dotransform(args):
     proto = mt.getVar("proto")
     service = mt.getValue()
     rep = scriptrunner(port, "smb-os-discovery,smb-security-mode,smb-server-stats,smb-system-info", ip)
-    if rep.hosts[0].status == "up":
+    if rep:
         d = {}
         for res in rep.hosts[0].scripts_results:
             if res.get("elements"):
@@ -48,7 +48,7 @@ def dotransform(args):
                 continue
             sambaentity.addAdditionalFields(k, k.capitalize(), False, v)
     else:
-        mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
     
 

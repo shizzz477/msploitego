@@ -24,11 +24,11 @@ def dotransform(args):
     workspace = mt.getVar("workspace")
     rep = scriptrunner(port, "http-sitemap-generator", ip)
 
-    if rep.hosts[0].status == "up":
+    if rep:
         for res in rep.hosts[0].services[0].scripts_results:
             output = res.get("output")
             webdir = mt.addEntity("msploitego.WebDirectoryInfo", res.get("id"))
-            webdir.setValue(res.get("id"))
+            webdir.setValue("{}:{}".format(res.get("id"),hostid))
             webdir.addAdditionalFields("data", "Data", True, output)
             webdir.addAdditionalFields("servicename", "Service Name", True, servicename)
             webdir.addAdditionalFields("serviceid", "Service Id", True, serviceid)
@@ -37,12 +37,11 @@ def dotransform(args):
             webdir.addAdditionalFields("ip", "IP Address", False, ip)
             webdir.addAdditionalFields("port", "Port", False, port)
     else:
-        mt.addUIMessage("host is {}!".format(rep.hosts[0].status))
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
 
-
 dotransform(sys.argv)
-# args = ['httpcsrf.py',
-#  'http/80:531',
-#  'properties.metasploitservice=http/80:531#info=Microsoft-IIS/6.0#proto=tcp#hostid=531#service.name=http/80:531#port=80#banner=Microsoft-IIS/6.0#properties.service= #ip=10.11.1.10#machinename=10.11.1.10#servicename=http#created_at=24/2/2018#updated_at=11/6/2018#workspaceid=18#state=open#serviceid=6877#workspace=default#user=msf#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#db=msf']
+# args = ['httpenum.py',
+#  'http/80:782',
+#  'properties.metasploitservice=http/80:782#proto=tcp#hostid=782#service.name=http/80:782#port=80#properties.service= #workspace=space2#ip=10.10.10.64#created_at=2/5/2018#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=2/5/2018#machinename=10.10.10.64#servicename=http#state=open#serviceid=7571#user=msf#db=msf#workspaceid=19']
 # dotransform(args)
