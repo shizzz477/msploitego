@@ -13,6 +13,22 @@ __maintainer__ = 'Marc Gurreri'
 __email__ = 'me@me.com'
 __status__ = 'Development'
 
+checks = [ re.compile("^\[!\]\sTitle:\s",re.I), re.compile("\[[i+!]\]\s"), re.compile("</"), re.compile("\||\"|\>") ]
+
+def sanitizefield(f):
+    global checks
+    results = []
+    if isinstance(f,list):
+        for line in f:
+            for regsub in checks:
+                line = regsub.sub("",line)
+            results.append(line)
+    else:
+        for regsub in checks:
+            f = regsub.sub("",f)
+        results.append(f)
+    return "".join(results).strip()
+
 def dotransform(args):
     mt = MaltegoTransform()
     # mt.debug(pprint(args))
@@ -22,15 +38,22 @@ def dotransform(args):
     hostid = mt.getVar("hostid")
 
     bashlog = bashrunner("wpscan --url {}:{} --enumerate p,u --no-banner --no-color".format(ip,port))
-    regex = re.compile("^\[!\]")
-    results = bucketparser(regex, bashlog)
+    # regp = re.compile("^\[i]\s", re.I)
+    results = bucketparser(re.compile("^\[!\]\sTitle:\s",re.I), bashlog)
 
     for res in results:
-        print "test"
+        if res.get("Header"):
+            header = sanitizefield(res.get("Header"))
+            wpent = mt.addEntity("msploitego.WordpressInfo", header)
+            wpent.setValue(header)
+            for k,v in res.items():
+                if not k or not k.strip() or k == "Header":
+                    continue
+                k = sanitizefield(k)
+                v = sanitizefield(v)
+                if v and v.strip() and k and k.strip():
+                    wpent.addAdditionalFields(k, k.capitalize(), False, v)
     mt.returnOutput()
 
-# dotransform(sys.argv)
-args = ['wpscan.py',
- 'http/80:524',
- 'properties.metasploitservice=http/80:524#info=Apache/2.2.14 (Ubuntu) ( Powered by PHP/5.3.2-1ubuntu4 )#proto=tcp#hostid=524#service.name=http/80:524#port=80#banner=Apache/2.2.14 (Ubuntu) ( Powered by PHP/5.3.2-1ubuntu4 )#properties.service= #workspace=default#ip=10.11.1.234#created_at=24/2/2018#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=31/5/2018#machinename=10.11.1.234#servicename=http#state=open#serviceid=6859#user=msf#db=msf#workspaceid=18']
-dotransform(args)
+dotransform(sys.argv)
+# dotransform(args)
