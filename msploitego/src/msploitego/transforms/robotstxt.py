@@ -12,12 +12,12 @@ __email__ = 'me@me.com'
 __status__ = 'Development'
 
 def dotransform(args):
-    global nmap_proc
     mt = MaltegoTransform()
     # mt.debug(pprint(args))
     mt.parseArguments(args)
     ip = mt.getVar("ip")
     port = mt.getVar("port")
+    hostid = mt.getVar("hostid")
     rep = scriptrunner(port, "http-robots.txt", ip)
 
     if rep:
@@ -26,14 +26,13 @@ def dotransform(args):
             for line in output.split("\n"):
                 if line.lstrip()[0] == "/":
                     for d in line.lstrip().strip().split():
-                        webdirentity = mt.addEntity("maltego.WebDir", d)
-                        webdirentity.setValue(d)
+                        webdirentity = mt.addEntity("maltego.WebDir", "{}:{}:{}".format(d,hostid,port))
+                        webdirentity.setValue("{}:{}:{}".format(d,hostid,port))
                         webdirentity.addAdditionalFields("ip", "IP Address", False, ip)
                         webdirentity.addAdditionalFields("port", "Port", False, port)
     else:
         mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
-    
 
 dotransform(sys.argv)
 # dotransform(args)

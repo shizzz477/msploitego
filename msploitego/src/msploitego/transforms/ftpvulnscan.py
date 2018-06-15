@@ -27,8 +27,8 @@ def dotransform(args):
             scriptid = scriptrun.get("id")
             if scriptid.lower() == "ftp-vuln-cve2010-4221":
                 scriptid = "cve-2010-4221"
-            vulnentity = mt.addEntity("msploitego.FTPVulnerability", scriptid)
-            vulnentity.setValue(scriptid)
+            vulnentity = mt.addEntity("msploitego.FTPVulnerability", "{}:{}".format(scriptid,hostid))
+            vulnentity.setValue("{}:{}".format(scriptid,hostid))
             vulnentity.addAdditionalFields("description", "Description",False,scriptrun.get("output"))
             vulnentity.addAdditionalFields("ip", "IP Address", False, ip)
             vulnentity.addAdditionalFields("port", "Port", False, port)

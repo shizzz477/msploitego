@@ -25,17 +25,19 @@ def dotransform(args):
     port = mt.getVar("port")
 
     rep = scriptrunner(port, "http-comments-displayer", ip)
-    for scriptrun in rep.hosts[0].services[0].scripts_results:
-        regex = re.compile("^\s+Path:")
-        results = bucketparser(regex,scriptrun.get("output").split("\n"))
-        for res in results:
-            k,v = res.get("Header").split(":",1)
-            commententity = mt.addEntity("msploitego.SourceCodeComment", v)
-            commententity.setValue(v)
-            commententity.addAdditionalFields("comment", "Comment", False, "\n".join(res.get("Details")))
-            commententity.addAdditionalFields("linenumber", "Line Number", False, res.get("Line number"))
-            commententity.addAdditionalFields("path", "Path", False, v)
-
+    if rep:
+        for scriptrun in rep.hosts[0].services[0].scripts_results:
+            regex = re.compile("^\s+Path:")
+            results = bucketparser(regex,scriptrun.get("output").split("\n"))
+            for res in results:
+                k,v = res.get("Header").split(":",1)
+                commententity = mt.addEntity("msploitego.SourceCodeComment", v)
+                commententity.setValue(v)
+                commententity.addAdditionalFields("comment", "Comment", False, "\n".join(res.get("Details")))
+                commententity.addAdditionalFields("linenumber", "Line Number", False, res.get("Line number"))
+                commententity.addAdditionalFields("path", "Path", False, v)
+    else:
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
 
 

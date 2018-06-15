@@ -31,8 +31,8 @@ def dotransform(args):
             elements = res.get("elements")
             if elements:
                 for cve,d in elements.items():
-                    vuln = mt.addEntity("maltego.Vulnerability", cve)
-                    vuln.setValue(cve)
+                    vuln = mt.addEntity("maltego.Vulnerability", "{}:{}".format(cve,hostid))
+                    vuln.setValue("{}:{}".format(cve,hostid))
                     vuln.addAdditionalFields("details", "Details", False, res.get("output"))
                     for k,v in d.items():
                         if v and v.strip():

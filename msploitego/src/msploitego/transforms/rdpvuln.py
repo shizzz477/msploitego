@@ -31,8 +31,8 @@ def dotransform(args):
             for res in results:
                 if res.get("Header") == "VULNERABLE":
                     continue
-                vulnentity = mt.addEntity("msploitego.RDPVulnerability", res.get("Header"))
-                vulnentity.setValue(res.get("Header"))
+                vulnentity = mt.addEntity("msploitego.RDPVulnerability", "{}:{}".format(res.get("Header"),hostid))
+                vulnentity.setValue("{}:{}".format(res.get("Header"),hostid))
                 vulnentity.addAdditionalFields("ip", "IP Address", False, ip)
                 vulnentity.addAdditionalFields("port", "Port", False, port)
                 for k,v in res.items():
@@ -44,7 +44,6 @@ def dotransform(args):
     else:
         mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
-
 
 dotransform(sys.argv)
 # dotransform(args)

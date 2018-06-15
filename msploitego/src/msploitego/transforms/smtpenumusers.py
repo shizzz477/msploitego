@@ -18,15 +18,17 @@ def dotransform(args):
     port = mt.getVar("port")
     hostid = mt.getVar("hostid")
     rep = scriptrunner(port, "smtp-enum-users", ip)
-
-    for res in rep.hosts[0].services[0].scripts_results:
-        output = res.get("output")
-        for username in output.split(","):
-            username = username.strip().lstrip()
-            userentity = mt.addEntity("maltego.Alias", username)
-            userentity.setValue(username)
-            userentity.addAdditionalFields("sourceip", "Source IP", False, ip)
-            userentity.addAdditionalFields("sourceport", "Source Port", False, port)
+    if rep:
+        for res in rep.hosts[0].services[0].scripts_results:
+            output = res.get("output")
+            for username in output.split(","):
+                username = username.strip().lstrip()
+                userentity = mt.addEntity("maltego.Alias", username)
+                userentity.setValue(username)
+                userentity.addAdditionalFields("sourceip", "Source IP", False, ip)
+                userentity.addAdditionalFields("sourceport", "Source Port", False, port)
+    else:
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
 
 

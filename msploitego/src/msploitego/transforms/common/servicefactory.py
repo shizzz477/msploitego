@@ -67,6 +67,10 @@ def getserviceentity(s):
                     return "msploitego.RocketWebServer"
                 elif "squid" in s.get("info").lower():
                     return "msploitego.SquidProxyServer"
+                elif "vpn" in s.get("info").lower():
+                    return "msploitego.CiscoVPN"
+                elif "communigate" in s.get("info").lower():
+                    return "msploitego.CommuniDatePro"
                 else:
                     return "msploitego.WebService"
             else:
@@ -160,7 +164,7 @@ def getserviceentity(s):
             return "msploitego.nfsacl"
         elif "x11" in servicename.lower():
             return "msploitego.X11"
-        elif "sip" == servicename.lower():
+        elif re.search("\bsip\b|sip-proxy", servicename.lower(), re.I):
             return "msploitego.SIP"
         elif "fmtp" in servicename.lower():
             return "msploitego.fmtp"
@@ -202,6 +206,8 @@ def getserviceentity(s):
             return "msploitego.AdvancedMultithreadedServer"
         elif re.search("landesk", servicename, re.I):
             return "msploitego.Landesk"
+        elif re.search("xmpp", servicename, re.I):
+            return "msploitego.xmpp"
         elif any(x in servicename.lower() for x in ["lansource","citrix"]):
             return "msploitego.Lansource"
     return entityname
@@ -232,6 +238,8 @@ def getosentity(osfamily,osname):
                     osentityname = "msploitego.LinuxOperatingSystem"
                 elif "embedded" in osname.lower():
                     osentityname = "msploitego.EmbeddedOS"
+                elif re.search("ios", osname.lower(), re.I):
+                    osentityname = "msploitego.IOS"
                 osdescription = osname
             else:
                 if "windows" in osfamily.lower():
@@ -246,5 +254,9 @@ def getosentity(osfamily,osname):
                 osentityname = "msploitego.EmbeddedOS"
             elif "linux" in osname.lower():
                 osentityname = "msploitego.LinuxOperatingSystem"
+            elif re.search("ios",osname.lower(),re.I):
+                osentityname = "msploitego.IOS"
+            elif re.search("diskstation\smanager",osname.lower(),re.I):
+                osentityname = "msploitego.DiskstationManager"
             osdescription = osname
     return [osentityname,osdescription]

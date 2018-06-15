@@ -30,8 +30,8 @@ def dotransform(args):
             regex = re.compile("^\s{4}/")
             for line in output:
                 if regex.match(line):
-                    webdir = mt.addEntity("maltego.WebDir", line.strip().lstrip())
-                    webdir.setValue(line.strip().lstrip())
+                    webdir = mt.addEntity("maltego.WebDir", "{}:{}".format(line.strip().lstrip(),hostid))
+                    webdir.setValue("{}:{}".format(line.strip().lstrip(),hostid))
                     webdir.addAdditionalFields("ip", "IP Address", False, ip)
                     webdir.addAdditionalFields("port", "Port", False, port)
     else:

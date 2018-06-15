@@ -25,16 +25,18 @@ def dotransform(args):
     workspace = mt.getVar("workspace")
 
     rep = scriptrunner(port, "http-csrf", ip)
-    for scriptrun in rep.hosts[0].services[0].scripts_results:
-        output = scriptrun.get("output")
-        csrfentity = mt.addEntity("msploitego.CSFR", scriptrun.get("id"))
-        csrfentity.setValue(scriptrun.get("id"))
-        csrfentity.addAdditionalFields("data", "Data", True, output)
-        csrfentity.addAdditionalFields("servicename", "Service Name", True, servicename)
-        csrfentity.addAdditionalFields("serviceid", "Service Id", True, serviceid)
-        csrfentity.addAdditionalFields("hostid", "Host Id", True, hostid)
-        csrfentity.addAdditionalFields("workspace", "Workspace", True, workspace)
-
+    if rep:
+        for scriptrun in rep.hosts[0].services[0].scripts_results:
+            output = scriptrun.get("output")
+            csrfentity = mt.addEntity("msploitego.CSFR", "{}:{}".format(scriptrun.get("id"),hostid))
+            csrfentity.setValue("{}:{}".format(scriptrun.get("id"),hostid))
+            csrfentity.addAdditionalFields("data", "Data", True, output)
+            csrfentity.addAdditionalFields("servicename", "Service Name", True, servicename)
+            csrfentity.addAdditionalFields("serviceid", "Service Id", True, serviceid)
+            csrfentity.addAdditionalFields("hostid", "Host Id", True, hostid)
+            csrfentity.addAdditionalFields("workspace", "Workspace", True, workspace)
+    else:
+        mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
 
 

@@ -27,8 +27,8 @@ def dotransform(args):
     if rep:
         for res in rep.hosts[0].services[0].scripts_results:
             output = res.get("output")
-            webdir = mt.addEntity("msploitego.WebDirectoryInfo", res.get("id"))
-            webdir.setValue("{}:{}".format(res.get("id"),hostid))
+            webdir = mt.addEntity("msploitego.WebDirectoryInfo", "{}:{}:{}".format(res.get("id"),hostid,port))
+            webdir.setValue("{}:{}:{}".format(res.get("id"),hostid,port))
             webdir.addAdditionalFields("data", "Data", True, output)
             webdir.addAdditionalFields("servicename", "Service Name", True, servicename)
             webdir.addAdditionalFields("serviceid", "Service Id", True, serviceid)

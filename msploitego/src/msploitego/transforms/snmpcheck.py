@@ -29,8 +29,8 @@ def dotransform(args):
         origheader = res.get("Header")
         header = res.get("Header").lower()
         if "write access permitted" in header:
-            phrase = mt.addEntity("maltego.Pharse", origheader)
-            phrase.setValue(origheader)
+            phrase = mt.addEntity("msploitego.RelevantInformation", "{}:{}".format(origheader,hostid))
+            phrase.setValue("{}:{}".format(origheader,hostid))
         elif "system information" in header:
             if res.get("Domain"):
                 dname = res.get("Domain").lstrip(":")
@@ -65,16 +65,16 @@ def dotransform(args):
             for k,v in res.items():
                 if any(x in k for x in ["Details", "Header","Index"]):
                     continue
-                nservice = mt.addEntity("msploitego.NetworkService", v)
-                nservice.setValue(v)
+                nservice = mt.addEntity("msploitego.NetworkService", "{}:{}".format(v,hostid))
+                nservice.setValue("{}:{}".format(v,hostid))
                 nservice.addAdditionalFields("ip", "IP Address", True, ip)
         elif "processes" in header:
             for k,v in res.items():
                 if any(x in k for x in ["Details", "Header"]):
                     continue
                 if "running" in v.lower():
-                    process = mt.addEntity("msploitego.Process", v.split()[-1])
-                    process.setValue(v.split()[-1])
+                    process = mt.addEntity("msploitego.Process", "{}:{}".format(v.split()[-1],hostid))
+                    process.setValue("{}:{}".format(v.split()[-1],hostid))
                     process.addAdditionalFields("ip", "IP Address", True, ip)
                     process.addAdditionalFields("pid","Process ID", True, k)
         elif "device information" in header:
@@ -82,15 +82,15 @@ def dotransform(args):
                 if any(x in k for x in ["Details", "Header", "Id"]):
                     continue
                 if any(x in v for x in ["unknown","running"]):
-                    device = mt.addEntity("maltego.Device", " ".join(v.split()[2::]))
-                    device.setValue(" ".join(v.split()[2::]))
+                    device = mt.addEntity("maltego.Device", "{}:{}".format(" ".join(v.split()[2::]),hostid))
+                    device.setValue("{}:{}".format(" ".join(v.split()[2::]),hostid))
                     device.addAdditionalFields("ip", "IP Address", True, ip)
         elif "software components" in header:
             for k,v in res.items():
                 if any(x in k for x in ["Details","Index","Header"]):
                     continue
-                iprout = mt.addEntity("msploitego.SotwareComponents", v)
-                iprout.setValue(v)
+                iprout = mt.addEntity("msploitego.SotwareComponents", "{}:{}".format(v,hostid))
+                iprout.setValue("{}:{}".format(v,hostid))
                 iprout.addAdditionalFields("ip", "IP Address", True, ip)
         elif "share" in header:
             path = res.get("Path").lstrip(":")
@@ -101,7 +101,6 @@ def dotransform(args):
             networkshare.addAdditionalFields("name", "Share Name", True, name)
 
     mt.returnOutput()
-
 
 dotransform(sys.argv)
 # dotransform(args)

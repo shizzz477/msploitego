@@ -28,7 +28,7 @@ def dotransform(args):
         for service in rep.hosts[0].services:
             for res in service.scripts_results:
                 output = res.get("output")
-                dnsinfo = mt.addEntity("msploitego.DNSInformation", res.get("id"))
+                dnsinfo = mt.addEntity("msploitego.DNSInformation", "{}:{}".format(res.get("id"),hostid))
                 dnsinfo.setValue("{}:{}".format(res.get("id"),hostid))
                 dnsinfo.addAdditionalFields("data", "Data", True, output)
                 dnsinfo.addAdditionalFields("servicename", "Service Name", True, servicename)

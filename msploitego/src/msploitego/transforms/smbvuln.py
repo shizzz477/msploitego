@@ -21,17 +21,19 @@ def dotransform(args):
     port = mt.getVar("port")
     hostid = mt.getVar("hostid")
     rep = scriptrunner(port, scripts, ip, scriptargs="unsafe=1")
-    for scriptrun in rep.hosts[0].scripts_results:
-        id = scriptrun.get("id")
-        if id and "ERROR" not in scriptrun.get("output"):
-            smbvuln = mt.addEntity("msploitego.SambaVulnerability", "{}:{}".format(id,hostid))
-            smbvuln.setValue("{}:{}".format(id,hostid))
-            smbvuln.addAdditionalFields("description", "Description", False, scriptrun.get("output"))
-            smbvuln.addAdditionalFields("IP", "IP Address", False, ip)
-            smbvuln.addAdditionalFields("Port", "Port", False, ip)
+    if rep:
+        for scriptrun in rep.hosts[0].scripts_results:
+            id = scriptrun.get("id")
+            if id and "ERROR" not in scriptrun.get("output"):
+                smbvuln = mt.addEntity("msploitego.SambaVulnerability", "{}:{}".format(id,hostid))
+                smbvuln.setValue("{}:{}".format(id,hostid))
+                smbvuln.addAdditionalFields("description", "Description", False, scriptrun.get("output"))
+                smbvuln.addAdditionalFields("IP", "IP Address", False, ip)
+                smbvuln.addAdditionalFields("Port", "Port", False, ip)
+    else:
+        mt.addUIMessage("host is either down or not responding in this port")
 
     mt.returnOutput()
-    
 
 dotransform(sys.argv)
 # dotransform(args)

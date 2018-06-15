@@ -40,6 +40,7 @@ Requirements
   - snmp-check
   - nikto
   - exploitdb
+  - wpscan
 
 Installation
 ============

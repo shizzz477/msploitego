@@ -28,8 +28,8 @@ def dotransform(args):
         for res in rep.hosts[0].services[0].scripts_results:
             output = res.get("output").strip()
             if output:
-                secheader = mt.addEntity("msploitego.httpsecureheaders", res.get("id"))
-                secheader.setValue(res.get("id"))
+                secheader = mt.addEntity("msploitego.httpsecureheaders", "{}:{}".format(res.get("id"),hostid))
+                secheader.setValue("{}:{}".format(res.get("id"),hostid))
                 secheader.addAdditionalFields("details", "Details", False, output)
                 secheader.addAdditionalFields("servicename", "Service Name", True, servicename)
                 secheader.addAdditionalFields("serviceid", "Service Id", True, serviceid)

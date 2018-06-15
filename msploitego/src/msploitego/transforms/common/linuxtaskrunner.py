@@ -22,5 +22,7 @@ def bashrunner(cmd):
     taskoutput = []
     while task.poll() is None:
         for streamline in iter(task.stdout.readline, ''):
+            if isinstance(streamline, unicode):
+                streamline = streamline.encode("ascii", "replace")
             taskoutput.append(streamline)
     return taskoutput

@@ -19,13 +19,15 @@ def dotransform(args):
     hostid = mt.getVar("hostid")
     rep = scriptrunner(port, "dns-nsid", ip, args="-sSU")
 
-    for res in rep.hosts[0].services[0].scripts_results:
-        id = res.get("id")
-        if id:
-            dnsnsid = mt.addEntity("msploitego.dnsnsid", "{}:{}".format(id,hostid))
-            dnsnsid.setValue("{}:{}".format(id,hostid))
+    if rep:
+        for res in rep.hosts[0].services[0].scripts_results:
+            did = res.get("id")
+            if id:
+                dnsnsid = mt.addEntity("msploitego.dnsnsid", "{}:{}".format(did,hostid))
+                dnsnsid.setValue("{}:{}".format(did,hostid))
+    else:
+        mt.addUIMessage("host is either down or not responding in this port")
 
     mt.returnOutput()
-    
 
 dotransform(sys.argv)

@@ -30,8 +30,8 @@ def dotransform(args):
         for res in rep.hosts[0].services[0].scripts_results:
             cve = res.get("elements").popitem()
             if len(cve) > 0:
-                apachevuln = mt.addEntity("msploitego.ApacheVulnerability", cve[0])
-                apachevuln.setValue(cve[0])
+                apachevuln = mt.addEntity("msploitego.ApacheVulnerability", "{}:{}".format(cve[0],hostid))
+                apachevuln.setValue("{}:{}".format(cve[0],hostid))
                 if isinstance(cve[1],dict):
                     details = cve[1]
                     for key,value in details.items():
