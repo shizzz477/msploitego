@@ -1,6 +1,6 @@
 **msploitego - The Pentesting suite for Maltego**
 =================================================
-!(https://github.com/shizzz477/msploitego/blob/master/msploitego/src/msploitego/resources/images/msploitego-06-12%2020-24.gif)
+![Alt-text](https://github.com/shizzz477/msploitego/blob/master/msploitego/src/msploitego/resources/images/msploitego-06-12%2020-24.gif)
 
 ![maltegosnapshot01](https://user-images.githubusercontent.com/9602322/40849078-f941f302-658e-11e8-83b1-62aea49c5b65.png)
 
