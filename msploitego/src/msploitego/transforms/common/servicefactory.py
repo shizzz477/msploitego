@@ -78,7 +78,7 @@ def getserviceentity(s):
         elif s.get("port") == "32768":
             return "msploitego.PotentialBackdoor"
         elif any(
-                x in servicename for x in ["samba", "netbios-ssn", "smb", "microsoft-ds", "netbios-ns", "netbios-dgm"]):
+                x in servicename for x in ["samba", "netbios-ssn", "smb", "microsoft-ds", "netbios-ns", "netbios-dgm", "netbios"]):
             return "msploitego.SambaService"
         elif servicename == "ssh":
             return "msploitego.SSHService"

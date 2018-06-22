@@ -1,6 +1,9 @@
+from pprint import pprint
+
 from common.MaltegoTransform import *
 from common.niktolib import NiktoReport
 import sys
+import os.path
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
@@ -28,7 +31,10 @@ def dotransform(args):
     else:
         nr = NiktoReport(fn)
         for d in nr.details:
-            det = mt.addEntity("msploitego.niktodetail", "{}:{}".format(d.description,hostid))
+            try:
+                det = mt.addEntity("msploitego.niktodetail", "{}:{}".format(d.description,hostid))
+            except Exception:
+                continue
             det.setValue("{}:{}".format(d.description,hostid))
             det.addAdditionalFields("description","Description",False,d.description)
             det.addAdditionalFields("iplink", "IP Link", False, d.iplink)

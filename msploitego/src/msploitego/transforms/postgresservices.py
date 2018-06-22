@@ -4,6 +4,7 @@ from common.MaltegoTransform import *
 from common.postgresdb import MsploitPostgres
 import sys
 from common.servicefactory import getserviceentity, getosentity
+import os.path
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
@@ -50,9 +51,15 @@ def dotransform(args):
 
         if servicename in ["http", "https", "possible_wls", "www", "ncacn_http", "ccproxy-http", "ssl/http",
                            "http-proxy"]:
-            hostservice.addAdditionalFields("niktofile", "Nikto File", True, '')
-        elif any(x in servicename for x in ["samba", "netbios-ssn", "smb", "microsoft-ds", "netbios-ns", "netbios-dgm"]):
-            hostservice.addAdditionalFields("enum4linux", "enum4linux File", True, '')
+            niktofile = "/root/nikto/{}-{}.xml".format(ip,service.get("port"))
+            if not os.path.exists(niktofile):
+                niktofile = ""
+            hostservice.addAdditionalFields("niktofile", "Nikto File", True, niktofile)
+        elif any(x in servicename for x in ["samba", "netbios-ssn", "smb", "microsoft-ds", "netbios-ns", "netbios-dgm", "netbios"]):
+            enum4file = "/root/enum4/{}-enum4.txt".format(ip)
+            if not os.path.exists(enum4file):
+                enum4file = ""
+            hostservice.addAdditionalFields("enum4linux", "enum4linux File", True, enum4file)
         for k,v in service.items():
             if isinstance(v,datetime):
                 hostservice.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
@@ -80,4 +87,7 @@ def dotransform(args):
     mt.returnOutput()
 
 dotransform(sys.argv)
+# args = ['postgresservices.py',
+#  '10.11.1.24',
+#  'ipv4-address=10.11.1.24#ipaddress.internal=false#vuln_count=53#workspace=default#address=10.11.1.24#os_family=Linux#purpose=server#service_count=9#os_sp=7.10#created_at=23/1/2018#mac=00:50:56:B8:92:1E#workspace_id=18#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=23/1/2018#name=10.11.1.24#os_name=Linux#id=545#state=alive#user=msf#note_count=15#db=msf']
 # dotransform(args)
