@@ -11,11 +11,10 @@ import sys
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, Metasploitego Project'
 __credits__ = []
-
 __license__ = 'GPL'
 __version__ = '0.1'
 __maintainer__ = 'Marc Gurreri'
-__email__ = 'me@me.com'
+__email__ = 'marcgurreri@gmail.com'
 __status__ = 'Development'
 
 @static_var("TCP_SYN", "-sS")

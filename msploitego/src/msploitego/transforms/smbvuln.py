@@ -8,7 +8,7 @@ __credits__ = []
 __license__ = 'GPL'
 __version__ = '0.1'
 __maintainer__ = 'Marc Gurreri'
-__email__ = 'me@me.com'
+__email__ = 'marcgurreri@gmail.com'
 __status__ = 'Development'
 
 scripts = "smb-double-pulsar-backdoor,smb-vuln-conficker,smb-vuln-cve-2017-7494,smb-vuln-cve2009-3103,smb-vuln-ms06-025,smb-vuln-ms07-029,smb-vuln-ms08-067,smb-vuln-ms10-054,smb-vuln-ms10-061,smb-vuln-ms17-010,smb-vuln-regsvc-dos,smb2-vuln-uptime"

@@ -1,6 +1,7 @@
 from pprint import pprint
 from common.MaltegoTransform import *
 from common.linuxtaskrunner import bashrunner
+import tempfile
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
@@ -8,7 +9,7 @@ __credits__ = []
 __license__ = 'GPLv3'
 __version__ = '0.1'
 __maintainer__ = 'Marc Gurreri'
-__email__ = 'me@me.com'
+__email__ = 'marcgurreri@gmail.com'
 __status__ = 'Development'
 
 def dotransform(args):
@@ -30,7 +31,10 @@ def dotransform(args):
     if details:
         webfile = mt.addEntity("msploitego.WebFile", url)
         webfile.setValue(url)
-        webfile.addAdditionalFields("details","Details",False, details)
+        f = tempfile.NamedTemporaryFile(delete=False)
+        f.file.write(details)
+        f.file.close()
+        webfile.addAdditionalFields("localfile","Local File",False, f.name)
         webfile.addAdditionalFields("url", "Site URL", False, url)
         webfile.addAdditionalFields("ip", "IP Address", False, ip)
         webfile.addAdditionalFields("port", "Port", False, port)

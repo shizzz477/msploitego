@@ -6,7 +6,7 @@ setup(
     name='msploitego',
     author='Marc Gurreri',
     version='1.0',
-    author_email='me@me.com',
+    author_email='marcgurreri@gmail.com',
     description='Metasploit specific transforms',
     license='GPLv3',
     packages=find_packages('src'),

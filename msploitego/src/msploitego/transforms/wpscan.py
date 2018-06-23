@@ -10,7 +10,7 @@ __credits__ = []
 __license__ = 'GPLv3'
 __version__ = '0.1'
 __maintainer__ = 'Marc Gurreri'
-__email__ = 'me@me.com'
+__email__ = 'marcgurreri@gmail.com'
 __status__ = 'Development'
 
 checks = [ re.compile("^\[!\]\sTitle:\s",re.I), re.compile("\[[i+!]\]\s"), re.compile("</"), re.compile("\||\"|\>") ]

@@ -5,6 +5,16 @@ from pprint import pprint
 
 from corelib import Nelement
 
+__author__ = 'Marc Gurreri'
+__copyright__ = 'Copyright 2018, Metasploitego Project'
+__credits__ = []
+__license__ = 'GPL'
+__version__ = '0.1'
+__maintainer__ = 'Marc Gurreri'
+__email__ = 'marcgurreri@gmail.com'
+__status__ = 'Development'
+
+
 class Nmapreport(object):
     def __init__(self, fn):
         _report = NmapParser.parse_fromfile(fn)

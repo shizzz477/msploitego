@@ -2,6 +2,15 @@
 
 import xml.etree.ElementTree as ET
 
+__author__ = 'Marc Gurreri'
+__copyright__ = 'Copyright 2018, Metasploitego Project'
+__credits__ = []
+__license__ = 'GPL'
+__version__ = '0.1'
+__maintainer__ = 'Marc Gurreri'
+__email__ = 'marcgurreri@gmail.com'
+__status__ = 'Development'
+
 class NiktoReport(object):
     def __init__(self, fn):
         self._root = ET.parse(fn).getroot()

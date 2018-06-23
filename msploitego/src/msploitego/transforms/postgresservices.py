@@ -12,7 +12,7 @@ __credits__ = []
 __license__ = 'GPLv3'
 __version__ = '0.1'
 __maintainer__ = 'Marc Gurreri'
-__email__ = 'me@me.com'
+__email__ = 'marcgurreri@gmail.com'
 __status__ = 'Development'
 
 def dotransform(args):
@@ -87,7 +87,4 @@ def dotransform(args):
     mt.returnOutput()
 
 dotransform(sys.argv)
-# args = ['postgresservices.py',
-#  '10.11.1.24',
-#  'ipv4-address=10.11.1.24#ipaddress.internal=false#vuln_count=53#workspace=default#address=10.11.1.24#os_family=Linux#purpose=server#service_count=9#os_sp=7.10#created_at=23/1/2018#mac=00:50:56:B8:92:1E#workspace_id=18#password=unDwIR39HP8LMSz3KKQMCNYrcvvtCK478l2qhIi7nsE\\=#updated_at=23/1/2018#name=10.11.1.24#os_name=Linux#id=545#state=alive#user=msf#note_count=15#db=msf']
 # dotransform(args)

@@ -5,3 +5,4 @@ NmapProcess
 pysmbc
 psycopg2
 chardet
+validators

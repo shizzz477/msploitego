@@ -11,7 +11,7 @@ __credits__ = []
 __license__ = 'GPLv3'
 __version__ = '0.1'
 __maintainer__ = 'Marc Gurreri'
-__email__ = 'me@me.com'
+__email__ = 'marcgurreri@gmail.com'
 __status__ = 'Development'
 
 def dotransform(args):
@@ -29,7 +29,7 @@ def dotransform(args):
         if "ssl" in page.get("protoname"):
             urlstring += "s"
         urlstring += "://{}:{}{}".format(ip,page.get("port"),page.get("path"))
-        pageent = mt.addEntity("msploitego.WebURL",urlstring)
+        pageent = mt.addEntity("msploitego.SiteURL",urlstring)
         pageent.setValue(urlstring)
         pageent.addAdditionalFields("ip", "IP Address", False, ip)
         pageent.addAdditionalFields("hostid", "Host Id", False, hostid)
