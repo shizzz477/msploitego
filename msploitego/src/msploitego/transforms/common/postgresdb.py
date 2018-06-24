@@ -57,7 +57,12 @@ class MsploitPostgres(object):
         return self._cur.fetchall()
 
     def getSessions(self,wid):
-        sql = "SELECT sessions.id, sessions.host_id, sessions.stype, sessions.via_exploit, sessions.via_payload,   sessions.desc, sessions.port, sessions.platform,sessions.opened_at, sessions.closed_at,   sessions.close_reason, sessions.local_id, sessions.last_seen, sessions.module_run_id, hosts.workspace_id as workspaceid FROM public.sessions, public.hosts, public.workspaces WHERE hosts.id = sessions.host_id AND workspaces.id = hosts.workspace_id AND hosts.workspace_id = {};".format(wid)
+        sql = "SELECT sessions.id as sessionid, sessions.host_id, sessions.stype, sessions.via_exploit, sessions.via_payload,   sessions.desc as sessiondescription, sessions.port, sessions.platform,sessions.opened_at, sessions.closed_at, sessions.close_reason, sessions.local_id, sessions.last_seen, sessions.module_run_id, hosts.workspace_id as workspaceid, hosts.address as ip FROM public.sessions, public.hosts, public.workspaces WHERE hosts.id = sessions.host_id AND workspaces.id = hosts.workspace_id AND hosts.workspace_id = {};".format(wid)
+        self._cur.execute(sql)
+        return self._cur.fetchall()
+
+    def getSessionsForHost(self,hostid):
+        sql = "SELECT hosts.address AS ip, sessions.host_id AS hostid, sessions.stype AS sessiontype, sessions.via_exploit, sessions.via_payload, sessions.desc AS sessiondescription, sessions.port,  sessions.platform, sessions.opened_at, sessions.closed_at, sessions.close_reason,   sessions.local_id AS localid, sessions.last_seen, sessions.module_run_id, sessions.id AS sessionid FROM   public.hosts, public.sessions WHERE hosts.id = sessions.host_id AND hosts.id = {};".format(hostid)
         self._cur.execute(sql)
         return self._cur.fetchall()
 

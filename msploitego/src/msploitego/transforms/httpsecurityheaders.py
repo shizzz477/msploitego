@@ -1,6 +1,7 @@
 from common.nsescriptlib import scriptrunner
 from common.MaltegoTransform import *
 import sys
+from common.corelib import inheritvalues
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
@@ -12,16 +13,13 @@ __email__ = 'marcgurreri@gmail.com'
 __status__ = 'Development'
 
 def dotransform(args):
-    global nmap_proc
+
     mt = MaltegoTransform()
     # mt.debug(pprint(args))
     mt.parseArguments(args)
-    ip = mt.getVar("ip")
-    port = mt.getVar("port")
-    servicename = mt.getVar("servicename")
-    serviceid = mt.getVar("serviceid")
     hostid = mt.getVar("hostid")
-    workspace = mt.getVar("workspace")
+    port = mt.getVar("port")
+    ip = mt.getVar("ip")
     rep = scriptrunner(port, "http-security-headers", ip)
 
     if rep:
@@ -31,12 +29,7 @@ def dotransform(args):
                 secheader = mt.addEntity("msploitego.httpsecureheaders", "{}:{}".format(res.get("id"),hostid))
                 secheader.setValue("{}:{}".format(res.get("id"),hostid))
                 secheader.addAdditionalFields("details", "Details", False, output)
-                secheader.addAdditionalFields("servicename", "Service Name", True, servicename)
-                secheader.addAdditionalFields("serviceid", "Service Id", True, serviceid)
-                secheader.addAdditionalFields("hostid", "Host Id", True, hostid)
-                secheader.addAdditionalFields("workspace", "Workspace", True, workspace)
-                secheader.addAdditionalFields("ip", "IP Address", False, ip)
-                secheader.addAdditionalFields("port", "Port", False, port)
+                inheritvalues(secheader, mt)
     else:
         mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()

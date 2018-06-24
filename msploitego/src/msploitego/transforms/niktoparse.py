@@ -5,6 +5,8 @@ from common.niktolib import NiktoReport
 import sys
 import os.path
 
+from common.corelib import inheritvalues
+
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
 __credits__ = []
@@ -18,12 +20,7 @@ def dotransform(args):
     mt = MaltegoTransform()
     # mt.debug(pprint(sys.argv))
     mt.parseArguments(args)
-    ip = mt.getVar("ip")
-    port = mt.getVar("port")
-    servicename = mt.getVar("servicename")
-    serviceid = mt.getVar("serviceid")
     hostid = mt.getVar("hostid")
-    workspace = mt.getVar("workspace")
     fn = mt.getVar("niktofile")
     if not fn:
         mt.addException("Nikto file is either not attached or does not exist")
@@ -40,12 +37,7 @@ def dotransform(args):
             det.addAdditionalFields("iplink", "IP Link", False, d.iplink)
             det.addAdditionalFields("namelink", "Name Link", False, d.namelink)
             det.addAdditionalFields("uri", "URI", False, d.uri)
-            det.addAdditionalFields("servicename", "Service Name", True, servicename)
-            det.addAdditionalFields("serviceid", "Service Id", True, serviceid)
-            det.addAdditionalFields("hostid", "Host Id", True, hostid)
-            det.addAdditionalFields("workspace", "Workspace", True, workspace)
-            det.addAdditionalFields("ip", "IP Address", False, ip)
-            det.addAdditionalFields("port", "Port", False, port)
+            inheritvalues(det,mt.values)
 
         mt.returnOutput()
 

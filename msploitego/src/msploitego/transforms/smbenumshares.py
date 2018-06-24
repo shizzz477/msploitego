@@ -53,7 +53,6 @@ def dotransform(args):
     else:
         mt.addUIMessage("host is either down or not responding in this port")
     mt.returnOutput()
-    
 
 dotransform(sys.argv)
 # dotransform(args)

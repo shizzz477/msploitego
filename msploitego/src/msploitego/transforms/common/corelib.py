@@ -16,8 +16,16 @@ __all__ = [
     'static_var',
     'bucketparser',
     'checkAndConvertToAscii',
-    'getFileContents'
+    'getFileContents',
+    'inheritvalues'
 ]
+
+noinheritfields = ["niktofile", "properties.", "created_at","updated_at","datastore"]
+
+def inheritvalues(ent,values):
+    for k,v in values.items():
+        if v and v.strip() and not any(x in k for x in noinheritfields):
+            ent.addAdditionalFields(k, k.capitalize(), False, v)
 
 def static_var(varname, value):
     def decorate(func):

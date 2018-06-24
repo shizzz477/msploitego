@@ -13,3 +13,4 @@ msploitego/src/msploitego/transforms/common/scratch\.py
 /msploitego/src/msploitego/transforms/smblistshares.py
 /msploitego/src/msploitego/transforms/toHashFile.py
 /msploitego/src/msploitego/transforms/enum4linuxlive.py
+/msploitego/src/msploitego/transforms/enum4sambashare.py

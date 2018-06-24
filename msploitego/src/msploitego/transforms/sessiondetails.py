@@ -19,7 +19,7 @@ def dotransform(args):
     mt = MaltegoTransform()
     # mt.debug(pprint(args))
     mt.parseArguments(args)
-    sessionid = mt.getValue()
+    sessionid = mt.getVar("sessionid")
     db = mt.getVar("db")
     user = mt.getVar("user")
     password = mt.getVar("password").replace("\\", "")
@@ -36,7 +36,6 @@ def dotransform(args):
         detailent.addAdditionalFields("password", "Password", False, password)
         detailent.addAdditionalFields("db", "db", False, db)
     mt.returnOutput()
-    
 
 dotransform(sys.argv)
 # dotransform(args)

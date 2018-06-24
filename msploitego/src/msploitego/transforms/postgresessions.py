@@ -26,8 +26,8 @@ def dotransform(args):
     password = mt.getVar("password").replace("\\", "")
     mpost = MsploitPostgres(user, password, db)
     for session in mpost.getSessions(workspaceid):
-        sessionentity = mt.addEntity("msploitego.MeterpreterSession", str(session.get("id")))
-        sessionentity.setValue(str(session.get("id")))
+        sessionentity = mt.addEntity("msploitego.MeterpreterSession", "{}:{}".format(session.get("ip"),str(session.get("sessionid"))))
+        sessionentity.setValue("{}:{}".format(session.get("ip"),str(session.get("sessionid"))))
         for k,v in session.items():
             if isinstance(v,datetime):
                 sessionentity.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))

@@ -19,23 +19,22 @@ def dotransform(args):
     mt = MaltegoTransform()
     # mt.debug(pprint(args))
     mt.parseArguments(args)
-    workspace = mt.getValue()
-    workspaceid = mt.getVar("workspaceid")
+    ip = mt.getValue()
+    hostid = mt.getVar("id")
     db = mt.getVar("db")
     user = mt.getVar("user")
-    password = mt.getVar("password").replace("\\","")
+    password = mt.getVar("password").replace("\\", "")
     mpost = MsploitPostgres(user, password, db)
-    for host in mpost.getAllHosts(workspaceid):
-        hostentity = mt.addEntity("maltego.IPv4Address", host.get("address"))
-        hostentity.setValue(host.get("address"))
-        for k,v in host.items():
+    for session in mpost.getSessionsForHost(hostid):
+        sessionentity = mt.addEntity("msploitego.MeterpreterSession", "{}:{}".format(ip,str(session.get("sessionid"))))
+        sessionentity.setValue("{}:{}".format(ip,str(session.get("sessionid"))))
+        for k,v in session.items():
             if isinstance(v,datetime):
-                hostentity.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
+                sessionentity.addAdditionalFields(k, k.capitalize(), False, "{}/{}/{}".format(v.day,v.month,v.year))
             elif v and str(v).strip():
-                hostentity.addAdditionalFields(k, k.capitalize(), False, str(v))
-        inheritvalues(hostentity, mt.values)
-        hostentity.addAdditionalFields("workspace", "Workspace Name", False, workspace)
+                sessionentity.addAdditionalFields(k, k.capitalize(), False, str(v))
+        inheritvalues(sessionentity,mt.values)
     mt.returnOutput()
-    
+
 dotransform(sys.argv)
 # dotransform(args)

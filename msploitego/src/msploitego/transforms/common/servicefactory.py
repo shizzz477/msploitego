@@ -10,14 +10,17 @@ __maintainer__ = 'Marc Gurreri'
 __email__ = 'marcgurreri@gmail.com'
 __status__ = 'Development'
 
+webservices = ["http", "https", "possible_wls", "www", "ncacn_http", "ccproxy-http", "ssl/http","http-proxy"]
+sambaservices = ["samba", "netbios-ssn", "smb", "microsoft-ds", "netbios-ns", "netbios-dgm", "netbios"]
+
 def getserviceentity(s):
     entityname = "msploitego.MetasploitService"
     try:
-        servicename = s.get("servicename")
+        servicename = s.get("servicename").lower()
     except AttributeError:
         servicename = "NoName"
     try:
-        serviceinfo = s.get("info")
+        serviceinfo = s.get("info").lower()
     except AttributeError:
         serviceinfo = None
     if s.get("state").lower() in ["filtered", "closed"]:
@@ -25,8 +28,7 @@ def getserviceentity(s):
     else:
         if not servicename and not serviceinfo.strip():
             return "msploitego.MetasploitService"
-        if servicename in ["http", "https", "possible_wls", "www", "ncacn_http", "ccproxy-http", "ssl/http",
-                           "http-proxy"]:
+        if any(x in servicename for x in webservices):
             if serviceinfo:
                 if "iis" in s.get("info").lower():
                     return "msploitego.IISWebservice"
@@ -77,14 +79,13 @@ def getserviceentity(s):
                 return "msploitego.WebService"
         elif s.get("port") == "32768":
             return "msploitego.PotentialBackdoor"
-        elif any(
-                x in servicename for x in ["samba", "netbios-ssn", "smb", "microsoft-ds", "netbios-ns", "netbios-dgm", "netbios"]):
+        elif any(x in servicename for x in sambaservices):
             return "msploitego.SambaService"
         elif servicename == "ssh":
             return "msploitego.SSHService"
         elif servicename in ["dns", "mdns", "domain"]:
             return "msploitego.DNSService"
-        elif "rpc" in servicename:
+        elif any(x in servicename for x in ["rpc","portmap"]):
             return "msploitego.RPC"
         elif "epmap" in servicename:
             return "msploitego.epmap"
@@ -104,103 +105,103 @@ def getserviceentity(s):
             return "msploitego.finger"
         elif "imap" in servicename:
             return "msploitego.imap"
-        elif "winrm" in servicename.lower():
+        elif "winrm" in servicename:
             return "msploitego.winrm"
-        elif "nmap" in servicename.lower():
+        elif "nmap" in servicename:
             return "msploitego.Nmap"
-        elif "ldap" in servicename.lower():
+        elif "ldap" in servicename:
             return "msploitego.LDAP"
-        elif "compressnet" in servicename.lower():
+        elif "compressnet" in servicename:
             return "msploitego.compressnet"
-        elif "ansys" in servicename.lower():
+        elif "ansys" in servicename:
             return "msploitego.ansys"
-        elif "boinc" in servicename.lower():
+        elif "boinc" in servicename:
             return "msploitego.boinc"
-        elif "bakbone" in servicename.lower():
+        elif "bakbone" in servicename:
             return "msploitego.bakbonenetvault"
-        elif "cisco" in servicename.lower():
+        elif "cisco" in servicename:
             return "msploitego.CISCO"
         elif "ntp" in servicename:
             return "msploitego.ntp"
         elif "dhcp" in servicename:
             return "msploitego.DHCP"
-        elif "dbase" in servicename.lower():
+        elif "dbase" in servicename:
             return "msploitego.dBase"
-        elif "chargen" in servicename.lower():
+        elif "chargen" in servicename:
             return "msploitego.chargen"
         elif "directplaysrvr" in servicename:
             return "msploitego.directplaysrvr"
-        elif "smtp" in servicename.lower():
+        elif "smtp" in servicename:
             return "msploitego.smtp"
-        elif "ident" in servicename.lower():
+        elif "ident" in servicename:
             return "msploitego.ident"
-        elif any(x in servicename.lower() for x in ["snmp", "smux"]):
+        elif any(x in servicename for x in ["snmp", "smux"]):
             return "msploitego.SNMP"
         elif "tcpwrapped" in servicename:
             return "msploitego.tcpwrapped"
         elif "mysql" in servicename:
             return "msploitego.mysql"
-        elif any(x in servicename.lower() for x in ["mssql", "ms-sql", "dbm"]):
+        elif any(x in servicename for x in ["mssql", "ms-sql", "dbm"]):
             return "msploitego.mssql"
         elif any(x in servicename for x in ["nat-pmp", "upnp", "natpmp"]):
             return "msploitego.natpmp"
-        elif any(x in servicename.lower() for x in ["confluent", "kafka"]):
+        elif any(x in servicename for x in ["confluent", "kafka"]):
             return "msploitego.ApacheKafka"
         elif any(x in servicename for x in ["ndmp"]):
             return "msploitego.NAS"
-        elif any(x in servicename.lower() for x in ["neod", "corba"]):
+        elif any(x in servicename for x in ["neod", "corba"]):
             return "msploitego.ObjectRequestBroker"
         elif "ajp" in servicename:
             return "msploitego.ajp"
-        elif "llmnr" in servicename.lower():
+        elif "llmnr" in servicename:
             return "msploitego.llmnr"
-        elif any(x in servicename.lower() for x in ["keysrvr", "keyshadow"]):
+        elif any(x in servicename for x in ["keysrvr", "keyshadow"]):
             return "msploitego.KeyServer"
-        elif servicename.lower() in ["kerberos", "kpasswd5", "kerberos-sec", "krb524"]:
+        elif servicename in ["kerberos", "kpasswd5", "kerberos-sec", "krb524"]:
             return "msploitego.kerberos"
-        elif "msexchange-logcopier" in servicename.lower():
+        elif "msexchange-logcopier" in servicename:
             return "msploitego.MSExchangeLogCopier"
-        elif any(x in servicename.lower() for x in ["nfs", "lockd", "amiganetfs"]):
+        elif any(x in servicename for x in ["nfs", "lockd", "amiganetfs","mountd","nlockmgr"]):
             return "msploitego.nfsacl"
-        elif "x11" in servicename.lower():
+        elif "x11" in servicename:
             return "msploitego.X11"
-        elif re.search("\bsip\b|sip-proxy", servicename.lower(), re.I):
+        elif re.search("\bsip\b|sip-proxy", servicename, re.I):
             return "msploitego.SIP"
-        elif "fmtp" in servicename.lower():
+        elif "fmtp" in servicename:
             return "msploitego.fmtp"
-        elif "telnet" in servicename.lower():
+        elif "telnet" in servicename:
             return "msploitego.telnet"
-        elif any(x in servicename.lower() for x in ["rdp", "xdmcp"]):
+        elif any(x in servicename for x in ["rdp", "xdmcp"]):
             return "msploitego.rdp"
-        elif "ipp" in servicename.lower():
+        elif "ipp" in servicename:
             return "msploitego.ipp"
-        elif "vnc" in servicename.lower():
+        elif "vnc" in servicename:
             return "msploitego.vnc"
-        elif "wap-wsp" in servicename.lower():
+        elif "wap-wsp" in servicename:
             return "msploitego.wapwsp"
-        elif "blackjack" in servicename.lower():
+        elif "blackjack" in servicename:
             return "msploitego.blackjack"
-        elif any(x in servicename.lower() for x in ["backorifice", "bo2k"]):
+        elif any(x in servicename for x in ["backorifice", "bo2k"]):
             return "msploitego.backorifice"
-        elif "rtsp" in servicename.lower():
+        elif "rtsp" in servicename:
             return "msploitego.rtsp"
-        elif "bacnet" in servicename.lower():
+        elif "bacnet" in servicename:
             return "msploitego.Bacnet"
-        elif "msdtc" in servicename.lower():
+        elif "msdtc" in servicename:
             return "msploitego.msdtc"
-        elif "wfremotertm" in servicename.lower():
+        elif "wfremotertm" in servicename:
             return "msploitego.wfremotertm"
-        elif "msdp" in servicename.lower():
+        elif "msdp" in servicename:
             return "msploitego.msdp"
-        elif "ssl" in servicename.lower():
+        elif "ssl" in servicename:
             return "msploitego.ssl"
-        elif all(x in servicename.lower() for x in ["afs", "fileserver"]):
+        elif all(x in servicename for x in ["afs", "fileserver"]):
             return "msploitego.AFS"
-        elif "adobeserver" in servicename.lower():
+        elif "adobeserver" in servicename:
             return "msploitego.AdobeserverService"
-        elif "ms-wbt-server" in servicename.lower():
+        elif "ms-wbt-server" in servicename:
             return "msploitego.MicrosoftTerminalServices"
-        elif servicename.lower() in ["rmiregistry", "java-rmi"]:
+        elif servicename in ["rmiregistry", "java-rmi"]:
             return "msploitego.JavaRMI"
         elif re.match("^ams$", servicename, re.I):
             return "msploitego.AdvancedMultithreadedServer"
@@ -208,7 +209,7 @@ def getserviceentity(s):
             return "msploitego.Landesk"
         elif re.search("xmpp", servicename, re.I):
             return "msploitego.xmpp"
-        elif any(x in servicename.lower() for x in ["lansource","citrix"]):
+        elif any(x in servicename for x in ["lansource","citrix"]):
             return "msploitego.Lansource"
     return entityname
 

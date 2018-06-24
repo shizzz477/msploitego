@@ -1,10 +1,11 @@
 from pprint import pprint
 
-from datetime import datetime
-
 from common.MaltegoTransform import *
 from common.postgresdb import MsploitPostgres
+from common.corelib import inheritvalues
 import sys
+
+
 
 __author__ = 'Marc Gurreri'
 __copyright__ = 'Copyright 2018, msploitego Project'
@@ -27,9 +28,8 @@ def dotransform(args):
         wsentity = mt.addEntity("msploitego.MetasploitWorkspace", workspace.get("name"))
         wsentity.setValue(workspace.get("name"))
         wsentity.addAdditionalFields("workspaceid", "Workspace Id", False, str(workspace.get("id")))
-        wsentity.addAdditionalFields("user", "User", False, user)
-        wsentity.addAdditionalFields("password", "Password", False, password)
-        wsentity.addAdditionalFields("db", "db", False, db)
+        wsentity.addAdditionalFields("db", "Database", False, db)
+        inheritvalues(wsentity, mt.values)
     mt.returnOutput()
     
 dotransform(sys.argv)

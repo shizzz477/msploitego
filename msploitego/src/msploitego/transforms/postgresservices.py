@@ -15,6 +15,9 @@ __maintainer__ = 'Marc Gurreri'
 __email__ = 'marcgurreri@gmail.com'
 __status__ = 'Development'
 
+webservices = ["http", "https", "possible_wls", "www", "ncacn_http", "ccproxy-http", "ssl/http","http-proxy"]
+sambaservices = ["samba", "netbios-ssn", "smb", "microsoft-ds", "netbios-ns", "netbios-dgm", "netbios"]
+
 def dotransform(args):
     mt = MaltegoTransform()
     # mt.debug(pprint(args))
@@ -49,13 +52,12 @@ def dotransform(args):
         else:
             hostservice.addAdditionalFields("banner.text", "Service Banner", True, "")
 
-        if servicename in ["http", "https", "possible_wls", "www", "ncacn_http", "ccproxy-http", "ssl/http",
-                           "http-proxy"]:
+        if any(x in servicename for x in webservices):
             niktofile = "/root/nikto/{}-{}.xml".format(ip,service.get("port"))
             if not os.path.exists(niktofile):
                 niktofile = ""
             hostservice.addAdditionalFields("niktofile", "Nikto File", True, niktofile)
-        elif any(x in servicename for x in ["samba", "netbios-ssn", "smb", "microsoft-ds", "netbios-ns", "netbios-dgm", "netbios"]):
+        elif any(x in servicename for x in sambaservices):
             enum4file = "/root/enum4/{}-enum4.txt".format(ip)
             if not os.path.exists(enum4file):
                 enum4file = ""

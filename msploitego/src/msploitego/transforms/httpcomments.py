@@ -17,7 +17,7 @@ __email__ = 'marcgurreri@gmail.com'
 __status__ = 'Development'
 
 def dotransform(args):
-    global nmap_proc
+
     mt = MaltegoTransform()
     # mt.debug(pprint(args))
     mt.parseArguments(args)
